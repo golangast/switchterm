@@ -25,8 +25,8 @@ func Down(linecount, atline, rows, cols int, background, foreground string, list
 
 }
 func Right(linecount, atline, rows, cols int, background, foreground string, list []string) (int, bool, error) {
-	if atline <= linecount-5 {
-		atline = atline + 4
+	if atline <= linecount-rows {
+		atline = atline + rows
 	}
 
 	PrintColumns(rows, cols, atline, list, background, foreground)
@@ -36,8 +36,8 @@ func Right(linecount, atline, rows, cols int, background, foreground string, lis
 }
 
 func Left(linecount, atline, rows, cols int, background, foreground string, list []string) (int, bool, error) {
-	if atline >= 5 {
-		atline = atline - 4
+	if atline >= rows {
+		atline = atline - rows
 	}
 	PrintColumns(rows, cols, atline, list, background, foreground)
 

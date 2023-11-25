@@ -56,7 +56,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 				cols = 1
 			}
 			// print in colunns
-			switchutility.PrintColumns(rows, cols, atline, results, background, foreground)
+			switchutility.PrintColumnsWChosen(rows, cols, atline, results, background, foreground)
 
 			list = results
 			answers := Dig(list, cols, background, foreground)
@@ -75,7 +75,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 func Dig(list []string, cols int, background, foreground string) []string {
 	var atline int
 	linecount := len(list)
-	var ans []string
+	var chosen []string
 	rows := (len(list) + cols - 1) / cols
 	//var results []string
 
@@ -88,7 +88,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 	}
 	switchutility.ClearDirections()
 	//print in colunns
-	switchutility.PrintColumns(rows, cols, atline, list, background, foreground)
+	switchutility.PrintColumns(rows, cols, atline, list, chosen, background, foreground)
 
 	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
 
@@ -98,7 +98,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select up
-			atlines, run, err := switchutility.UP(atline, rows, cols, background, foreground, list)
+			atlines, run, err := switchutility.UP(atline, rows, cols, background, foreground, list, chosen)
 			//keep listening
 
 			atline = atlines
@@ -108,7 +108,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select down
-			atlines, run, err := switchutility.Down(linecount, atline, rows, cols, background, foreground, list)
+			atlines, run, err := switchutility.Down(linecount, atline, rows, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
@@ -116,7 +116,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select right
-			atlines, run, err := switchutility.Right(linecount, atline, rows, cols, background, foreground, list)
+			atlines, run, err := switchutility.Right(linecount, atline, rows, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
@@ -124,17 +124,23 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select left
-			atlines, run, err := switchutility.Left(linecount, atline, rows, cols, background, foreground, list)
+			atlines, run, err := switchutility.Left(linecount, atline, rows, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
 		case "e": //choose another
-			ans = append(ans, list[atline])
-			fmt.Println("chosen: ", ans)
+			chosen = append(chosen, list[atline])
+			fmt.Println("added: ", chosen)
+
+			return false, nil // Return false to continue listening
+		case "r": //removing selection
+			delans := switchutility.Delete(chosen, list[atline])
+			chosen = delans
+			fmt.Println("removed: ", list[atline])
 			return false, nil // Return false to continue listening
 
 		case "enter": //enter
-			ans = append(ans, list[atline])
+			chosen = append(chosen, list[atline])
 
 			return true, nil
 		case "q", "esc", "c", "ctrl+c": //to quit
@@ -151,7 +157,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 	if err != nil {
 		fmt.Println(err)
 	}
-	return ans
+	return chosen
 
 }
 
@@ -160,7 +166,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 	linecount := len(list)
 	var ans string
 	rows := (len(list) + cols - 1) / cols
-	//var results []string
+	var chosen []string //not needed but didnt want to rewrite all the arrow functions
 
 	// init map
 	lines := make(map[int]string)
@@ -171,7 +177,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 	}
 	switchutility.ClearDirections()
 	//print in colunns
-	switchutility.PrintColumns(rows, cols, atline, list, background, foreground)
+	switchutility.PrintColumnsWChosen(rows, cols, atline, list, background, foreground)
 
 	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
 
@@ -181,7 +187,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select up
-			atlines, run, err := switchutility.UP(atline, rows, cols, background, foreground, list)
+			atlines, run, err := switchutility.UP(atline, rows, cols, background, foreground, list, chosen)
 			//keep listening
 
 			atline = atlines
@@ -191,7 +197,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select down
-			atlines, run, err := switchutility.Down(linecount, atline, rows, cols, background, foreground, list)
+			atlines, run, err := switchutility.Down(linecount, atline, rows, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
@@ -199,7 +205,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select right
-			atlines, run, err := switchutility.Right(linecount, atline, rows, cols, background, foreground, list)
+			atlines, run, err := switchutility.Right(linecount, atline, rows, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
@@ -207,7 +213,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select left
-			atlines, run, err := switchutility.Left(linecount, atline, rows, cols, background, foreground, list)
+			atlines, run, err := switchutility.Left(linecount, atline, rows, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 

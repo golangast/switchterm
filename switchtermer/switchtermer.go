@@ -29,7 +29,6 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	switchutility.Directions()
 
 	answer := DigSingle(lists, 1, "green", "red")
-	fmt.Println("ans : ", answer)
 
 	switch answer {
 	case "search":

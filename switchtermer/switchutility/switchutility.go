@@ -51,7 +51,7 @@ func ClearDirections() {
 
 func Directions() {
 	fmt.Print("\033[H\033[2J")
-	fmt.Println("Do you want to search for a command? or select a command?")
+	fmt.Println("")
 }
 
 func PrintColumns(rows, cols, atline int, list []string, background, foreground string) {

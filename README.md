@@ -8,7 +8,7 @@
 ![Go 100%](https://img.shields.io/badge/Go-100%25-blue)
 ![status beta](https://img.shields.io/badge/Status-Beta-red)
 
-## goservershell
+
   - [switchterm](#switchterm)
   - [General info](#general-info)
   - [Why build this?](#why-build-this)

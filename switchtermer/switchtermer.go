@@ -2,15 +2,18 @@ package switchtermer
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"atomicgo.dev/keyboard"
 	"atomicgo.dev/keyboard/keys"
+	"github.com/golangast/switchterm/configure"
 	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
 // takes in a list of strings and then lets you select search or select
 func SwitchCol(list []string, cols int, background, foreground string) []string {
+
 	var atline int                        //to know what line you are on
 	rows := (len(list) + cols - 1) / cols //rows
 	var results []string                  // append to results
@@ -23,7 +26,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 		lines[i] = item
 	}
 	//commands available
-	lists := []string{"search", "select"}
+	lists := []string{"search", "select", "add"}
 
 	//print directions
 	switchutility.Directions()
@@ -67,6 +70,16 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	case "select":
 		answers := Dig(list, cols, background, foreground)
 		return answers
+	case "add":
+		var arg string
+		fmt.Println("add a commnd..")
+
+		_, err := fmt.Scanf("%s\n", &arg)
+		if err != nil {
+			fmt.Println(err)
+		}
+		configure.AddCommand(arg)
+
 	}
 
 	return results
@@ -77,8 +90,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 	linecount := len(list)
 	var chosen []string
 	rows := (len(list) + cols - 1) / cols
-	//var results []string
-
+	var remove bool
 	// init map
 	lines := make(map[int]string)
 
@@ -131,14 +143,30 @@ func Dig(list []string, cols int, background, foreground string) []string {
 		case "e": //choose another
 			chosen = append(chosen, list[atline])
 			fmt.Println("added: ", chosen)
+			remove = false
 
 			return false, nil // Return false to continue listening
 		case "r": //removing selection
-			delans := switchutility.Delete(chosen, list[atline])
-			chosen = delans
-			fmt.Println("removed: ", list[atline])
+			remove = true
+			chosen = append(chosen, list[atline])
 			return false, nil // Return false to continue listening
+		case "x": //removing selection
+			chosen = append(chosen, list[atline])
+			for _, v := range chosen {
+				fmt.Println("running...: ", v)
+				out, errout, err := switchutility.Shellout(v)
+				if err != nil {
+					fmt.Println("error: ", err)
+				}
+				if errout != "" {
+					fmt.Println("error: ", errout)
+				}
+				fmt.Println("out: ", out)
+			}
+			fmt.Println("ran: ", chosen)
+			remove = false
 
+			return false, nil // Return false to continue listening
 		case "enter": //enter
 			chosen = append(chosen, list[atline])
 
@@ -157,6 +185,18 @@ func Dig(list []string, cols int, background, foreground string) []string {
 	if err != nil {
 		fmt.Println(err)
 	}
+	if remove == true {
+		//remove chosen from list
+		for _, v := range list {
+			index := slices.Index(list, v)
+			if index > -1 {
+				list = append(list[:index], list[index+1:]...)
+			}
+		}
+		configure.RemoveCommand(list)
+		fmt.Println("removed: ", list)
+	}
+	remove = false
 	return chosen
 
 }

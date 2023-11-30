@@ -31,13 +31,14 @@ This project is a command line selection tool
 
 
 ## What does it do?
-* lets you select multiple commands
+* lets you select multiple commands and run them
 
 
 
 ## Technologies
 Project is created with:
 * [atomicgo.dev/keyboard](https://atomicgo.dev/keyboard) - For pressing keys
+* [spf13/viper](https://github.com/spf13/viper) - Basically for keeping state
 
 
 ## Requirements
@@ -56,6 +57,13 @@ Project is created with:
 
 ## Things to remember
 * using atomicgo.dev/keyboard there is no way to call itself after a key press
+
+## Reference Commands
+* enter is to select
+* e is to select many
+* r is to remove
+* x is to execute
+* q is to quit
 
 
 

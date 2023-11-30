@@ -1,7 +1,10 @@
 package switchutility
 
 import (
+	"bytes"
 	"fmt"
+	"os/exec"
+	"runtime"
 	"slices"
 
 	"github.com/golangast/switchterm/switchtermer/colortermer"
@@ -109,46 +112,20 @@ func PrintColumnsWChosen(rows, cols, atline int, list []string, background, fore
 
 	}
 }
-func Delete[T comparable](collection []T, el T) []T {
-	idx := Find(collection, el)
-	if idx > -1 {
-		return slices.Delete(collection, idx, idx+1)
-	}
-	return collection
-}
 
-func Find[T comparable](collection []T, el T) int {
-	for i := range collection {
-		if collection[i] == el {
-			return i
-		}
-	}
-	return -1
-}
+func Shellout(command string) (string, string, error) {
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
 
-func contains(s []string, e string) bool {
-	for _, a := range s {
-		if a == e {
-			return true
-		}
-	}
-	return false
-}
-
-func diff(a, b []string) []string {
-	temp := map[string]int{}
-	for _, s := range a {
-		temp[s]++
-	}
-	for _, s := range b {
-		temp[s]--
+	var cmd *exec.Cmd
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/C", command)
+	} else {
+		cmd = exec.Command("bash", "-c", command)
 	}
 
-	var result []string
-	for s, v := range temp {
-		if v != 0 {
-			result = append(result, s)
-		}
-	}
-	return result
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	return stdout.String(), stderr.String(), err
 }

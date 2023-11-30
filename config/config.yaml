@@ -1,0 +1,9 @@
+cmd:
+    basic:
+        cmds:
+            - pwd
+            - ls
+            - tree
+
+
+

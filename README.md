@@ -17,6 +17,7 @@
   - [Requirements](#requirements)
   - [Repository overview](#repository-overview)
   - [Things to remember](#things-to-remember)
+  - [Reference Commands](#reference-commands)
   - [Special thanks](#special-thanks)
 
 
@@ -44,10 +45,34 @@ Project is created with:
 ## Requirements
 * go 1.21 for gonew
 
+## How to run as is?
+*1. install the library
+```bash
+go get github.com/golangast/switchterm
+```
+*2. do mod tidy/vendor
+```bash
+go mod tidy && go mod vendor
+```
+*3. do mod tidy/vendor
+```bash
+go mod tidy && go mod vendor
+```
 
+
+*1. install gonew to pull down project quickly
+```bash
+go install golang.org/x/tools/cmd/gonew@latest
+```
+*2. run gonew
+```bash
+gonew github.com/golangast/switchterm example.com/switchterm
+```
 
 ## Repository overview
 ```bash
+├── switchtermer [folder for functions]
+├── configure [folder for config utility functions]
 ├── switchtermer [folder for functions]
 │   ├── colortermer [file for coloring selections]
 │   ├── switchutility [file for selection functions]
@@ -59,11 +84,11 @@ Project is created with:
 * using atomicgo.dev/keyboard there is no way to call itself after a key press
 
 ## Reference Commands
-* enter is to select
-* e is to select many
-* r is to remove
-* x is to execute
-* q is to quit
+* "enter" is to select
+* "e" is to select many
+* "r" is to remove
+* "x" is to execute
+* "q" is to quit
 
 
 

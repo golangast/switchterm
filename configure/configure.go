@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"strings"
 
+	ff "github.com/golangast/gentil/utility/ff"
+	temp "github.com/golangast/gentil/utility/temp"
+	config "github.com/golangast/switchterm/configure/templates/config"
 	"github.com/spf13/viper"
 )
 
@@ -12,6 +15,18 @@ type Config struct {
 	File string
 }
 
+func GenConfig() {
+	sfile, err := ff.Filefolder("./config", "config.yaml")
+	if err != nil {
+		fmt.Print(err)
+	}
+
+	/* write to files*/
+	temp.Writetemplate(config.Configtemp, sfile, nil)
+	if err != nil {
+		fmt.Print(err)
+	}
+}
 func LoadConfig() []string {
 	viper.SetConfigName("config")     // name of config file (without extension)
 	viper.SetConfigType("yaml")       // REQUIRED if the config file does not have the extension in the name

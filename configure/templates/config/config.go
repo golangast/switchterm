@@ -6,5 +6,5 @@ var Configtemp = `` +
         cmds:
             - pwd
             - ls
-            - tree
+            - top
 `

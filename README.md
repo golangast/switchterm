@@ -23,7 +23,8 @@
 
 
 ## General info
-This project is a command line selection tool
+This project is a command line selection tool.
+It also generates the config for storing the commands
 
 
 ## Why build this?
@@ -54,9 +55,9 @@ go get github.com/golangast/switchterm
 ```bash
 go mod tidy && go mod vendor
 ```
-*3. do mod tidy/vendor
+*3. run the program
 ```bash
-go mod tidy && go mod vendor
+go run .
 ```
 
 

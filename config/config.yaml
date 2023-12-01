@@ -3,7 +3,4 @@ cmd:
         cmds:
             - pwd
             - ls
-            - tree
-
-
-
+            - top

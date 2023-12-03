@@ -1,11 +1,15 @@
 package main
 
-"github.com/golangast/switchterm/configure"
-"github.com/golangast/switchterm/switchtermer"
+import (
+	"fmt"
+
+	"github.com/golangast/switchterm/configure"
+	"github.com/golangast/switchterm/switchtermer"
+)
 
 func main() {
 
-	configure.GenConfigure()
+	//configure.GenConfigure()
 
 	//commands
 	cmds := configure.LoadConfig()

@@ -10,7 +10,7 @@
             "request": "launch",
             // "debugAdapter": "dlv-dap",
             "mode": "auto",
-            "program": "${workspaceFolder}/examples",
+            "program": "${workspaceFolder}",
             "env": {},
             // "args": [
             //     "test"

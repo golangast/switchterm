@@ -187,12 +187,14 @@ func Dig(list []string, cols int, background, foreground string) []string {
 	}
 	if remove == true {
 		//remove chosen from list
-		for _, v := range list {
-			index := slices.Index(list, v)
+		for _, item := range chosen {
+
+			index := slices.Index(list, item)
 			if index > -1 {
 				list = append(list[:index], list[index+1:]...)
 			}
 		}
+
 		configure.RemoveCommand(list)
 		fmt.Println("removed: ", list)
 	}

@@ -3,4 +3,3 @@ cmd:
         cmds:
             - pwd
             - ls
-            - top

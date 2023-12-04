@@ -1,351 +1,159 @@
-// package user
+package tags
 
-// import (
-// 	"context"
-// 	"database/sql"
-// 	"fmt"
-// 	"time"
+import (
+	"context"
+	"database/sql"
+	"fmt"
 
-// 	"github.com/go-playground/validator"
-// 	"github.com/golangast/goservershell/internal/dbsql/dbconn"
-// 	"github.com/golangast/goservershell/internal/security/cookies"
-// 	"github.com/golangast/goservershell/internal/security/crypt"
-// 	"github.com/golangast/goservershell/internal/security/jwt"
-// 	"github.com/labstack/echo/v4"
-// )
+	"github.com/golangast/switchterm/db/sqlite/dbconn"
+)
 
-// func (u *Users) Exists() error {
-// 	var exists bool
-// 	db, err := dbconn.DbConnection()
-// 	if err != nil {
-// 		return err
-// 	}
-// 	stmts := db.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM users WHERE email=?)", u.Email)
-// 	err = stmts.Scan(&exists)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	db.Close()
+func (t *Tags) Exists() error {
+	var exists bool
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		return err
+	}
+	stmts := db.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM users WHERE email=?)", t.CMD)
+	err = stmts.Scan(&exists)
+	if err != nil {
+		return err
+	}
+	db.Close()
 
-// 	return nil
+	return nil
 
-// }
-// func Exists(email, password, sitetoken string) (bool, error) {
-// 	var passwordhash string
-// 	db, err := dbconn.DbConnection()
-// 	if err != nil {
-// 		return false, err
-// 	}
+}
+func Exists(cmd string) (bool, error) {
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		return false, err
+	}
 
-// 	stmts := db.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM users WHERE email=? AND sitetoken=?)", email, sitetoken)
-// 	err = stmts.Scan(&passwordhash)
-// 	if err != nil {
-// 		return false, err
-// 	}
+	stmts := db.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM tags WHERE cmd=?)", cmd)
+	err = stmts.Scan(&cmd)
+	if err != nil {
+		return false, err
+	}
 
-// 	err = crypt.CheckPassword([]byte(passwordhash), []byte(password))
-// 	if err != nil {
-// 		return false, err
-// 	}
+	db.Close()
 
-// 	db.Close()
+	return true, nil
 
-// 	return true, nil
+}
+func (t *Tags) Create() error {
 
-// }
-// func (u *Users) CheckLogin(c echo.Context, email, sitetokens, passwordraw string) (error, string) {
-// 	db, err := dbconn.DbConnection()
-// 	if err != nil {
-// 		return err, "wrong input"
-// 	}
-// 	var exists string
-// 	ctx, cancel := context.WithTimeout(context.Background(), 56666*time.Millisecond)
-// 	defer cancel()
-// 	stmts := db.QueryRowContext(ctx, "SELECT EXISTS(SELECT 1 FROM users WHERE email=? AND sitetoken=? AND passwordraw=?)", email, sitetokens, passwordraw)
-// 	err = stmts.Scan(&exists)
-// 	if err != nil {
-// 		return err, "wrong input"
-// 	}
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		return err
+	}
+	// Create a statement to insert data into the `users` table.
+	stmt, err := db.PrepareContext(context.Background(), "INSERT INTO `tags` (`id`, `cmd`, `note`, `tag`) VALUES (?, ?,?, ?)")
+	if err != nil {
+		panic(err)
+	}
+	defer stmt.Close()
 
-// 	if exists == "0" {
-// 		return err, "wrong input"
-// 	} else {
-// 		u, err := u.GetUserByEmail(email, sitetokens)
-// 		if err != nil {
-// 			return err, "wrong input"
-// 		}
+	// Insert data into the `users` table.
+	_, err = stmt.ExecContext(context.Background(), t.ID, t.CMD, t.Note, t.Tag)
+	if err != nil {
+		panic(err)
+	}
 
-// 		err = crypt.CheckPassword([]byte(u.PasswordHash), []byte(u.PasswordRaw))
-// 		if err != nil {
-// 			return err, "wrong input"
-// 		}
+	db.Close()
+	return nil
+}
 
-// 		cookie, err := cookies.ReadCookie(c, u.SessionName)
-// 		if err != nil {
-// 			return err, "wrong input"
-// 		}
+func (tags *Tags) GetCMD(cmd string) (Tags, error) {
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		fmt.Println(err)
+		return *tags, err
+	}
+	var (
+		id   string
+		note string
+		tag  string
+		t    Tags
+	)
 
-// 		fmt.Println(u)
-// 		if cookie.Name != u.SessionName && cookie.Value != u.SessionKey {
-// 			return err, "wrong input"
-// 		}
+	//get from database
+	stmt, err := db.Prepare("SELECT * FROM tags WHERE cmd = ?")
+	if err != nil {
+		return t, err
+	}
+	err = stmt.QueryRow(cmd).Scan(&id, &cmd, &note, &tag)
+	if err != nil {
+		return t, err
+	}
+	t = Tags{ID: id, CMD: cmd, Note: note, Tag: tag}
+	defer db.Close()
+	defer stmt.Close()
+	switch err {
+	case sql.ErrNoRows:
+		fmt.Println("No rows were returned!")
+		// close db when not in use
+		return t, nil
 
-// 		//header
-// 		hkey := c.Response().Header().Get("headerkey")
+	case nil:
+		fmt.Println("nil!!!!!!!!!!!!")
 
-// 		crypt.CheckPassword([]byte(hkey), []byte("goservershell"))
+		// close db when not in use
+		return t, nil
 
-// 		db.Close()
+	default:
 
-// 		return nil, ""
-// 	}
+		fmt.Println("default!!!!!!!!!!!!")
 
-// }
-// func (u *Users) CheckUser(c echo.Context, email, sitetokens string) (error, string) {
-// 	db, err := dbconn.DbConnection()
-// 	if err != nil {
-// 		return err, "wrong input"
-// 	}
-// 	var exists string
-// 	ctx, cancel := context.WithTimeout(context.Background(), 56666*time.Millisecond)
-// 	defer cancel()
-// 	stmts := db.QueryRowContext(ctx, "SELECT EXISTS(SELECT 1 FROM users WHERE email=? AND sitetoken=?)", email, sitetokens)
-// 	err = stmts.Scan(&exists)
-// 	if err != nil {
-// 		return err, "wrong input"
-// 	}
+		return t, nil
+	}
 
-// 	if exists == "0" {
-// 		return err, "wrong input"
-// 	} else {
-// 		u, err := u.GetUserByEmail(email, sitetokens)
-// 		if err != nil {
-// 			return err, "wrong input"
-// 		}
+}
 
-// 		err = crypt.CheckPassword([]byte(u.PasswordHash), []byte(u.PasswordRaw))
-// 		if err != nil {
-// 			return err, "wrong input"
-// 		}
+// https://golangbot.com/mysql-select-single-multiple-rows/
+func (tags Tags) GetCMDByTag(tag string) (Tags, error) {
+	var (
+		id   string
+		cmd  string
+		note string
+		t    Tags
+	)
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		return t, err
+	}
 
-// 		cookie, err := cookies.ReadCookie(c, u.SessionName)
-// 		if err != nil {
-// 			return err, "wrong input"
-// 		}
+	//get from database
+	stmt, err := db.Prepare("SELECT * FROM tags WHERE tag = ?")
+	if err != nil {
+		return t, err
+	}
+	err = stmt.QueryRow(tag).Scan(&id, &cmd, &note, &tag)
+	if err != nil {
+		return t, err
+	}
+	t = Tags{ID: id, CMD: cmd, Note: note, Tag: tag}
+	defer db.Close()
+	defer stmt.Close()
+	switch err {
+	case sql.ErrNoRows:
+		fmt.Println("No rows were returned!")
+		return t, nil
 
-// 		fmt.Println(u)
-// 		if cookie.Name != u.SessionName && cookie.Value != u.SessionKey {
-// 			return err, "wrong input"
-// 		}
+	case nil:
+		fmt.Println("was nil !!!!!!!!!!!!!", tag)
+		return t, nil
 
-// 		//header
-// 		hkey := c.Response().Header().Get("headerkey")
+	default:
+		fmt.Println("default!!!!!!!!!!!!")
+		return t, nil
+	}
 
-// 		crypt.CheckPassword([]byte(hkey), []byte("goservershell"))
+}
 
-// 		db.Close()
-
-// 		return nil, ""
-// 	}
-
-// }
-// func (u *Users) Create() error {
-
-// 	db, err := dbconn.DbConnection()
-// 	if err != nil {
-// 		return err
-// 	}
-// 	// Create a statement to insert data into the `users` table.
-// 	stmt, err := db.PrepareContext(context.Background(), "INSERT INTO `users` (`email`, `passwordhash`, `passwordraw`, `isdisabled`, `sessionkey`, `sessionname`,  `sessiontoken`, `sitetoken`) VALUES (?, ?,?, ?,?,?, ?, ?)")
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	defer stmt.Close()
-
-// 	// Insert data into the `users` table.
-// 	_, err = stmt.ExecContext(context.Background(), u.Email, u.PasswordHash, u.PasswordRaw, "true", u.SessionKey, u.SessionName, u.SessionToken, u.SiteToken)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	db.Close()
-// 	return nil
-// }
-
-// func (u *Users) JWT() error {
-// 	t, err := jwt.CreateJWT(u.SessionName, u.SessionKey)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	u.SessionToken = t
-// 	return nil
-// }
-// func (u *Users) SessionKeys(c echo.Context) error {
-// 	err := cookies.WriteCookie(c, u.SessionName, u.SessionKey)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
-
-// // ValidateValuer implements validator.CustomTypeFunc
-// func (users *Users) Validate(user *Users) error {
-
-// 	// use a single instance of Validate, it caches struct info
-// 	//var validate *validator.Validate
-
-// 	validate := validator.New()
-
-// 	// returns InvalidValidationError for bad validation input, nil or ValidationErrors ( []FieldError )
-// 	err := validate.Struct(user)
-// 	if err != nil {
-// 		if _, ok := err.(*validator.InvalidValidationError); ok {
-// 			fmt.Println(err)
-// 			return err
-// 		}
-
-// 		fmt.Println("------ List of tag fields with error ---------")
-
-// 		for _, err := range err.(validator.ValidationErrors) {
-// 			fmt.Println(err.StructField())
-// 			fmt.Println(err.ActualTag())
-// 			fmt.Println(err.Kind())
-// 			fmt.Println(err.Value())
-// 			fmt.Println(err.Param())
-// 			fmt.Println("---------------")
-// 		}
-
-// 	}
-// 	return nil
-// 	// save user to database
-// }
-
-// func (user *Users) GetUser(id, idkey string) (Users, error) {
-// 	db, err := dbconn.DbConnection()
-// 	if err != nil {
-// 		return *user, err
-// 	}
-// 	var (
-// 		email        string
-// 		passwordhash string
-// 		isdisabled   string
-// 		sessionkey   string
-// 		sessionname  string
-// 		sessiontoken string
-// 		sitetoken    string
-// 		u            Users
-// 	)
-
-// 	//get from database
-// 	stmt, err := db.Prepare("SELECT * FROM users WHERE id = ? AND SiteToken = ?")
-// 	if err != nil {
-// 		return u, err
-// 	}
-// 	err = stmt.QueryRow(id, idkey).Scan(email, passwordhash, isdisabled, sessionkey, sessionname, sessiontoken, sitetoken)
-// 	if err != nil {
-// 		return u, err
-// 	}
-// 	u = Users{ID: id, Email: email, PasswordHash: passwordhash, Isdisabled: isdisabled, SessionKey: sessionkey, SessionName: sessionname, SessionToken: sessiontoken, SiteToken: sitetoken}
-// 	defer db.Close()
-// 	defer stmt.Close()
-// 	switch err {
-// 	case sql.ErrNoRows:
-// 		fmt.Println("No rows were returned!")
-// 		// close db when not in use
-// 		return u, nil
-
-// 	case nil:
-// 		fmt.Println("nil!!!!!!!!!!!!")
-
-// 		// close db when not in use
-// 		return u, nil
-
-// 	default:
-
-// 		fmt.Println("default!!!!!!!!!!!!")
-
-// 		return u, nil
-// 	}
-
-// }
-
-// // https://golangbot.com/mysql-select-single-multiple-rows/
-// func (user Users) GetUserByEmail(email, idkey string) (Users, error) {
-// 	// ctx, cancelfunc := context.WithTimeout(context.Background(), 500*time.Second)
-// 	// defer cancelfunc()
-// 	var (
-// 		id           string
-// 		passwordhash string
-// 		passwordraw  string
-// 		isdisabled   string
-// 		sessionkey   string
-// 		sessionname  string
-// 		sessiontoken string
-// 		sitetoken    string
-// 		u            Users
-// 	)
-// 	db, err := dbcon.DbConnection()
-// 	if err != nil {
-// 		return u, err
-// 	}
-
-// 	//get from database
-// 	stmt, err := db.Prepare("SELECT * FROM cmd WHERE email = ? AND sitetoken = ?")
-// 	if err != nil {
-// 		return u, err
-// 	}
-// 	err = stmt.QueryRow(email, idkey).Scan(&id, &email, &passwordhash, &passwordraw, &isdisabled, &sessionkey, &sessionname, &sessiontoken, &sitetoken)
-// 	if err != nil {
-// 		return u, err
-// 	}
-// 	u = Users{ID: id, Email: email, PasswordHash: passwordhash, Isdisabled: isdisabled, SessionKey: sessionkey, SessionName: sessionname, SessionToken: sessiontoken, SiteToken: sitetoken}
-// 	defer db.Close()
-// 	defer stmt.Close()
-// 	switch err {
-// 	case sql.ErrNoRows:
-// 		fmt.Println("No rows were returned!")
-// 		// close db when not in use
-// 		return u, nil
-
-// 	case nil:
-// 		fmt.Println("was nil !!!!!!!!!!!!!", email)
-
-// 		// close db when not in use
-// 		return u, nil
-
-// 	default:
-
-// 		fmt.Println("default!!!!!!!!!!!!")
-
-// 		return u, nil
-// 	}
-
-// }
-
-// func (user Tags) SetUserSitetoken(sitetoken string) error {
-// 	//opening database
-// 	db, err := dbcon.DbConnection()
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	//prepare statement so that no sql injection
-// 	stmt, err := db.Prepare("update cmd set sitetoken=?")
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	//execute qeury
-// 	_, err = stmt.Exec(sitetoken)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	return nil
-// }
-
-// type Tags struct {
-// 	ID    string `param:"id" query:"id" form:"id" json:"id" xml:"id"`
-// 	CMD   string `valid:"type(string),required" param:"cmd" query:"cmd" form:"cmd" json:"cmd" xml:"cmd" validate:"required,cmd" mod:"trim"`
-// 	Notes string `valid:"type(string),required" param:"notes" query:"notes" form:"notes" json:"notes" xml:"notes"`
-// 	Tags  string `valid:"type(string)" param:"tags" query:"tags" form:"tags" json:"tags" xml:"tags" validate:"required" mod:"trim"`
-// }
+type Tags struct {
+	ID   string `param:"id" query:"id" form:"id" json:"id" xml:"id"`
+	CMD  string `valid:"type(string),required" param:"cmd" query:"cmd" form:"cmd" json:"cmd" xml:"cmd" validate:"required,cmd" mod:"trim"`
+	Note string `valid:"type(string),required" param:"note" query:"note" form:"note" json:"note" xml:"note"`
+	Tag  string `valid:"type(string)" param:"tag" query:"tag" form:"tag" json:"tag" xml:"tag" validate:"required" mod:"trim"`
+}

@@ -1,4 +1,4 @@
-package dbcon
+package dbconn
 
 import (
 	"database/sql"
@@ -8,13 +8,12 @@ import (
 	_ "modernc.org/sqlite"
 )
 
-const file string = "./data.db"
+const file string = "./db/data.db"
 
 func DbConnection() (*sql.DB, error) {
-	fmt.Println(file)
-
 	db, err := sql.Open("sqlite", file)
 	if err != nil {
+		fmt.Println("Error opening", file, err)
 		return nil, err
 	}
 	db.SetMaxOpenConns(20)

@@ -34,6 +34,9 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	answer := DigSingle(lists, 1, "green", "red")
 
 	switch answer {
+
+	case "state":
+
 	case "search":
 
 		var letters string

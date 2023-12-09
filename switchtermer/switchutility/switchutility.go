@@ -10,40 +10,46 @@ import (
 	"github.com/golangast/switchterm/switchtermer/colortermer"
 )
 
-func UP(atline, rows, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+func UP(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
 	if atline >= 1 {
 		atline--
 	}
-	PrintColumns(rows, cols, atline, list, chosen, background, foreground)
+	PrintColumns(cols, atline, list, chosen, background, foreground)
 
 	return atline, false, nil
 }
 
-func Down(linecount, atline, rows, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+func Down(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+	linecount := len(list)
+
 	if atline <= linecount-2 {
 		atline++
 	}
-	PrintColumns(rows, cols, atline, list, chosen, background, foreground)
+	PrintColumns(cols, atline, list, chosen, background, foreground)
 
 	return atline, false, nil
 
 }
-func Right(linecount, atline, rows, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+func Right(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+	linecount := len(list)
+	rows := (len(list) + cols - 1) / cols
 	if atline <= linecount-rows {
 		atline = atline + rows
 	}
 
-	PrintColumns(rows, cols, atline, list, chosen, background, foreground)
+	PrintColumns(cols, atline, list, chosen, background, foreground)
 
 	return atline, false, nil
 
 }
 
-func Left(linecount, atline, rows, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+func Left(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+	rows := (len(list) + cols - 1) / cols
+
 	if atline >= rows {
 		atline = atline - rows
 	}
-	PrintColumns(rows, cols, atline, list, chosen, background, foreground)
+	PrintColumns(cols, atline, list, chosen, background, foreground)
 
 	return atline, false, nil
 
@@ -58,7 +64,8 @@ func Directions() {
 	fmt.Println("")
 }
 
-func PrintColumns(rows, cols, atline int, list, chosen []string, background, foreground string) {
+func PrintColumns(cols, atline int, list, chosen []string, background, foreground string) {
+	rows := (len(list) + cols - 1) / cols
 
 	for row := 0; row < rows; row++ {
 
@@ -90,7 +97,9 @@ func PrintColumns(rows, cols, atline int, list, chosen []string, background, for
 	}
 }
 
-func PrintColumnsWChosen(rows, cols, atline int, list []string, background, foreground string) {
+func PrintColumnsWChosen(cols, atline int, list []string, background, foreground string) {
+	rows := (len(list) + cols - 1) / cols
+
 	for row := 0; row < rows; row++ {
 
 		for col := 0; col < cols; col++ {

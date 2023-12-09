@@ -8,15 +8,14 @@ import (
 	"atomicgo.dev/keyboard"
 	"atomicgo.dev/keyboard/keys"
 	"github.com/golangast/switchterm/configure"
+	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
 // takes in a list of strings and then lets you select search or select
 func SwitchCol(list []string, cols int, background, foreground string) []string {
-
-	var atline int                        //to know what line you are on
-	rows := (len(list) + cols - 1) / cols //rows
-	var results []string                  // append to results
+	var atline int       //to know what line you are on
+	var results []string // append to results
 
 	// init map
 	lines := make(map[int]string) // to cycle through lines
@@ -34,8 +33,6 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	answer := DigSingle(lists, 1, "green", "red")
 
 	switch answer {
-
-	case "state":
 
 	case "search":
 
@@ -62,7 +59,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 				cols = 1
 			}
 			// print in colunns
-			switchutility.PrintColumnsWChosen(rows, cols, atline, results, background, foreground)
+			switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 
 			list = results
 			answers := Dig(list, cols, background, foreground)
@@ -74,14 +71,32 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 		answers := Dig(list, cols, background, foreground)
 		return answers
 	case "add":
-		var arg string
+		var cmd string
 		fmt.Println("add a commnd..")
-
-		_, err := fmt.Scanf("%s\n", &arg)
+		_, err := fmt.Scanf("%s", &cmd)
 		if err != nil {
 			fmt.Println(err)
 		}
-		configure.AddCommand(arg)
+		var note string
+		fmt.Println("add a note..")
+		_, err = fmt.Scanf("%s", &note)
+		if err != nil {
+			fmt.Println(err)
+		}
+		var tag string
+		fmt.Println("add a tag..")
+		_, err = fmt.Scanln(tag)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println("add a fdsf..")
+
+		_, err = fmt.Scanln(tag)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(cmd, note, tag)
+		tags.Create(cmd, note, tag)
 
 	}
 
@@ -89,21 +104,15 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 }
 
 func Dig(list []string, cols int, background, foreground string) []string {
-	var atline int
-	linecount := len(list)
-	var chosen []string
-	rows := (len(list) + cols - 1) / cols
-	var remove bool
-	// init map
-	lines := make(map[int]string)
+	var (
+		atline int
+		chosen []string
+		remove bool
+	)
 
-	// load values into map
-	for i, item := range list {
-		lines[i] = item
-	}
 	switchutility.ClearDirections()
 	//print in colunns
-	switchutility.PrintColumns(rows, cols, atline, list, chosen, background, foreground)
+	switchutility.PrintColumns(cols, atline, list, chosen, background, foreground)
 
 	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
 
@@ -113,7 +122,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select up
-			atlines, run, err := switchutility.UP(atline, rows, cols, background, foreground, list, chosen)
+			atlines, run, err := switchutility.UP(atline, cols, background, foreground, list, chosen)
 			//keep listening
 
 			atline = atlines
@@ -123,7 +132,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select down
-			atlines, run, err := switchutility.Down(linecount, atline, rows, cols, background, foreground, list, chosen)
+			atlines, run, err := switchutility.Down(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
@@ -131,7 +140,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select right
-			atlines, run, err := switchutility.Right(linecount, atline, rows, cols, background, foreground, list, chosen)
+			atlines, run, err := switchutility.Right(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
@@ -139,7 +148,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select left
-			atlines, run, err := switchutility.Left(linecount, atline, rows, cols, background, foreground, list, chosen)
+			atlines, run, err := switchutility.Left(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
@@ -188,16 +197,16 @@ func Dig(list []string, cols int, background, foreground string) []string {
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	//if remove is true then remove the chosen
 	if remove == true {
 		//remove chosen from list
 		for _, item := range chosen {
-
 			index := slices.Index(list, item)
 			if index > -1 {
 				list = append(list[:index], list[index+1:]...)
 			}
 		}
-
 		configure.RemoveCommand(list)
 		fmt.Println("removed: ", list)
 	}
@@ -207,22 +216,14 @@ func Dig(list []string, cols int, background, foreground string) []string {
 }
 
 func DigSingle(list []string, cols int, background, foreground string) string {
-	var atline int
-	linecount := len(list)
-	var ans string
-	rows := (len(list) + cols - 1) / cols
-	var chosen []string //not needed but didnt want to rewrite all the arrow functions
+	var (
+		atline int
+		chosen []string
+		ans    string
+	)
 
-	// init map
-	lines := make(map[int]string)
-
-	// load values into map
-	for i, item := range list {
-		lines[i] = item
-	}
 	switchutility.ClearDirections()
-	//print in colunns
-	switchutility.PrintColumnsWChosen(rows, cols, atline, list, background, foreground)
+	switchutility.PrintColumnsWChosen(cols, atline, list, background, foreground)
 
 	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
 
@@ -232,7 +233,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select up
-			atlines, run, err := switchutility.UP(atline, rows, cols, background, foreground, list, chosen)
+			atlines, run, err := switchutility.UP(atline, cols, background, foreground, list, chosen)
 			//keep listening
 
 			atline = atlines
@@ -242,7 +243,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select down
-			atlines, run, err := switchutility.Down(linecount, atline, rows, cols, background, foreground, list, chosen)
+			atlines, run, err := switchutility.Down(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
@@ -250,7 +251,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select right
-			atlines, run, err := switchutility.Right(linecount, atline, rows, cols, background, foreground, list, chosen)
+			atlines, run, err := switchutility.Right(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 
@@ -258,7 +259,7 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 			//print directions
 			switchutility.ClearDirections()
 			//make it select left
-			atlines, run, err := switchutility.Left(linecount, atline, rows, cols, background, foreground, list, chosen)
+			atlines, run, err := switchutility.Left(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 

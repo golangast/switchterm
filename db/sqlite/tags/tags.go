@@ -41,21 +41,23 @@ func Exists(cmd string) (bool, error) {
 	return true, nil
 
 }
-func (t *Tags) Create() error {
+func Create(cmd, note, tag string) error {
+
+	var id int
 
 	db, err := dbconn.DbConnection()
 	if err != nil {
 		return err
 	}
-	// Create a statement to insert data into the `users` table.
+	// Create a statement to insert data into the `tags` table.
 	stmt, err := db.PrepareContext(context.Background(), "INSERT INTO `tags` (`id`, `cmd`, `note`, `tag`) VALUES (?, ?,?, ?)")
 	if err != nil {
 		panic(err)
 	}
 	defer stmt.Close()
 
-	// Insert data into the `users` table.
-	_, err = stmt.ExecContext(context.Background(), t.ID, t.CMD, t.Note, t.Tag)
+	// Insert data into the `tags` table.
+	_, err = stmt.ExecContext(context.Background(), id, cmd, note, tag)
 	if err != nil {
 		panic(err)
 	}
@@ -106,6 +108,62 @@ func (tags *Tags) GetCMD(cmd string) (Tags, error) {
 		fmt.Println("default!!!!!!!!!!!!")
 
 		return t, nil
+	}
+
+}
+
+func (tags *Tags) GetAll() ([]Tags, error) {
+	var (
+		id   string
+		cmd  string
+		note string
+		tag  string
+		ts   []Tags
+	)
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		fmt.Println(err)
+		return ts, err
+	}
+
+	//get from database
+	rows, err := db.Query("SELECT * FROM tags")
+	if err != nil {
+		fmt.Println(err)
+		return ts, err
+	}
+
+	//cycle through the rows to collect all the data
+	for rows.Next() {
+		err := rows.Scan(&id, &cmd, &note, &tag)
+		if err != nil {
+			fmt.Println(err)
+			return ts, err
+		}
+
+		// //store into memory
+		t := Tags{ID: id, CMD: cmd, Note: note, Tag: tag}
+
+		ts = append(ts, t)
+
+	}
+	//close everything
+	defer rows.Close()
+	defer db.Close()
+	switch err {
+	case sql.ErrNoRows:
+		fmt.Println("No rows were returned!")
+		// close db when not in use
+		return ts, nil
+
+	case nil:
+		fmt.Println("nil!!!!!!!!!!!!")
+		// close db when not in use
+		return ts, nil
+
+	default:
+		fmt.Println("default!!!!!!!!!!!!")
+		return ts, nil
 	}
 
 }

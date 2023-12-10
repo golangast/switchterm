@@ -7,10 +7,12 @@ import (
 	"runtime"
 	"slices"
 
+	"github.com/golangast/switchterm/configure"
 	"github.com/golangast/switchterm/switchtermer/colortermer"
 )
 
 func UP(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+	ClearDirections()
 	if atline >= 1 {
 		atline--
 	}
@@ -20,6 +22,8 @@ func UP(atline, cols int, background, foreground string, list, chosen []string) 
 }
 
 func Down(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+	ClearDirections()
+
 	linecount := len(list)
 
 	if atline <= linecount-2 {
@@ -31,6 +35,8 @@ func Down(atline, cols int, background, foreground string, list, chosen []string
 
 }
 func Right(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+	ClearDirections()
+
 	linecount := len(list)
 	rows := (len(list) + cols - 1) / cols
 	if atline <= linecount-rows {
@@ -44,6 +50,8 @@ func Right(atline, cols int, background, foreground string, list, chosen []strin
 }
 
 func Left(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
+	ClearDirections()
+
 	rows := (len(list) + cols - 1) / cols
 
 	if atline >= rows {
@@ -120,6 +128,38 @@ func PrintColumnsWChosen(cols, atline int, list []string, background, foreground
 		fmt.Println() //yes this needs to be here for padding
 
 	}
+}
+
+func RemoveItemWChosen(remove bool, list, chosen []string) {
+	// if remove is true then remove the chosen
+	if remove == true {
+		//remove chosen from list
+		for _, item := range chosen {
+			index := slices.Index(list, item)
+			if index > -1 {
+				list = append(list[:index], list[index+1:]...)
+			}
+		}
+		configure.RemoveCommand(list)
+		fmt.Println("removed: ", list)
+	}
+	remove = false
+
+}
+
+func RunApps(chosen []string) {
+	for _, v := range chosen {
+		fmt.Println("running...: ", v)
+		out, errout, err := Shellout(v)
+		if err != nil {
+			fmt.Println("error: ", err)
+		}
+		if errout != "" {
+			fmt.Println("error: ", errout)
+		}
+		fmt.Println("out: ", out)
+	}
+	fmt.Println("ran: ", chosen)
 }
 
 func Shellout(command string) (string, string, error) {

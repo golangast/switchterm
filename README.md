@@ -25,12 +25,12 @@
 
 ## General info
 This project is a command line selection tool.
-It also generates the config for storing the commands
+It stores commands in a sqlite database and their tags
 
 
 ## Why build this?
 * Go never changes
-* Wanted a easy quick way to run commands
+* Wanted a easy quick way to run commands and search for them.
 
 
 ## What does it do?
@@ -138,7 +138,11 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 * "x" is to execute
 * "q" is to quit
 
-
+## Licenses
+1. [GNU 3 for my code](https://github.com/golangast/switchterm/blob/main/LICENSE.md)
+2. [MIT License for atomicgo keyboard](https://github.com/atomicgo/keyboard/blob/main/LICENSE)
+3. [BSD-3-Clause for sqlite driver](https://pkg.go.dev/modernc.org/sqlite?tab=licenses) 
+4. [BSD-3-Clause for Go itself](https://github.com/golang/go/blob/master/LICENSE) 
 
 ## Special thanks
 * [Go Team because they are gods](https://github.com/golang/go/graphs/contributors)

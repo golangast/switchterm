@@ -36,7 +36,19 @@ It also generates the config for storing the commands
 ## What does it do?
 * lets you select multiple commands and run them
 
+ <h1 align="center"> Main menu for selection</h1>
+ <p align="center">
 
+<img src="./readmeimages/main.png" alt="Alt text" title="Optional title">
+</p>
+<h1 align="center">Selection menu that is formatted</h1>
+ <p align="center">
+<img src="./readmeimages/selection.png" alt="Alt text" title="Optional title">
+</p>
+<h1 align="center">You can even do search by tag</h1>
+ <p align="center">
+<img src="./readmeimages/searchby.png" alt="Alt text" title="Optional title">
+</p>
 
 ## Technologies
 Project is created with:
@@ -110,6 +122,11 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
          err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
 		switch key.String() {
 ```
+
+
+
+
+
 
 ## Things to remember
 * using atomicgo.dev/keyboard there is no way to call itself after a key press

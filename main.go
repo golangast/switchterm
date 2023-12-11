@@ -10,7 +10,6 @@ import (
 func main() {
 
 	//configure.GenConfigure()
-	t := tags.Tags{}
 	// tt, err := t.GetCMD("ls")
 	// if err != nil {
 	// 	fmt.Println(err)
@@ -19,7 +18,7 @@ func main() {
 	//commands
 	// cmds := configure.LoadConfig()
 
-	tt, err := t.GetAll()
+	tt, err := tags.GetAll()
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -36,37 +36,76 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 
 	case "search":
 
-		var letters string
-		fmt.Println("type first letters you want to search by", "example: `th` and then press enter")
+		//commands available
+		listsearch := []string{"cmd", "tag"}
 
-		n, err := fmt.Scanf("%s\n", &letters)
-		if err != nil || n != 1 {
-			// handle invalid input
-			fmt.Println(n, err)
-		}
-		fmt.Println(letters)
-		//show what was pressed
-		if len(letters) > 1 {
+		//print directions
+		switchutility.Directions()
 
-			for _, s := range list {
+		searchanswer := DigSingle(listsearch, 1, "green", "red")
 
-				if strings.HasPrefix(s, letters) {
-					results = append(results, s)
+		switch searchanswer {
+		case "cmd":
+			var letters string
+			fmt.Println("type first letters you want to search by", "example: `th` and then press enter")
+
+			n, err := fmt.Scanf("%s\n", &letters)
+			if err != nil || n != 1 {
+				// handle invalid input
+				fmt.Println(n, err)
+			}
+			fmt.Println(letters)
+			//show what was pressed
+			if len(letters) > 1 {
+
+				for _, s := range list {
+
+					if strings.HasPrefix(s, letters) {
+						results = append(results, s)
+					}
 				}
+
+				if len(results) < 6 {
+					cols = 1
+				}
+				// print in colunns
+				switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
+
+				list = results
+				answers := Dig(list, cols, background, foreground)
+				return answers
+			} else {
+				fmt.Println("choose another letter")
 			}
 
-			if len(results) < 6 {
-				cols = 1
+		case "tag":
+			var tagcmds []string
+			var selectedtag []string
+			//get all tags
+			tagcmd, err := tags.GetAll()
+			if err != nil {
+				fmt.Println(err)
 			}
-			// print in colunns
-			switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
+			//collect the tags
+			for _, v := range tagcmd {
+				tagcmds = append(tagcmds, v.Tag)
+			}
+			//show them
+			switchutility.PrintColumnsWChosen(cols, atline, tagcmds, background, foreground)
+			//do a selection of tags
+			answers := DigSingle(tagcmds, cols, background, foreground)
+			//get cmd by tag
+			selectedtag, err = tags.GetCMDByTag(answers)
+			if err != nil {
+				fmt.Println(err)
+			}
+			//let the user select cmd from the cmds that were from the tags
+			anstag := Dig(selectedtag, cols, background, foreground)
 
-			list = results
-			answers := Dig(list, cols, background, foreground)
-			return answers
-		} else {
-			fmt.Println("choose another letter")
+			return anstag
+
 		}
+
 	case "select":
 		answers := Dig(list, cols, background, foreground)
 		return answers
@@ -157,7 +196,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 		fmt.Println(err)
 	}
 	//remove item after one has been chosen
-	switchutility.RemoveItemWChosen(remove, list, chosen) //it is this way because you cannot call keyboard.Listen in itself
+	remove = switchutility.RemoveItemWChosen(remove, list, chosen) //it is this way because you cannot call keyboard.Listen in itself
 	return chosen
 }
 

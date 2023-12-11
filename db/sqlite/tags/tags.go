@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
 
 	"github.com/golangast/switchterm/db/sqlite/dbconn"
 )
@@ -66,14 +67,15 @@ func Create(cmd, note, tag string) error {
 	return nil
 }
 
-func (tags *Tags) GetCMD(cmd string) (Tags, error) {
+func GetCMD() (Tags, error) {
 	db, err := dbconn.DbConnection()
 	if err != nil {
 		fmt.Println(err)
-		return *tags, err
+
 	}
 	var (
 		id   string
+		cmd  string
 		note string
 		tag  string
 		t    Tags
@@ -89,6 +91,7 @@ func (tags *Tags) GetCMD(cmd string) (Tags, error) {
 		return t, err
 	}
 	t = Tags{ID: id, CMD: cmd, Note: note, Tag: tag}
+
 	defer db.Close()
 	defer stmt.Close()
 	switch err {
@@ -112,7 +115,7 @@ func (tags *Tags) GetCMD(cmd string) (Tags, error) {
 
 }
 
-func (tags *Tags) GetAll() ([]Tags, error) {
+func GetAll() ([]Tags, error) {
 	var (
 		id   string
 		cmd  string
@@ -169,44 +172,62 @@ func (tags *Tags) GetAll() ([]Tags, error) {
 }
 
 // https://golangbot.com/mysql-select-single-multiple-rows/
-func (tags Tags) GetCMDByTag(tag string) (Tags, error) {
+func GetCMDByTag(tag string) ([]string, error) {
 	var (
-		id   string
+		id   int
 		cmd  string
 		note string
-		t    Tags
+		tt   []string
 	)
 	db, err := dbconn.DbConnection()
 	if err != nil {
-		return t, err
+		return tt, err
 	}
 
-	//get from database
-	stmt, err := db.Prepare("SELECT * FROM tags WHERE tag = ?")
+	rows, err := db.Query("SELECT * FROM tags WHERE tag = ?", tag)
 	if err != nil {
-		return t, err
+		log.Printf("Error %s when preparing SQL statement", err)
+		return tt, err
 	}
-	err = stmt.QueryRow(tag).Scan(&id, &cmd, &note, &tag)
-	if err != nil {
-		return t, err
-	}
-	t = Tags{ID: id, CMD: cmd, Note: note, Tag: tag}
+	defer rows.Close()
 	defer db.Close()
-	defer stmt.Close()
-	switch err {
-	case sql.ErrNoRows:
-		fmt.Println("No rows were returned!")
-		return t, nil
 
-	case nil:
-		fmt.Println("was nil !!!!!!!!!!!!!", tag)
-		return t, nil
+	for rows.Next() {
 
-	default:
-		fmt.Println("default!!!!!!!!!!!!")
-		return t, nil
+		if err := rows.Scan(&id, &cmd, &note, &tag); err != nil {
+			return tt, err
+		}
+		fmt.Println(id, cmd, note, tag)
+		tt = append(tt, cmd)
+	}
+	if err := rows.Err(); err != nil {
+		return tt, err
+	}
+	return tt, nil
+
+}
+
+func DeleteTag(cmd string) error {
+
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		return err
+	}
+	res, err := db.Exec("DELETE FROM tags WHERE cmd =$1", cmd)
+	if err != nil {
+		return err
 	}
 
+	rowsAffected, err := res.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if rowsAffected == 0 {
+		fmt.Println("rows affected were 0!!")
+	}
+
+	return nil
 }
 
 type Tags struct {

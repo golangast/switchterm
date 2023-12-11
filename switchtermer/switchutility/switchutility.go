@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"slices"
 
-	"github.com/golangast/switchterm/configure"
+	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/switchtermer/colortermer"
 )
 
@@ -130,20 +130,21 @@ func PrintColumnsWChosen(cols, atline int, list []string, background, foreground
 	}
 }
 
-func RemoveItemWChosen(remove bool, list, chosen []string) {
+func RemoveItemWChosen(remove bool, list, chosen []string) bool {
 	// if remove is true then remove the chosen
 	if remove == true {
 		//remove chosen from list
 		for _, item := range chosen {
 			index := slices.Index(list, item)
 			if index > -1 {
-				list = append(list[:index], list[index+1:]...)
+				tags.DeleteTag(item)
+				fmt.Println("removed: ", item)
+
 			}
 		}
-		configure.RemoveCommand(list)
-		fmt.Println("removed: ", list)
 	}
-	remove = false
+
+	return false
 
 }
 

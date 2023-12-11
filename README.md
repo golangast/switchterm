@@ -16,6 +16,7 @@
   - [Technologies](#technologies)
   - [Requirements](#requirements)
   - [Repository overview](#repository-overview)
+  - [Overview of the code.](#Overview-of-the-code.)
   - [Things to remember](#things-to-remember)
   - [Reference Commands](#reference-commands)
   - [Special thanks](#special-thanks)
@@ -79,6 +80,36 @@ gonew github.com/golangast/switchterm example.com/switchterm
 │   ├── switchutility [file for selection functions]
 │   └── switchtermer.go [where the service functions are]
 
+```
+## Overview of the code.
+1. allows for the user to select one from multiple values 
+```bash
+answer := DigSingle(lists, 1, "green", "red")
+```
+2. allows for the user to select many from multiple values
+```bash
+answer := Dig(lists, 1, "green", "red")
+```
+3. prints the selection and formats it.
+```bash
+switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
+```
+4. allows you to ask a question and save the value
+```bash
+    fmt.Println("add a commnd..")
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		inputcmd := scanner.Text()
+```
+5. prints the directions and clears the terminal
+```bash
+ 	switchutility.ClearDirections()
+```
+6. allows you to start the keyboard key press selecting
+```bash
+    err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
+		//press arrows to change index to highlight selected item
+		switch key.String() {
 ```
 
 ## Things to remember

@@ -53,7 +53,7 @@ It also generates the config for storing the commands
 ## Technologies
 Project is created with:
 * [atomicgo.dev/keyboard](https://atomicgo.dev/keyboard) - For pressing keys
-* [spf13/viper](https://github.com/spf13/viper) - Basically for keeping state
+* [https://pkg.go.dev/modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite) - Basically for keeping state
 
 
 ## Requirements
@@ -142,4 +142,4 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 
 ## Special thanks
 * [Go Team because they are gods](https://github.com/golang/go/graphs/contributors)
-* [Creators of atomicgo/keyboard - Marvin Wendt](https://github.com/MarvinJWendt)
+* [Creators of https://pkg.go.dev/modernc.org/sqlite - ](https://gitlab.com/cznic/sqlite/-/project_members)

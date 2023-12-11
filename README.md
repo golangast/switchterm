@@ -73,7 +73,7 @@ gonew github.com/golangast/switchterm example.com/switchterm
 
 ## Repository overview
 ```bash
-├── switchtermer [folder for functions]
+├── db [folder db functions]
 ├── configure [folder for config utility functions]
 ├── switchtermer [folder for functions]
 │   ├── colortermer [file for coloring selections]
@@ -96,7 +96,7 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 ```
 4. allows you to ask a question and save the value
 ```bash
-    fmt.Println("add a commnd..")
+       fmt.Println("add a commnd..")
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		inputcmd := scanner.Text()
@@ -107,8 +107,7 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 ```
 6. allows you to start the keyboard key press selecting
 ```bash
-    err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
-		//press arrows to change index to highlight selected item
+         err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
 		switch key.String() {
 ```
 

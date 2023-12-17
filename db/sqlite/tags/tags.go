@@ -9,38 +9,50 @@ import (
 	"github.com/golangast/switchterm/db/sqlite/dbconn"
 )
 
-func (t *Tags) Exists() error {
-	var exists bool
+func GetNoteByChosen(cmds []string) ([]Tags, error) {
+	var tags []Tags
 	db, err := dbconn.DbConnection()
 	if err != nil {
-		return err
+		return tags, err
 	}
-	stmts := db.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM users WHERE email=?)", t.CMD)
-	err = stmts.Scan(&exists)
+
+	// get from database
+	stmt, err := db.Prepare("SELECT * FROM tags WHERE cmd = ?")
 	if err != nil {
-		return err
-	}
-	db.Close()
-
-	return nil
-
-}
-func Exists(cmd string) (bool, error) {
-	db, err := dbconn.DbConnection()
-	if err != nil {
-		return false, err
+		return tags, err
 	}
 
-	stmts := db.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM tags WHERE cmd=?)", cmd)
-	err = stmts.Scan(&cmd)
-	if err != nil {
-		return false, err
+	var id, cmd, note, tag string
+
+	for _, v := range cmds {
+		err = stmt.QueryRow(v).Scan(&id, &cmd, &note, &tag)
+		if err != nil {
+			return tags, err
+		}
+		t := Tags{ID: id, CMD: cmd, Note: note, Tag: tag}
+		tags = append(tags, t)
 	}
 
-	db.Close()
+	defer db.Close()
+	defer stmt.Close()
+	switch err {
+	case sql.ErrNoRows:
+		fmt.Println("No rows were returned!")
+		// close db when not in use
+		return tags, nil
 
-	return true, nil
+	case nil:
+		fmt.Println("nil!!!!!!!!!!!!")
 
+		// close db when not in use
+		return tags, nil
+
+	default:
+
+		fmt.Println("default!!!!!!!!!!!!")
+
+		return tags, nil
+	}
 }
 func Create(cmd, note, tag string) error {
 
@@ -78,7 +90,8 @@ func GetCMD() (Tags, error) {
 		cmd  string
 		note string
 		tag  string
-		t    Tags
+
+		t Tags
 	)
 
 	//get from database
@@ -121,7 +134,8 @@ func GetAll() ([]Tags, error) {
 		cmd  string
 		note string
 		tag  string
-		ts   []Tags
+
+		ts []Tags
 	)
 	db, err := dbconn.DbConnection()
 	if err != nil {
@@ -177,7 +191,8 @@ func GetCMDByTag(tag string) ([]string, error) {
 		id   int
 		cmd  string
 		note string
-		tt   []string
+
+		tt []string
 	)
 	db, err := dbconn.DbConnection()
 	if err != nil {

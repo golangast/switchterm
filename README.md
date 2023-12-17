@@ -20,6 +20,7 @@
   - [Things to remember](#things-to-remember)
   - [Reference Commands](#reference-commands)
   - [Special thanks](#special-thanks)
+  - [Why Go?](#why-go)
 
 
 
@@ -147,3 +148,14 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 ## Special thanks
 * [Go Team because they are gods](https://github.com/golang/go/graphs/contributors)
 * [Creators of https://pkg.go.dev/modernc.org/sqlite - ](https://gitlab.com/cznic/sqlite/-/project_members)
+
+## Why Go?
+* The language is done since 1.0.https://youtu.be/rFejpH_tAHM there are little features that get added after 10 years but yeah that's it. 
+* It also has a compatibility promise https://go.dev/doc/go1compat
+* It was also built by great people. https://hackernoon.com/why-go-ef8850dc5f3c
+* 14th used language https://insights.stackoverflow.com/survey/2021
+* Highest starred language https://github.com/golang/go
+* It is also number 1 language to go to and not from https://www.jetbrains.com/lp/devecosystem-2021/#Do-you-plan-to-adopt--migrate-to-other-languages-in-the-next--months-If-so-to-which-ones
+* Jobs are almost doubling every year. https://stacktrends.dev/technologies/programming-languages/golang/
+* Companies that use go. https://github.com/golang/go/wiki/GoUsers
+* 

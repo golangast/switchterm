@@ -9,21 +9,12 @@ import (
 
 func main() {
 
-	//configure.GenConfigure()
-	// tt, err := t.GetCMD("ls")
-	// if err != nil {
-	// 	fmt.Println(err)
-	// }
-	// fmt.Println(tt)
-	//commands
-	// cmds := configure.LoadConfig()
-
 	tt, err := tags.GetAll()
 	if err != nil {
 		fmt.Println(err)
 	}
-	var CMDS []string // to cycle through lines
-
+	var CMDS []string
+	//turn into []string for the selector
 	for _, item := range tt {
 		CMDS = append(CMDS, item.CMD)
 	}
@@ -31,7 +22,16 @@ func main() {
 	//function to search or select a command
 	answ := switchtermer.SwitchCol(CMDS, 6, "red", "green")
 
-	//returned command
-	fmt.Println("you have chosen the command: ", answ)
+	//get notes from selection
+	ta, err := tags.GetNoteByChosen(answ)
+	if err != nil {
+		fmt.Println(err)
+	}
+	//Print them
+	for _, v := range ta {
+		fmt.Println("CMD: ", v.CMD)
+		fmt.Println("Notes: ", v.Note)
+
+	}
 
 }

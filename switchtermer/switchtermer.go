@@ -6,8 +6,6 @@ import (
 	"os"
 	"strings"
 
-	"atomicgo.dev/keyboard"
-	"atomicgo.dev/keyboard/keys"
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
@@ -30,7 +28,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	//print directions
 	switchutility.Directions()
 
-	answer := DigSingle(lists, 1, "green", "red")
+	answer := switchutility.DigSingle(lists, 1, "green", "red")
 
 	switch answer {
 
@@ -42,20 +40,19 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 		//print directions
 		switchutility.Directions()
 
-		searchanswer := DigSingle(listsearch, 1, "green", "red")
+		//show commands to select.
+		searchanswer := switchutility.DigSingle(listsearch, 1, "green", "red")
 
 		switch searchanswer {
 		case "cmd":
+			//to capture the first two characters to search
 			var letters string
 			fmt.Println("type first letters you want to search by", "example: `th` and then press enter")
-
 			n, err := fmt.Scanf("%s\n", &letters)
 			if err != nil || n != 1 {
-				// handle invalid input
 				fmt.Println(n, err)
 			}
-			fmt.Println(letters)
-			//show what was pressed
+
 			if len(letters) > 1 {
 
 				for _, s := range list {
@@ -72,7 +69,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 				switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 
 				list = results
-				answers := Dig(list, cols, background, foreground)
+				answers := switchutility.Dig(list, cols, background, foreground)
 				return answers
 			} else {
 				fmt.Println("choose another letter")
@@ -93,21 +90,21 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 			//show them
 			switchutility.PrintColumnsWChosen(cols, atline, tagcmds, background, foreground)
 			//do a selection of tags
-			answers := DigSingle(tagcmds, cols, background, foreground)
+			answers := switchutility.DigSingle(tagcmds, cols, background, foreground)
 			//get cmd by tag
 			selectedtag, err = tags.GetCMDByTag(answers)
 			if err != nil {
 				fmt.Println(err)
 			}
 			//let the user select cmd from the cmds that were from the tags
-			anstag := Dig(selectedtag, cols, background, foreground)
+			anstag := switchutility.Dig(selectedtag, cols, background, foreground)
 
 			return anstag
 
 		}
 
 	case "select":
-		answers := Dig(list, cols, background, foreground)
+		answers := switchutility.Dig(list, cols, background, foreground)
 		return answers
 	case "add":
 		fmt.Println("add a commnd..")
@@ -133,124 +130,4 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	}
 
 	return results
-}
-
-func Dig(list []string, cols int, background, foreground string) []string {
-	var (
-		atline int
-		chosen []string
-		remove bool
-	)
-	switchutility.ClearDirections()
-	//print in colunns
-	switchutility.PrintColumns(cols, atline, list, chosen, background, foreground)
-	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
-		//press arrows to change index to highlight selected item
-		switch key.String() {
-		case "up": //up arrow
-			//make it select up
-			atlines, run, err := switchutility.UP(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-		case "down": //down arrow
-			//make it select down
-			atlines, run, err := switchutility.Down(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-		case "right": //right arrow
-			//make it select right
-			atlines, run, err := switchutility.Right(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-		case "left": //left arrow
-			//make it select left
-			atlines, run, err := switchutility.Left(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-		case "e": //choose another
-			chosen = append(chosen, list[atline])
-			fmt.Println("added: ", chosen)
-			remove = false
-			return false, nil // Return false to continue listening
-		case "r": //removing selection
-			remove = true
-			chosen = append(chosen, list[atline])
-			return false, nil // Return false to continue listening
-		case "x": //removing selection
-			chosen = append(chosen, list[atline])
-			switchutility.RunApps(chosen) //runs the commands
-			remove = false
-			return false, nil // Return false to continue listening
-		case "enter": //enter
-			chosen = append(chosen, list[atline])
-			return true, nil
-		case "q", "esc", "c", "ctrl+c": //to quit
-			return true, nil
-		default:
-			fmt.Println(key.String())
-			return false, nil // Return false to continue listening
-		}
-
-	})
-	if err != nil {
-		fmt.Println(err)
-	}
-	//remove item after one has been chosen
-	remove = switchutility.RemoveItemWChosen(remove, list, chosen) //it is this way because you cannot call keyboard.Listen in itself
-	return chosen
-}
-
-func DigSingle(list []string, cols int, background, foreground string) string {
-	var (
-		atline int
-		chosen []string
-		ans    string
-	)
-
-	switchutility.ClearDirections()
-	switchutility.PrintColumnsWChosen(cols, atline, list, background, foreground)
-	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
-		//press arrows to change index to highlight selected item
-		switch key.String() {
-		case "up": //up arrow
-			//make it select up
-			atlines, run, err := switchutility.UP(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-
-		case "down": //down arrow
-			//make it select down
-			atlines, run, err := switchutility.Down(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-
-		case "right": //left arrow
-			//make it select right
-			atlines, run, err := switchutility.Right(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-
-		case "left": //left arrow
-			//make it select left
-			atlines, run, err := switchutility.Left(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-
-		case "enter": //enter
-			ans = list[atline]
-			return true, nil
-		case "q", "esc", "c", "ctrl+c": //to quit
-			return true, nil
-
-		default:
-			fmt.Println(key.String())
-			return false, nil // Return false to continue listening
-		}
-	})
-
-	if err != nil {
-		fmt.Println(err)
-	}
-	return ans
-
 }

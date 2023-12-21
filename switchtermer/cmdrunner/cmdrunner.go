@@ -28,7 +28,6 @@ func CmdRunner(exes bool, chosen []string) bool {
 		}
 		for _, v := range slicetags {
 			if slices.Contains(chosen, v.CMD) {
-				//chosen = slices.Delete(chosen, 1, slices.Index(chosen, v.CMD))
 
 				switch v.CMD {
 
@@ -43,13 +42,14 @@ func CmdRunner(exes bool, chosen []string) bool {
 				default:
 
 				}
-				i := slices.Index(chosen, v.CMD)
-				chosen = append(chosen[:i], chosen[i+1:]...)
-				if len(chosen) > 0 {
-					RunApps(chosen)
-				}
+
+				chosen = Delete(chosen, v.CMD)
+				chosen = removeDuplicateStr(chosen)
 			}
 
+		}
+		if len(chosen) > 0 {
+			RunApps(chosen)
 		}
 	}
 	return false
@@ -84,4 +84,31 @@ func RunApps(chosen []string) {
 		fmt.Println("out: ", out)
 	}
 	fmt.Println("ran: ", chosen)
+}
+func Delete[T comparable](collection []T, el T) []T {
+	idx := Find(collection, el)
+	if idx > -1 {
+		return slices.Delete(collection, idx, idx+1)
+	}
+	return collection
+}
+
+func Find[T comparable](collection []T, el T) int {
+	for i := range collection {
+		if collection[i] == el {
+			return i
+		}
+	}
+	return -1
+}
+func removeDuplicateStr(strSlice []string) []string {
+	allKeys := make(map[string]bool)
+	list := []string{}
+	for _, item := range strSlice {
+		if _, value := allKeys[item]; !value {
+			allKeys[item] = true
+			list = append(list, item)
+		}
+	}
+	return list
 }

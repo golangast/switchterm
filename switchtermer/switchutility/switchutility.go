@@ -182,18 +182,20 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			atline = atlines
 			return run, err
 		case "c": //choose another
+
 			chosen = append(chosen, list[atline])
 			remove = false
 			return false, nil // Return false to continue listening
-		case "e": //choose another
+		case "e":
 			exes = true
 			remove = false
+
 			return false, nil // Return false to continue listening
 		case "r": //removing selection
 			remove = true
 			chosen = append(chosen, list[atline])
 			return false, nil // Return false to continue listening
-		case "x": //removing selection
+		case "x":
 			chosen = append(chosen, list[atline])
 			cmdrunner.CmdRunner(exes, chosen) //runs the commands
 			remove = false

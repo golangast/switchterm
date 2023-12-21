@@ -1,15 +1,13 @@
 package switchutility
 
 import (
-	"bytes"
 	"fmt"
-	"os/exec"
-	"runtime"
 	"slices"
 
 	"atomicgo.dev/keyboard"
 	"atomicgo.dev/keyboard/keys"
 	"github.com/golangast/switchterm/db/sqlite/tags"
+	"github.com/golangast/switchterm/switchtermer/cmdrunner"
 	"github.com/golangast/switchterm/switchtermer/colortermer"
 )
 
@@ -150,43 +148,12 @@ func RemoveItemWChosen(remove bool, list, chosen []string) bool {
 
 }
 
-func RunApps(chosen []string) {
-	for _, v := range chosen {
-		fmt.Println("running...: ", v)
-		out, errout, err := Shellout(v)
-		if err != nil {
-			fmt.Println("error: ", err)
-		}
-		if errout != "" {
-			fmt.Println("error: ", errout)
-		}
-		fmt.Println("out: ", out)
-	}
-	fmt.Println("ran: ", chosen)
-}
-
-func Shellout(command string) (string, string, error) {
-	var stdout bytes.Buffer
-	var stderr bytes.Buffer
-
-	var cmd *exec.Cmd
-	if runtime.GOOS == "windows" {
-		cmd = exec.Command("cmd", "/C", command)
-	} else {
-		cmd = exec.Command("bash", "-c", command)
-	}
-
-	cmd.Stdout = &stdout
-	cmd.Stderr = &stderr
-	err := cmd.Run()
-	return stdout.String(), stderr.String(), err
-}
-
 func Dig(list []string, cols int, background, foreground string) []string {
 	var (
 		atline int
 		chosen []string
 		remove bool
+		exes   bool
 	)
 	ClearDirections()
 	//print in colunns
@@ -214,8 +181,12 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			atlines, run, err := Left(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
-		case "e": //choose another
+		case "c": //choose another
 			chosen = append(chosen, list[atline])
+			remove = false
+			return false, nil // Return false to continue listening
+		case "e": //choose another
+			exes = true
 			remove = false
 			return false, nil // Return false to continue listening
 		case "r": //removing selection
@@ -224,13 +195,14 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			return false, nil // Return false to continue listening
 		case "x": //removing selection
 			chosen = append(chosen, list[atline])
-			RunApps(chosen) //runs the commands
+			cmdrunner.CmdRunner(exes, chosen) //runs the commands
 			remove = false
 			return false, nil // Return false to continue listening
 		case "enter": //enter
 			chosen = append(chosen, list[atline])
+			exes = true
 			return true, nil
-		case "q", "esc", "c", "ctrl+c": //to quit
+		case "q", "esc", "ctrl+c": //to quit
 			return true, nil
 		default:
 			fmt.Println(key.String())
@@ -243,7 +215,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 	}
 	//remove item after one has been chosen
 	remove = RemoveItemWChosen(remove, list, chosen) //it is this way because you cannot call keyboard.Listen in itself
-
+	exes = cmdrunner.CmdRunner(exes, chosen)
 	return chosen
 }
 

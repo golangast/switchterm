@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/golangast/switchterm/db/sqlite/tags"
+	"github.com/golangast/switchterm/switchtermer/cmdcreator"
 	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
@@ -126,6 +127,8 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 		fmt.Println("description: ", inputdesc)
 		fmt.Println("tag: ", inputtag)
 		tags.Create(inputcmd, inputdesc, inputtag)
+
+		cmdcreator.Cmdcreator(inputcmd)
 
 	}
 

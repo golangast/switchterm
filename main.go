@@ -18,7 +18,6 @@ func main() {
 	for _, item := range tt {
 		CMDS = append(CMDS, item.CMD)
 	}
-	fmt.Println(CMDS)
 	//function to search or select a command
 	answ := switchtermer.SwitchCol(CMDS, 6, "red", "green")
 

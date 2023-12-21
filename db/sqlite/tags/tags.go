@@ -1,7 +1,6 @@
 package tags
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 	"log"
@@ -55,22 +54,19 @@ func GetNoteByChosen(cmds []string) ([]Tags, error) {
 	}
 }
 func Create(cmd, note, tag string) error {
-
-	var id int
-
 	db, err := dbconn.DbConnection()
 	if err != nil {
 		return err
 	}
 	// Create a statement to insert data into the `tags` table.
-	stmt, err := db.PrepareContext(context.Background(), "INSERT INTO `tags` (`id`, `cmd`, `note`, `tag`) VALUES (?, ?,?, ?)")
+	stmt, err := db.Prepare("INSERT INTO `tags` ( `cmd`, `note`, `tag`) VALUES ( ?,?, ?)")
 	if err != nil {
 		panic(err)
 	}
 	defer stmt.Close()
 
 	// Insert data into the `tags` table.
-	_, err = stmt.ExecContext(context.Background(), id, cmd, note, tag)
+	_, err = stmt.Exec(cmd, note, tag)
 	if err != nil {
 		panic(err)
 	}

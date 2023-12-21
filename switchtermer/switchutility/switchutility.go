@@ -64,7 +64,7 @@ func Left(atline, cols int, background, foreground string, list, chosen []string
 }
 func ClearDirections() {
 	fmt.Print("\033[H\033[2J")
-	fmt.Println("q-quit|e-multiselection|x-execute|enter-select|down/up/left/right|")
+	fmt.Println("q-quit|c-multiselection|x-select/execute||enter-select/execute|down/up/left/right|")
 }
 
 func Directions() {

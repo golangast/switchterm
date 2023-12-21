@@ -133,7 +133,7 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 
 ## Reference Commands
 * "enter" is to select
-* "e" is to select many
+* "c" is to select many
 * "r" is to remove
 * "x" is to execute
 * "q" is to quit

@@ -7,6 +7,7 @@ import (
 	"atomicgo.dev/keyboard"
 	"atomicgo.dev/keyboard/keys"
 	"github.com/golangast/switchterm/db/sqlite/tags"
+	"github.com/golangast/switchterm/switchtermer/cmdremover"
 	"github.com/golangast/switchterm/switchtermer/cmdrunner"
 	"github.com/golangast/switchterm/switchtermer/colortermer"
 )
@@ -133,6 +134,7 @@ func PrintColumnsWChosen(cols, atline int, list []string, background, foreground
 func RemoveItemWChosen(remove bool, list, chosen []string) bool {
 	// if remove is true then remove the chosen
 	if remove == true {
+
 		//remove chosen from list
 		for _, item := range chosen {
 			index := slices.Index(list, item)
@@ -141,6 +143,8 @@ func RemoveItemWChosen(remove bool, list, chosen []string) bool {
 				fmt.Println("removed: ", item)
 
 			}
+
+			cmdremover.RemoveCMD(item)
 		}
 	}
 

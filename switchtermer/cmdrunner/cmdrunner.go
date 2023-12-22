@@ -8,13 +8,10 @@ import (
 	"runtime"
 	"slices"
 
-	"github.com/golangast/switchterm/cmd/aa"
-	"github.com/golangast/switchterm/cmd/ee"
-	"github.com/golangast/switchterm/cmd/fd"
-	"github.com/golangast/switchterm/cmd/tt"
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/switchtermer/loggers"
-	// #import
+	
+// #import
 )
 
 func CmdRunner(exes bool, chosen []string) bool {
@@ -33,19 +30,8 @@ func CmdRunner(exes bool, chosen []string) bool {
 				if v.Bash != "bash" {
 					switch v.CMD {
 
-					case "aa":
-						aa.Aa()
-						break
-					case "ee":
-						ee.Ee()
-						break
-					case "tt":
-						tt.Tt()
-						break
-					case "fd":
-						fd.Fd()
-						break
-						//#addcmd
+					 
+//#addcmd
 
 					default:
 
@@ -53,6 +39,7 @@ func CmdRunner(exes bool, chosen []string) bool {
 					chosen = Delete(chosen, v.CMD)
 					chosen = removeDuplicateStr(chosen)
 				} else {
+
 					if len(chosen) > 0 {
 						RunApps(chosen)
 					}

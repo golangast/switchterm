@@ -182,14 +182,8 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			atline = atlines
 			return run, err
 		case "c": //choose another
-
 			chosen = append(chosen, list[atline])
 			remove = false
-			return false, nil // Return false to continue listening
-		case "e":
-			exes = true
-			remove = false
-
 			return false, nil // Return false to continue listening
 		case "r": //removing selection
 			remove = true
@@ -218,6 +212,7 @@ func Dig(list []string, cols int, background, foreground string) []string {
 	//remove item after one has been chosen
 	remove = RemoveItemWChosen(remove, list, chosen) //it is this way because you cannot call keyboard.Listen in itself
 	exes = cmdrunner.CmdRunner(exes, chosen)
+
 	return chosen
 }
 

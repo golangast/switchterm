@@ -10,6 +10,8 @@ import (
 
 	"github.com/golangast/switchterm/cmd/aa"
 	"github.com/golangast/switchterm/cmd/ee"
+	"github.com/golangast/switchterm/cmd/fd"
+	"github.com/golangast/switchterm/cmd/tt"
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/switchtermer/loggers"
 	// #import
@@ -28,29 +30,37 @@ func CmdRunner(exes bool, chosen []string) bool {
 		}
 		for _, v := range slicetags {
 			if slices.Contains(chosen, v.CMD) {
+				if v.Bash != "bash" {
+					switch v.CMD {
 
-				switch v.CMD {
+					case "aa":
+						aa.Aa()
+						break
+					case "ee":
+						ee.Ee()
+						break
+					case "tt":
+						tt.Tt()
+						break
+					case "fd":
+						fd.Fd()
+						break
+						//#addcmd
 
-				case "aa":
-					aa.Aa()
-					break
-				case "ee":
-					ee.Ee()
-					break
-					//#addcmd
+					default:
 
-				default:
-
+					}
+					chosen = Delete(chosen, v.CMD)
+					chosen = removeDuplicateStr(chosen)
+				} else {
+					if len(chosen) > 0 {
+						RunApps(chosen)
+					}
 				}
-
-				chosen = Delete(chosen, v.CMD)
-				chosen = removeDuplicateStr(chosen)
 			}
 
 		}
-		if len(chosen) > 0 {
-			RunApps(chosen)
-		}
+
 	}
 	return false
 }

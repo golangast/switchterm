@@ -108,27 +108,59 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 		answers := switchutility.Dig(list, cols, background, foreground)
 		return answers
 	case "add":
-		fmt.Println("add a commnd..")
-		scanner := bufio.NewScanner(os.Stdin)
-		scanner.Scan()
-		inputcmd := scanner.Text()
+		listbash := []string{"bash", "custom"}
 
-		fmt.Println("add a description..")
-		scannerdesc := bufio.NewScanner(os.Stdin)
-		scannerdesc.Scan()
-		inputdesc := scannerdesc.Text()
+		//print directions
+		switchutility.Directions()
 
-		fmt.Println("add a tag..")
-		scannertag := bufio.NewScanner(os.Stdin)
-		scannertag.Scan()
-		inputtag := scannertag.Text()
+		answerbash := switchutility.DigSingle(listbash, 1, "green", "red")
 
-		fmt.Println("commands: ", inputcmd)
-		fmt.Println("description: ", inputdesc)
-		fmt.Println("tag: ", inputtag)
-		tags.Create(inputcmd, inputdesc, inputtag)
+		switch answerbash {
 
-		cmdcreator.Cmdcreator(inputcmd)
+		case "bash":
+			fmt.Println("add a commnd..")
+			scanner := bufio.NewScanner(os.Stdin)
+			scanner.Scan()
+			inputcmd := scanner.Text()
+
+			fmt.Println("add a description..")
+			scannerdesc := bufio.NewScanner(os.Stdin)
+			scannerdesc.Scan()
+			inputnote := scannerdesc.Text()
+
+			fmt.Println("add a tag..")
+			scannertag := bufio.NewScanner(os.Stdin)
+			scannertag.Scan()
+			inputtag := scannertag.Text()
+			bash := "true"
+			tags.Create(inputcmd, inputnote, inputtag, bash)
+
+		case "custom":
+			fmt.Println("add a commnd..")
+			scanner := bufio.NewScanner(os.Stdin)
+			scanner.Scan()
+			inputcmd := scanner.Text()
+
+			fmt.Println("add a description..")
+			scannerdesc := bufio.NewScanner(os.Stdin)
+			scannerdesc.Scan()
+			inputdesc := scannerdesc.Text()
+
+			fmt.Println("add a tag..")
+			scannertag := bufio.NewScanner(os.Stdin)
+			scannertag.Scan()
+			inputtag := scannertag.Text()
+
+			fmt.Println("commands: ", inputcmd)
+			fmt.Println("description: ", inputdesc)
+			fmt.Println("tag: ", inputtag)
+			bash := "false"
+
+			tags.Create(inputcmd, inputdesc, inputtag, bash)
+
+			cmdcreator.Cmdcreator(inputcmd)
+
+		}
 
 	}
 

@@ -16,8 +16,8 @@ func DbConnection() (*sql.DB, error) {
 		fmt.Println("Error opening", file, err)
 		return nil, err
 	}
-	db.SetMaxOpenConns(20)
-	db.SetMaxIdleConns(20)
+	db.SetMaxOpenConns(30)
+	db.SetMaxIdleConns(30)
 	db.SetConnMaxLifetime(time.Minute * 5)
 	//check if it pings
 	err = db.Ping()

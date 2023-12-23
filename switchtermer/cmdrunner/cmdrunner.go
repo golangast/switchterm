@@ -10,8 +10,9 @@ import (
 
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/switchtermer/loggers"
-	
-// #import
+
+	"github.com/golangast/switchterm/cmd/aa"
+	// #import
 )
 
 func CmdRunner(exes bool, chosen []string) bool {
@@ -30,8 +31,11 @@ func CmdRunner(exes bool, chosen []string) bool {
 				if v.Bash != "bash" {
 					switch v.CMD {
 
-					 
-//#addcmd
+					case "aa":
+						aa.Aa()
+						break
+
+						//#addcmd
 
 					default:
 

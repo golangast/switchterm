@@ -25,7 +25,7 @@
 
 
 ## General info
-This project is a command line selection tool.
+This project is a command line selection tool. 
 It stores commands in a sqlite database and their tags
 
 
@@ -35,6 +35,7 @@ It stores commands in a sqlite database and their tags
 
 
 ## What does it do?
+* walkthrough [video](https://youtu.be/7Wdoy_aPr0c?feature=shared)  
 * lets you select multiple commands and run them
 
  <h1 align="center"> Main menu for selection</h1>
@@ -155,6 +156,7 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 * 14th used language https://insights.stackoverflow.com/survey/2021
 * Highest starred language https://github.com/golang/go
 * It is also number 1 language to go to and not from https://www.jetbrains.com/lp/devecosystem-2021/#Do-you-plan-to-adopt--migrate-to-other-languages-in-the-next--months-If-so-to-which-ones
+* Go is growing in all measures https://madnight.github.io/githut/#/stars/2023/3
 * Jobs are almost doubling every year. https://stacktrends.dev/technologies/programming-languages/golang/
 * Companies that use go. https://github.com/golang/go/wiki/GoUsers
 * Why I picked Go https://youtu.be/fD005g07cU4

@@ -65,7 +65,7 @@ func Left(atline, cols int, background, foreground string, list, chosen []string
 }
 func ClearDirections() {
 	fmt.Print("\033[H\033[2J")
-	fmt.Println("q-quit|c-multiselection|x-select/execute||enter-select/execute|down/up/left/right|")
+	fmt.Println("(q-quit) - (c-multiselection) - (r-remove) - (enter-select/execute) - down/up/left/right")
 }
 
 func Directions() {
@@ -166,39 +166,30 @@ func Dig(list []string, cols int, background, foreground string) []string {
 		//press arrows to change index to highlight selected item
 		switch key.String() {
 		case "up": //up arrow
-			//make it select up
 			atlines, run, err := UP(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 		case "down": //down arrow
-			//make it select down
 			atlines, run, err := Down(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 		case "right": //right arrow
-			//make it select right
 			atlines, run, err := Right(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 		case "left": //left arrow
-			//make it select left
 			atlines, run, err := Left(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
 		case "c": //choose another
 			chosen = append(chosen, list[atline])
 			remove = false
-			return false, nil // Return false to continue listening
+			return false, nil
 		case "r": //removing selection
 			remove = true
 			chosen = append(chosen, list[atline])
-			return false, nil // Return false to continue listening
-		case "x":
-			chosen = append(chosen, list[atline])
-			cmdrunner.CmdRunner(exes, chosen) //runs the commands
-			remove = false
-			return false, nil // Return false to continue listening
-		case "enter": //enter
+			return false, nil
+		case "enter": //select and run
 			chosen = append(chosen, list[atline])
 			exes = true
 			return true, nil
@@ -208,7 +199,6 @@ func Dig(list []string, cols int, background, foreground string) []string {
 			fmt.Println(key.String())
 			return false, nil // Return false to continue listening
 		}
-
 	})
 	if err != nil {
 		fmt.Println(err)

@@ -37,7 +37,7 @@ It stores commands in a sqlite database and their tags
 ## What does it do?
 * walkthrough [video](https://youtu.be/7Wdoy_aPr0c?feature=shared)  
 
-<h1 align="center">Change the directory of the commands and run them/h1>
+<h1 align="center">Change the directory of the commands and run them</h1>
  <p align="center">
 <img src="./readmeimages/changedir.gif" alt="Alt text" title="Optional title">
 </p>

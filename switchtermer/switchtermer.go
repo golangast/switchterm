@@ -78,7 +78,9 @@ func SwitchCall() {
 			)
 		}
 		//Print them
+		colortermer.ColorizeOutPut("purple", "purple", "......NOTES.......\n")
 		for _, v := range ta {
+
 			colortermer.ColorizeOutPut("purple", "purple", "{ "+v.CMD+" ~")
 			colortermer.ColorizeOutPut("dpurple", "bpurple", "Notes: "+v.Note+" }")
 			fmt.Println("\n")

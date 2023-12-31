@@ -1,6 +1,7 @@
 package cmdrunner
 
 import (
+	"fmt"
 	"log/slog"
 	"slices"
 
@@ -15,6 +16,8 @@ import (
 )
 
 func CmdRunner(exes bool, chosen []string) bool {
+	fmt.Print("\033[H\033[2J")
+	fmt.Println("")
 	colortermer.ColorizeOutPut("purple", "bpurple", ".......Running commands.......\n")
 
 	if exes {

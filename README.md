@@ -41,15 +41,18 @@ It stores commands in a sqlite database and their tags
  <h1 align="center"> Main menu for selection</h1>
  <p align="center">
 
-<img src="./readmeimages/main.png" alt="Alt text" title="Optional title">
+
 </p>
-<h1 align="center">Selection menu that is formatted</h1>
+<h1 align="center">Select commands and run them.</h1>
  <p align="center">
-<img src="./readmeimages/selection.png" alt="Alt text" title="Optional title">
+<img src="./readmeimages/ex.gif" alt="Alt text" title="Optional title">
 </p>
 <h1 align="center">You can even do search by tag</h1>
  <p align="center">
-<img src="./readmeimages/searchby.png" alt="Alt text" title="Optional title">
+<img src="./readmeimages/search.gif" alt="Alt text" title="Optional title">
+<h1 align="center">Add commands</h1>
+ <p align="center">
+<img src="./readmeimages/add.gif" alt="Alt text" title="Optional title">
 </p>
 
 ## Technologies

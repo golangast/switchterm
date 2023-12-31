@@ -43,6 +43,7 @@ func CmdRunner(exes bool, chosen []string) bool {
 					case "hh":
 						hh.Hh()
 						break
+
 						//#addcmd
 
 					default:

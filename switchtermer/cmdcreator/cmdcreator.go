@@ -7,8 +7,10 @@ import (
 	temps "github.com/golangast/gentil/utility/temp"
 	text "github.com/golangast/gentil/utility/text"
 
+	"github.com/golangast/switchterm/db/sqlite/sqlsettings"
 	"github.com/golangast/switchterm/switchtermer/cmdcreator/temp"
 	"github.com/golangast/switchterm/switchtermer/loggers"
+
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
@@ -18,8 +20,16 @@ func Cmdcreator(cmd string) {
 	var err error
 	logger := loggers.CreateLogger()
 
+	dir, err := sqlsettings.GetDir()
+	if err != nil {
+		logger.Error(
+			"getting the directory",
+			slog.String("error: ", err.Error()),
+		)
+	}
+
 	//make file
-	cmdfile, err := ff.Filefolder("./cmd/"+cmd, cmd+".go")
+	cmdfile, err := ff.Filefolder("."+dir+"/cmd/"+cmd, cmd+".go")
 	if err != nil {
 		logger.Error(
 			"trying to create handler file",
@@ -52,7 +62,7 @@ func Cmdcreator(cmd string) {
 
 	foundimport := text.FindTextNReturn("./switchtermer/cmdrunner/cmdrunner.go", `// #import`)
 	if foundimport != `// #import` {
-		err := text.UpdateText("./switchtermer/cmdrunner/cmdrunner.go", `// #import`, `"github.com/golangast/switchterm/cmd/`+cmd+`"`+"\n"+`// #import`)
+		err := text.UpdateText("./switchtermer/cmdrunner/cmdrunner.go", `// #import`, `"github.com/golangast/switchterm`+dir+`/cmd/`+cmd+`"`+"\n"+`// #import`)
 		if err != nil {
 			logger.Error(
 				"trying to update text in cmdrunner.go",

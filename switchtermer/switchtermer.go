@@ -9,6 +9,7 @@ import (
 	"github.com/golangast/switchterm/switchtermer/colortermer"
 	"github.com/golangast/switchterm/switchtermer/loggers"
 	"github.com/golangast/switchterm/switchtermer/search"
+	"github.com/golangast/switchterm/switchtermer/settings"
 	"github.com/golangast/switchterm/switchtermer/switchselector"
 	"github.com/golangast/switchterm/switchtermer/switchutility"
 	"github.com/golangast/switchterm/switchtermer/window"
@@ -25,7 +26,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	var results []string // append to results
 
 	//commands available
-	lists := []string{"search", "select", "add", "window"}
+	lists := []string{"search", "select", "add", "window", "settings"}
 
 	//print directions
 	switchutility.Directions()
@@ -42,6 +43,8 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 		add.Add()
 	case "window":
 		window.Window()
+	case "settings":
+		settings.Settings()
 	default:
 		return results
 	}
@@ -80,7 +83,6 @@ func SwitchCall() {
 		//Print them
 		colortermer.ColorizeOutPut("purple", "purple", "......NOTES.......\n")
 		for _, v := range ta {
-
 			colortermer.ColorizeOutPut("purple", "purple", "{ "+v.CMD+" ~")
 			colortermer.ColorizeOutPut("dpurple", "bpurple", "Notes: "+v.Note+" }")
 			fmt.Println("\n")

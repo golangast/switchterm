@@ -44,9 +44,9 @@ It stores commands in a sqlite database and their tags
 <h1 align="center">You can even do search by tag</h1>
  <p align="center">
 <img src="./readmeimages/search.gif" alt="Alt text" title="Optional title">
-<h1 align="center">Add commands</h1>
+<h1 align="center">Run multiple commands</h1>
  <p align="center">
-<img src="./readmeimages/add.gif" alt="Alt text" title="Optional title">
+<img src="./readmeimages/ex.gif" alt="Alt text" title="Optional title">
 </p>
 
 ## Technologies

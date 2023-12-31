@@ -1,0 +1,13 @@
+{
+    "docwriter.style": "GoDoc",
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "group": "new",
+            "database": "${workspaceFolder:switchterm}/db/data.db",
+            "name": "new"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

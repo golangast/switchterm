@@ -12,7 +12,10 @@ import (
 )
 
 func GetNoteByChosen(cmds []string) ([]Tags, error) {
+
 	var tags []Tags
+	var id, cmd, note, tag, bash string
+
 	db, err := dbconn.DbConnection()
 	if err != nil {
 		return tags, err
@@ -21,7 +24,6 @@ func GetNoteByChosen(cmds []string) ([]Tags, error) {
 	if err != nil {
 		return tags, err
 	}
-	var id, cmd, note, tag, bash string
 	for _, v := range cmds {
 		err = stmt.QueryRow(v).Scan(&id, &cmd, &note, &tag, &bash)
 		if err != nil {
@@ -33,8 +35,7 @@ func GetNoteByChosen(cmds []string) ([]Tags, error) {
 	defer db.Close()
 	defer stmt.Close()
 	switch err {
-	case sql.ErrNoRows:
-		return tags, nil
+
 	case nil:
 		return tags, nil
 	default:
@@ -182,6 +183,38 @@ func DeleteTag(cmd string) error {
 	defer db.Close()
 
 	return nil
+}
+
+func UpdateTag(name, tag string) {
+	logger := loggers.CreateLogger()
+
+	//opening database
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		logger.Error(
+			"trying to connect to database",
+			slog.String("error: ", err.Error()),
+		)
+	}
+
+	//prepare statement so that no sql injection
+	stmt, err := db.Prepare("update tags set tag=? where tag=?")
+	if err != nil {
+		logger.Error(
+			"trying to prepare update tag in db",
+			slog.String("error: ", err.Error()),
+		)
+	}
+
+	//execute qeury
+	_, err = stmt.Exec(tag, name)
+	if err != nil {
+		logger.Error(
+			"trying to execute db statement",
+			slog.String("error: ", err.Error()),
+		)
+	}
+
 }
 
 type Tags struct {

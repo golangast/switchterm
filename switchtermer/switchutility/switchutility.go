@@ -1,14 +1,14 @@
 package switchutility
 
 import (
+	"bytes"
 	"fmt"
+	"os/exec"
+	"runtime"
 	"slices"
 
-	"atomicgo.dev/keyboard"
-	"atomicgo.dev/keyboard/keys"
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/switchtermer/cmdremover"
-	"github.com/golangast/switchterm/switchtermer/cmdrunner"
 	"github.com/golangast/switchterm/switchtermer/colortermer"
 )
 
@@ -18,54 +18,43 @@ func UP(atline, cols int, background, foreground string, list, chosen []string) 
 		atline--
 	}
 	PrintColumns(cols, atline, list, chosen, background, foreground)
-
 	return atline, false, nil
 }
 
 func Down(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
 	ClearDirections()
-
 	linecount := len(list)
-
 	if atline <= linecount-2 {
 		atline++
 	}
 	PrintColumns(cols, atline, list, chosen, background, foreground)
-
 	return atline, false, nil
 
 }
 func Right(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
 	ClearDirections()
-
 	linecount := len(list)
 	rows := (len(list) + cols - 1) / cols
 	if atline <= linecount-rows {
 		atline = atline + rows
 	}
-
 	PrintColumns(cols, atline, list, chosen, background, foreground)
-
 	return atline, false, nil
-
 }
 
 func Left(atline, cols int, background, foreground string, list, chosen []string) (int, bool, error) {
 	ClearDirections()
-
 	rows := (len(list) + cols - 1) / cols
-
 	if atline >= rows {
 		atline = atline - rows
 	}
 	PrintColumns(cols, atline, list, chosen, background, foreground)
-
 	return atline, false, nil
-
 }
 func ClearDirections() {
 	fmt.Print("\033[H\033[2J")
-	fmt.Println("(q-quit) - (c-multiselection) - (r-remove) - (enter-select/execute) - down/up/left/right")
+	colortermer.ColorizeCol("purple", "purple", "(q-quit) - (c-multiselection) - (r-remove) - (enter-select/execute) - down/up/left/right")
+	fmt.Println("\n")
 }
 
 func Directions() {
@@ -90,19 +79,14 @@ func PrintColumns(cols, atline int, list, chosen []string, background, foregroun
 
 			} else {
 				if slices.Contains(chosen, list[i]) {
-					colortermer.ColorizeCol("red", foreground, list[i])
+					colortermer.ColorizeCol("purple", foreground, list[i])
 
 				} else {
 					fmt.Printf("%-11s%s", list[i], " ")
-
 				}
-
 			}
-
 		}
-
 		fmt.Println() //yes this needs to be here for padding
-
 	}
 }
 
@@ -133,7 +117,7 @@ func PrintColumnsWChosen(cols, atline int, list []string, background, foreground
 
 func RemoveItemWChosen(remove bool, list, chosen []string) bool {
 	// if remove is true then remove the chosen
-	if remove == true {
+	if remove {
 
 		//remove chosen from list
 		for _, item := range chosen {
@@ -152,115 +136,63 @@ func RemoveItemWChosen(remove bool, list, chosen []string) bool {
 
 }
 
-func Dig(list []string, cols int, background, foreground string) []string {
-	var (
-		atline int
-		chosen []string
-		remove bool
-		exes   bool
-	)
-	ClearDirections()
-	//print in colunns
-	PrintColumns(cols, atline, list, chosen, background, foreground)
-	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
-		//press arrows to change index to highlight selected item
-		switch key.String() {
-		case "up": //up arrow
-			atlines, run, err := UP(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-		case "down": //down arrow
-			atlines, run, err := Down(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-		case "right": //right arrow
-			atlines, run, err := Right(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-		case "left": //left arrow
-			atlines, run, err := Left(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-		case "c": //choose another
-			chosen = append(chosen, list[atline])
-			remove = false
-			return false, nil
-		case "r": //removing selection
-			remove = true
-			chosen = append(chosen, list[atline])
-			return false, nil
-		case "enter": //select and run
-			chosen = append(chosen, list[atline])
-			exes = true
-			return true, nil
-		case "q", "esc", "ctrl+c": //to quit
-			return true, nil
-		default:
-			fmt.Println(key.String())
-			return false, nil // Return false to continue listening
-		}
-	})
-	if err != nil {
-		fmt.Println(err)
-	}
-	//remove item after one has been chosen
-	remove = RemoveItemWChosen(remove, list, chosen) //it is this way because you cannot call keyboard.Listen in itself
-	exes = cmdrunner.CmdRunner(exes, chosen)
+func Shellout(command string) (string, string, error) {
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
 
-	return chosen
+	var cmd *exec.Cmd
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/C", command)
+	} else {
+		cmd = exec.Command("bash", "-c", command)
+	}
+
+	cmd.Stdout = &stdout
+	cmd.Stderr = &stderr
+	err := cmd.Run()
+	return stdout.String(), stderr.String(), err
+}
+func RunApps(chosen []string) {
+	for _, v := range chosen {
+		colortermer.ColorizeOutPut("dpurple", "purple", "ran: "+v)
+
+		out, errout, err := Shellout(v)
+		if err != nil {
+			colortermer.ColorizeOutPut("dpurple", "magenta", "error: "+err.Error())
+		}
+		if errout != "" {
+			colortermer.ColorizeOutPut("magenta", "magenta", "error: "+errout)
+
+			fmt.Println()
+		}
+		colortermer.ColorizeOutPut("dpurple", "bpurple", "output: "+out)
+		fmt.Println("\n")
+	}
+}
+func Delete[T comparable](collection []T, el T) []T {
+	idx := Find(collection, el)
+	if idx > -1 {
+		return slices.Delete(collection, idx, idx+1)
+	}
+	return collection
 }
 
-func DigSingle(list []string, cols int, background, foreground string) string {
-	var (
-		atline int
-		chosen []string
-		ans    string
-	)
-
-	ClearDirections()
-	PrintColumnsWChosen(cols, atline, list, background, foreground)
-	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
-		//press arrows to change index to highlight selected item
-		switch key.String() {
-		case "up": //up arrow
-			//make it select up
-			atlines, run, err := UP(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-
-		case "down": //down arrow
-			//make it select down
-			atlines, run, err := Down(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-
-		case "right": //left arrow
-			//make it select right
-			atlines, run, err := Right(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-
-		case "left": //left arrow
-			//make it select left
-			atlines, run, err := Left(atline, cols, background, foreground, list, chosen)
-			atline = atlines
-			return run, err
-
-		case "enter": //enter
-			ans = list[atline]
-			return true, nil
-		case "q", "esc", "c", "ctrl+c": //to quit
-			return true, nil
-
-		default:
-			fmt.Println(key.String())
-			return false, nil // Return false to continue listening
+func Find[T comparable](collection []T, el T) int {
+	for i := range collection {
+		if collection[i] == el {
+			return i
 		}
-	})
-
-	if err != nil {
-		fmt.Println(err)
 	}
-	return ans
-
+	return -1
+}
+func RemoveDuplicateStr(strSlice []string) []string {
+	allKeys := make(map[string]bool)
+	list := []string{}
+	for _, item := range strSlice {
+		if _, value := allKeys[item]; !value {
+			allKeys[item] = true
+			list = append(list, item)
+		}
+	}
+	return list
 }

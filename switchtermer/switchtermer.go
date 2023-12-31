@@ -1,168 +1,88 @@
 package switchtermer
 
 import (
-	"bufio"
 	"fmt"
-	"os"
-	"strings"
+	"log/slog"
 
 	"github.com/golangast/switchterm/db/sqlite/tags"
-	"github.com/golangast/switchterm/switchtermer/cmdcreator"
+	"github.com/golangast/switchterm/switchtermer/add"
+	"github.com/golangast/switchterm/switchtermer/colortermer"
+	"github.com/golangast/switchterm/switchtermer/loggers"
+	"github.com/golangast/switchterm/switchtermer/search"
+	"github.com/golangast/switchterm/switchtermer/switchselector"
 	"github.com/golangast/switchterm/switchtermer/switchutility"
+	"github.com/golangast/switchterm/switchtermer/window"
 )
 
 // takes in a list of strings and then lets you select search or select
+// The `func` keyword is used to define a function in Go. In this code, it is used to define several
+// functions, such as `SwitchCol`, `SwitchCall`, and others. These functions perform various tasks,
+// such as switching between different actions based on user input, searching or selecting commands,
+// adding commands, and displaying windows.
 func SwitchCol(list []string, cols int, background, foreground string) []string {
+
 	var atline int       //to know what line you are on
 	var results []string // append to results
 
-	// init map
-	lines := make(map[int]string) // to cycle through lines
-
-	// load values into map
-	for i, item := range list {
-		lines[i] = item
-	}
 	//commands available
-	lists := []string{"search", "select", "add"}
+	lists := []string{"search", "select", "add", "window"}
 
 	//print directions
 	switchutility.Directions()
 
-	answer := switchutility.DigSingle(lists, 1, "green", "red")
+	answer := switchselector.DigSingle(lists, 1, "purple", "purple")
 
 	switch answer {
-
 	case "search":
-
-		//commands available
-		listsearch := []string{"cmd", "tag"}
-
-		//print directions
-		switchutility.Directions()
-
-		//show commands to select.
-		searchanswer := switchutility.DigSingle(listsearch, 1, "green", "red")
-
-		switch searchanswer {
-		case "cmd":
-			//to capture the first two characters to search
-			var letters string
-			fmt.Println("type first letters you want to search by", "example: `th` and then press enter")
-			n, err := fmt.Scanf("%s\n", &letters)
-			if err != nil || n != 1 {
-				fmt.Println(n, err)
-			}
-
-			if len(letters) > 1 {
-
-				for _, s := range list {
-
-					if strings.HasPrefix(s, letters) {
-						results = append(results, s)
-					}
-				}
-
-				if len(results) < 6 {
-					cols = 1
-				}
-				// print in colunns
-				switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
-
-				list = results
-				answers := switchutility.Dig(list, cols, background, foreground)
-				return answers
-			} else {
-				fmt.Println("choose another letter")
-			}
-
-		case "tag":
-			var tagcmds []string
-			var selectedtag []string
-			//get all tags
-			tagcmd, err := tags.GetAll()
-			if err != nil {
-				fmt.Println(err)
-			}
-			//collect the tags
-			for _, v := range tagcmd {
-				tagcmds = append(tagcmds, v.Tag)
-			}
-			//show them
-			switchutility.PrintColumnsWChosen(cols, atline, tagcmds, background, foreground)
-			//do a selection of tags
-			answers := switchutility.DigSingle(tagcmds, cols, background, foreground)
-			//get cmd by tag
-			selectedtag, err = tags.GetCMDByTag(answers)
-			if err != nil {
-				fmt.Println(err)
-			}
-			//let the user select cmd from the cmds that were from the tags
-			anstag := switchutility.Dig(selectedtag, cols, background, foreground)
-
-			return anstag
-
-		}
-
+		return search.Search(background, foreground, list, cols, atline)
 	case "select":
-		answers := switchutility.Dig(list, cols, background, foreground)
-		return answers
+		ans := switchselector.Dig(list, cols, background, foreground)
+		return ans
 	case "add":
-		listbash := []string{"bash", "custom"}
+		add.Add()
+	case "window":
+		window.Window()
+	default:
+		return results
+	}
+	return results
 
-		//print directions
-		switchutility.Directions()
+}
 
-		answerbash := switchutility.DigSingle(listbash, 1, "green", "red")
+func SwitchCall() {
+	logger := loggers.CreateLogger()
 
-		switch answerbash {
+	tt, err := tags.GetAll()
+	if err != nil {
+		logger.Error(
+			"getting all tags",
+			slog.String("error: ", err.Error()),
+		)
+	}
+	var CMDS []string
+	//turn into []string for the selector
+	for _, item := range tt {
+		CMDS = append(CMDS, item.CMD)
+	}
+	//function to search or select a command
+	answ := SwitchCol(CMDS, 6, "magenta", "purple")
+	answ = switchutility.RemoveDuplicateStr(answ)
+	if len(answ) > 1 {
 
-		case "bash":
-			fmt.Println("add a commnd..")
-			scanner := bufio.NewScanner(os.Stdin)
-			scanner.Scan()
-			inputcmd := scanner.Text()
-
-			fmt.Println("add a description..")
-			scannerdesc := bufio.NewScanner(os.Stdin)
-			scannerdesc.Scan()
-			inputnote := scannerdesc.Text()
-
-			fmt.Println("add a tag..")
-			scannertag := bufio.NewScanner(os.Stdin)
-			scannertag.Scan()
-			inputtag := scannertag.Text()
-			bash := "true"
-			tags.Create(inputcmd, inputnote, inputtag, bash)
-
-		case "custom":
-			fmt.Println("add a commnd..")
-			scanner := bufio.NewScanner(os.Stdin)
-			scanner.Scan()
-			inputcmd := scanner.Text()
-
-			fmt.Println("add a description..")
-			scannerdesc := bufio.NewScanner(os.Stdin)
-			scannerdesc.Scan()
-			inputdesc := scannerdesc.Text()
-
-			fmt.Println("add a tag..")
-			scannertag := bufio.NewScanner(os.Stdin)
-			scannertag.Scan()
-			inputtag := scannertag.Text()
-
-			fmt.Println("commands: ", inputcmd)
-			fmt.Println("description: ", inputdesc)
-			fmt.Println("tag: ", inputtag)
-			bash := "false"
-
-			tags.Create(inputcmd, inputdesc, inputtag, bash)
-
-			cmdcreator.Cmdcreator(inputcmd)
+		//get notes from selection
+		ta, err := tags.GetNoteByChosen(answ)
+		if err != nil {
+			logger.Error(
+				"getting all tags by note",
+				slog.String("error: ", err.Error()),
+			)
+		}
+		//Print them
+		for _, v := range ta {
+			colortermer.ColorizeOutPut("purple", "purple", "{ "+v.CMD+" ~")
+			colortermer.ColorizeOutPut("dpurple", "bpurple", "Notes: "+v.Note+" }")
+			fmt.Println("\n")
 
 		}
-
 	}
-
-	return results
 }

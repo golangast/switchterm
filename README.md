@@ -161,5 +161,5 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 * It is also number 1 language to go to and not from https://www.jetbrains.com/lp/devecosystem-2021/#Do-you-plan-to-adopt--migrate-to-other-languages-in-the-next--months-If-so-to-which-ones
 * Go is growing in all measures https://madnight.github.io/githut/#/stars/2023/3
 * Jobs are almost doubling every year. https://stacktrends.dev/technologies/programming-languages/golang/
-* Companies that use go. https://github.com/golang/go/wiki/GoUsers
+* Companies that use go. https://go.dev/wiki/GoUsers
 * Why I picked Go https://youtu.be/fD005g07cU4

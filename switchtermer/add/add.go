@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/switchtermer/cmdcreator"
@@ -27,6 +28,7 @@ func Add() {
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		inputcmd := scanner.Text()
+		stripcmd := strings.TrimSpace(inputcmd)
 
 		fmt.Println("add a description..")
 		scannerdesc := bufio.NewScanner(os.Stdin)
@@ -37,15 +39,17 @@ func Add() {
 		scannertag := bufio.NewScanner(os.Stdin)
 		scannertag.Scan()
 		inputtag := scannertag.Text()
+		striptag := strings.TrimSpace(inputtag)
 
 		bash := "true"
-		tags.Create(inputcmd, inputnote, inputtag, bash)
+		tags.Create(stripcmd, inputnote, striptag, bash)
 
 	case "custom":
 		fmt.Println("add a commnd..")
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		inputcmd := scanner.Text()
+		stripcmd := strings.TrimSpace(inputcmd)
 
 		fmt.Println("add a description..")
 		scannerdesc := bufio.NewScanner(os.Stdin)
@@ -56,13 +60,14 @@ func Add() {
 		scannertag := bufio.NewScanner(os.Stdin)
 		scannertag.Scan()
 		inputtag := scannertag.Text()
+		striptag := strings.TrimSpace(inputtag)
 
-		fmt.Println("commands: ", inputcmd)
-		fmt.Println("description: ", inputdesc)
-		fmt.Println("tag: ", inputtag)
+		// fmt.Println("commands: ", inputcmd)
+		// fmt.Println("description: ", inputdesc)
+		// fmt.Println("tag: ", inputtag)
 		bash := "false"
 
-		tags.Create(inputcmd, inputdesc, inputtag, bash)
+		tags.Create(stripcmd, inputdesc, striptag, bash)
 
 		cmdcreator.Cmdcreator(inputcmd)
 

@@ -2,6 +2,7 @@ package window
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"log/slog"
 	"os"
@@ -9,6 +10,7 @@ import (
 
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/db/sqlite/window"
+	"github.com/golangast/switchterm/switchtermer/cmdrunner"
 	"github.com/golangast/switchterm/switchtermer/loggers"
 
 	"github.com/golangast/switchterm/switchtermer/switchselector"
@@ -28,6 +30,55 @@ func Window() {
 	answer := switchselector.DigSingle(listwindow, 1, "green", "red")
 
 	switch answer {
+	case "run":
+		var names []string
+
+		fmt.Println("Choose your window?")
+		windows, err := window.GetAll()
+		if err != nil {
+			logger.Error(
+				"getting all windows",
+				slog.String("error: ", err.Error()),
+			)
+		}
+		for _, v := range windows {
+			names = append(names, v.Name)
+		}
+		answer := switchselector.DigSingle(names, 1, "green", "red")
+
+		w, err := window.GetWindowByName(answer)
+		if err != nil {
+			logger.Error(
+				"getting a window",
+				slog.String("error: ", err.Error()),
+			)
+		}
+
+		fmt.Println("Choose a tag")
+		slice := []string{}
+		err = json.Unmarshal([]byte(w.Tag), &slice)
+		if err != nil {
+			logger.Error(
+				"converting str to []string",
+				slog.String("error: ", err.Error()),
+			)
+		}
+		var cmds []string
+		answertag := switchselector.Dig(slice, 1, "green", "red")
+		for _, v := range answertag {
+			cmd, err := tags.GetCMDByTag(v)
+			if err != nil {
+				logger.Error(
+					"getting cmds",
+					slog.String("error: ", err.Error()),
+				)
+			}
+			cmds = append(cmds, cmd...)
+
+			cmdrunner.CmdRunner(cmds)
+
+		}
+
 	case "edit":
 		var names []string
 
@@ -58,9 +109,11 @@ func Window() {
 			tagnames = append(tagnames, v.Tag)
 		}
 
-		answertag := switchselector.DigSingle(tagnames, 1, "green", "red")
+		answertag := switchselector.Dig(tagnames, 1, "green", "red")
 
-		window.UpdateTag(answer, answertag)
+		str2 := strings.Join(answertag, " ")
+
+		window.UpdateTag(answer, str2)
 
 	case "create":
 		fmt.Println("What do you want to call this window?")

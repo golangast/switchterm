@@ -29,7 +29,6 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	lists := []string{"search", "select", "add", "window", "settings"}
 
 	//print directions
-	switchutility.Directions()
 
 	answer := switchselector.DigSingle(lists, 1, "purple", "purple")
 
@@ -45,9 +44,11 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 		window.Window()
 	case "settings":
 		settings.Settings()
+
 	default:
 		return results
 	}
+
 	return results
 
 }

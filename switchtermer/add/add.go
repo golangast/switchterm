@@ -41,8 +41,22 @@ func Add() {
 		inputtag := scannertag.Text()
 		striptag := strings.TrimSpace(inputtag)
 
+		fmt.Println("what is the directory of bashfile?")
+		scannerbash := bufio.NewScanner(os.Stdin)
+		scannerbash.Scan()
+		inputbashfile := scannerbash.Text()
+		stripbash := strings.TrimSpace(inputbashfile)
+
+		fmt.Println("what is the name of bashfile?")
+		scannerbashname := bufio.NewScanner(os.Stdin)
+		scannerbashname.Scan()
+		inputbashfilename := scannerbashname.Text()
+		stripbashname := strings.TrimSpace(inputbashfilename)
+
 		bash := "true"
-		tags.Create(stripcmd, inputnote, striptag, bash)
+
+		tags.Create(stripcmd, inputnote, striptag, bash, stripbash, stripbashname)
+		cmdcreator.CreateBashFile(stripbash, stripbashname)
 
 	case "custom":
 		fmt.Println("add a commnd..")
@@ -61,13 +75,9 @@ func Add() {
 		scannertag.Scan()
 		inputtag := scannertag.Text()
 		striptag := strings.TrimSpace(inputtag)
-
-		// fmt.Println("commands: ", inputcmd)
-		// fmt.Println("description: ", inputdesc)
-		// fmt.Println("tag: ", inputtag)
 		bash := "false"
 
-		tags.Create(stripcmd, inputdesc, striptag, bash)
+		tags.Create(stripcmd, inputdesc, striptag, bash, "", "")
 
 		cmdcreator.Cmdcreator(inputcmd)
 

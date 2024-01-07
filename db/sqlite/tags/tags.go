@@ -14,7 +14,7 @@ import (
 func GetNoteByChosen(cmds []string) ([]Tags, error) {
 
 	var tags []Tags
-	var id, cmd, note, tag, bash string
+	var id, cmd, note, tag, bash, bashfile, bashdir string
 
 	db, err := dbconn.DbConnection()
 	if err != nil {
@@ -25,11 +25,11 @@ func GetNoteByChosen(cmds []string) ([]Tags, error) {
 		return tags, err
 	}
 	for _, v := range cmds {
-		err = stmt.QueryRow(v).Scan(&id, &cmd, &note, &tag, &bash)
+		err = stmt.QueryRow(v).Scan(&id, &cmd, &note, &tag, &bash, &bashfile, &bashdir)
 		if err != nil {
 			return tags, err
 		}
-		t := Tags{ID: id, CMD: cmd, Note: note, Tag: tag, Bash: bash}
+		t := Tags{ID: id, CMD: cmd, Note: note, Tag: tag, Bash: bash, Bashfile: bashfile, Bashdir: bashdir}
 		tags = append(tags, t)
 	}
 	defer db.Close()
@@ -42,7 +42,8 @@ func GetNoteByChosen(cmds []string) ([]Tags, error) {
 		return tags, nil
 	}
 }
-func Create(cmd, note, tag, bash string) error {
+func Create(cmd, note, tag, bash, bashdir, bashfile string) error {
+
 	var err error
 	logger := loggers.CreateLogger()
 	db, err := dbconn.DbConnection()
@@ -52,7 +53,7 @@ func Create(cmd, note, tag, bash string) error {
 			slog.String("error: ", err.Error()),
 		)
 	}
-	stmt, err := db.Prepare("INSERT INTO `tags` ( `cmd`, `note`, `tag`, `bash`) VALUES ( ?,?, ?,?)")
+	stmt, err := db.Prepare("INSERT INTO `tags` ( `cmd`, `note`, `tag`, `bash`, `bashfile`, `bashdir`) VALUES ( ?,?, ?,?, ?, ?)")
 	if err != nil {
 		logger.Error(
 			"trying to prepare db statement",
@@ -60,7 +61,7 @@ func Create(cmd, note, tag, bash string) error {
 		)
 	}
 
-	_, err = stmt.Exec(cmd, note, tag, bash)
+	_, err = stmt.Exec(cmd, note, tag, bash, bashfile, bashdir)
 	if err != nil {
 		logger.Error(
 			"trying to execute db statement",
@@ -77,18 +78,18 @@ func GetCMD() (Tags, error) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	var id, cmd, note, tag, bash string
+	var id, cmd, note, tag, bash, bashfile, bashdir string
 	var t Tags
 	stmt, err := db.Prepare("SELECT * FROM tags WHERE cmd = ?")
 	if err != nil {
 		return t, err
 	}
 
-	err = stmt.QueryRow(cmd).Scan(&id, &cmd, &note, &tag, &bash)
+	err = stmt.QueryRow(cmd).Scan(&id, &cmd, &note, &tag, &bash, &bashfile, &bashdir)
 	if err != nil {
 		return t, err
 	}
-	t = Tags{ID: id, CMD: cmd, Note: note, Tag: tag, Bash: bash}
+	t = Tags{ID: id, CMD: cmd, Note: note, Tag: tag, Bash: bash, Bashfile: bashfile, Bashdir: bashdir}
 
 	defer db.Close()
 	defer stmt.Close()
@@ -103,7 +104,7 @@ func GetCMD() (Tags, error) {
 }
 
 func GetAll() ([]Tags, error) {
-	var id, cmd, note, tag, bash string
+	var id, cmd, note, tag, bash, bashfile, bashdir string
 	var ts []Tags
 	db, err := dbconn.DbConnection()
 	if err != nil {
@@ -116,12 +117,12 @@ func GetAll() ([]Tags, error) {
 		return ts, err
 	}
 	for rows.Next() {
-		err := rows.Scan(&id, &cmd, &note, &tag, &bash)
+		err := rows.Scan(&id, &cmd, &note, &tag, &bash, &bashfile, &bashdir)
 		if err != nil {
 			fmt.Println(err)
 			return ts, err
 		}
-		t := Tags{ID: id, CMD: cmd, Note: note, Tag: tag, Bash: bash}
+		t := Tags{ID: id, CMD: cmd, Note: note, Tag: tag, Bash: bash, Bashfile: bashfile, Bashdir: bashdir}
 		ts = append(ts, t)
 	}
 	//close everything
@@ -139,7 +140,7 @@ func GetAll() ([]Tags, error) {
 
 // https://golangbot.com/mysql-select-single-multiple-rows/
 func GetCMDByTag(tag string) ([]string, error) {
-	var id, cmd, note, bash string
+	var id, cmd, note, bash, bashfile, bashdir string
 	var tt []string
 	db, err := dbconn.DbConnection()
 	if err != nil {
@@ -153,7 +154,7 @@ func GetCMDByTag(tag string) ([]string, error) {
 	defer rows.Close()
 	defer db.Close()
 	for rows.Next() {
-		if err := rows.Scan(&id, &cmd, &note, &tag, &bash); err != nil {
+		if err := rows.Scan(&id, &cmd, &note, &tag, &bash, &bashfile, &bashdir); err != nil {
 			return tt, err
 		}
 		tt = append(tt, cmd)
@@ -218,9 +219,11 @@ func UpdateTag(name, tag string) {
 }
 
 type Tags struct {
-	ID   string `param:"id" query:"id" form:"id" json:"id" xml:"id"`
-	CMD  string `valid:"type(string),required" param:"cmd" query:"cmd" form:"cmd" json:"cmd" xml:"cmd" validate:"required,cmd" mod:"trim"`
-	Note string `valid:"type(string),required" param:"note" query:"note" form:"note" json:"note" xml:"note"`
-	Tag  string `valid:"type(string)" param:"tag" query:"tag" form:"tag" json:"tag" xml:"tag" validate:"required" mod:"trim"`
-	Bash string `valid:"type(string)" param:"bash" query:"bash" form:"bash" json:"bash" xml:"bash" validate:"required" mod:"trim"`
+	ID       string `param:"id" query:"id" form:"id" json:"id" xml:"id"`
+	CMD      string `valid:"type(string),required" param:"cmd" query:"cmd" form:"cmd" json:"cmd" xml:"cmd" validate:"required,cmd" mod:"trim"`
+	Note     string `valid:"type(string),required" param:"note" query:"note" form:"note" json:"note" xml:"note"`
+	Tag      string `valid:"type(string)" param:"tag" query:"tag" form:"tag" json:"tag" xml:"tag" validate:"required" mod:"trim"`
+	Bash     string `valid:"type(string)" param:"bash" query:"bash" form:"bash" json:"bash" xml:"bash" validate:"required" mod:"trim"`
+	Bashfile string `valid:"type(string)" param:"bashfile" query:"bashfile" form:"bashfile" json:"bashfile" xml:"bashfile" validate:"required" mod:"trim"`
+	Bashdir  string `valid:"type(string)" param:"bashdir" query:"bashdir" form:"bashdir" json:"bashdir" xml:"bashdir" validate:"required" mod:"trim"`
 }

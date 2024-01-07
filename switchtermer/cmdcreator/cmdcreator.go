@@ -72,3 +72,17 @@ func Cmdcreator(cmd string) {
 	}
 
 }
+
+func CreateBashFile(dir, file string) {
+	logger := loggers.CreateLogger()
+
+	// make file
+	_, err := ff.Filefolder("."+dir, file+".bash")
+	if err != nil {
+		logger.Error(
+			"trying to create bash file",
+			slog.String("error: ", err.Error()),
+		)
+	}
+
+}

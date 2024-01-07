@@ -20,7 +20,6 @@ func Dig(list []string, cols int, background, foreground string) []string {
 		remove bool
 		exes   bool
 	)
-	switchutility.ClearDirections()
 	//print in colunns
 	switchutility.PrintColumns(cols, atline, list, chosen, background, foreground)
 	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
@@ -75,7 +74,9 @@ func Dig(list []string, cols int, background, foreground string) []string {
 	//remove item after one has been chosen
 	remove = switchutility.RemoveItemWChosen(remove, list, chosen) //it is this way because you cannot call keyboard.Listen in itself
 
-	exes = cmdrunner.CmdRunner(exes, chosen)
+	if exes {
+		cmdrunner.CmdRunner(chosen)
+	}
 
 	return chosen
 }
@@ -89,41 +90,32 @@ func DigSingle(list []string, cols int, background, foreground string) string {
 		ans    string
 	)
 
-	switchutility.ClearDirections()
 	switchutility.PrintColumnsWChosen(cols, atline, list, background, foreground)
 	err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
+
 		//press arrows to change index to highlight selected item
 		switch key.String() {
 		case "up": //up arrow
-			//make it select up
 			atlines, run, err := switchutility.UP(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
-
 		case "down": //down arrow
-			//make it select down
 			atlines, run, err := switchutility.Down(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
-
 		case "right": //left arrow
-			//make it select right
 			atlines, run, err := switchutility.Right(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
-
 		case "left": //left arrow
-			//make it select left
 			atlines, run, err := switchutility.Left(atline, cols, background, foreground, list, chosen)
 			atline = atlines
 			return run, err
-
 		case "enter": //enter
 			ans = list[atline]
 			return true, nil
 		case "q", "esc", "c", "ctrl+c": //to quit
 			return true, nil
-
 		default:
 			fmt.Println(key.String())
 			return false, nil // Return false to continue listening

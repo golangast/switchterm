@@ -48,6 +48,10 @@ It stores commands in a sqlite database and their tags
  <p align="center">
 <img src="./readmeimages/ex.gif" alt="Alt text" title="Optional title">
 </p>
+<h1 align="center">Make bash files and run arguments in them</h1>
+ <p align="center">
+<img src="./readmeimages/bash.gif" alt="Alt text" title="Optional title">
+</p>
 
 ## Technologies
 Project is created with:

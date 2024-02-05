@@ -5,7 +5,7 @@ go 1.21.5
 require (
 	atomicgo.dev/keyboard v0.2.9
 	github.com/fatih/color v1.16.0
-	github.com/golangast/gentil v0.0.0-20231130135802-989fe2942325
+	github.com/golangast/gentil v0.0.0-20240203190046-df50137b967d
 	golang.org/x/text v0.14.0
 	modernc.org/sqlite v1.28.0
 )

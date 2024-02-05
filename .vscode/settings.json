@@ -9,5 +9,6 @@
             "name": "new"
         }
     ],
-    "sqltools.useNodeRuntime": true
+    "sqltools.useNodeRuntime": true,
+    "DockerRun.DisableAutoGenerateConfig": true
 }

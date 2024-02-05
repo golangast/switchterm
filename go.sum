@@ -25,8 +25,8 @@ github.com/dustin/go-humanize v1.0.1 h1:GzkhY7T5VNhEkwH0PVJgjz+fX1rhBrR7pRT3mDkp
 github.com/dustin/go-humanize v1.0.1/go.mod h1:Mu1zIs6XwVuF/gI1OepvI0qD18qycQx+mFykh5fBlto=
 github.com/fatih/color v1.16.0 h1:zmkK9Ngbjj+K0yRhTVONQh1p/HknKYSlNT+vZCzyokM=
 github.com/fatih/color v1.16.0/go.mod h1:fL2Sau1YI5c0pdGEVCbKQbLXB6edEj1ZgiY4NijnWvE=
-github.com/golangast/gentil v0.0.0-20231130135802-989fe2942325 h1:OFToL6fVi/f4UR/BQAtWH8wU/82mYowv6XlhHUkE7Bc=
-github.com/golangast/gentil v0.0.0-20231130135802-989fe2942325/go.mod h1:/NWQ9w8SnjuiArDwkH8djKJK8Q62kHD78PbVx9SAN7o=
+github.com/golangast/gentil v0.0.0-20240203190046-df50137b967d h1:Y9W1BcRpEcLQTLWGPyBiaSq7Akt8VgMa6xb1wZiREns=
+github.com/golangast/gentil v0.0.0-20240203190046-df50137b967d/go.mod h1:/NWQ9w8SnjuiArDwkH8djKJK8Q62kHD78PbVx9SAN7o=
 github.com/google/go-cmp v0.5.9 h1:O2Tfq5qg4qc4AmwVlvv0oLiVAGB7enBSJ2x2DqQFi38=
 github.com/google/go-cmp v0.5.9/go.mod h1:17dUlkBOakJ0+DkrSSNjCkIjxS6bF9zb3elmeNGIjoY=
 github.com/google/pprof v0.0.0-20221118152302-e6195bd50e26 h1:Xim43kblpZXfIBQsbuBVKCudVG457BR2GZFIz3uw3hQ=

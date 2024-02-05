@@ -21,10 +21,11 @@ github.com/dustin/go-humanize
 # github.com/fatih/color v1.16.0
 ## explicit; go 1.17
 github.com/fatih/color
-# github.com/golangast/gentil v0.0.0-20231130135802-989fe2942325
+# github.com/golangast/gentil v0.0.0-20240203190046-df50137b967d
 ## explicit; go 1.18
 github.com/golangast/gentil/utility/ff
 github.com/golangast/gentil/utility/temp
+github.com/golangast/gentil/utility/term
 github.com/golangast/gentil/utility/text
 # github.com/google/uuid v1.3.0
 ## explicit

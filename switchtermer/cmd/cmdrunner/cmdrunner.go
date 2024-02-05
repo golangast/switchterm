@@ -6,7 +6,6 @@ import (
 	"slices"
 
 	"github.com/golangast/switchterm/cmd/ff"
-	"github.com/golangast/switchterm/cmd/server"
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/loggers"
 	"github.com/golangast/switchterm/switchtermer/switch/switchutility"
@@ -34,9 +33,6 @@ func CmdRunner(chosen []string) {
 
 				case "ff":
 					ff.Ff()
-					break
-				case "server":
-					server.Server()
 					break
 					//#addcmd
 

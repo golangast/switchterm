@@ -1,4 +1,4 @@
-package gentil
+package ff
 
 import (
 	"errors"
@@ -25,7 +25,7 @@ func Makefile(p string) (*os.File, error) {
 	return file, nil
 }
 
-//make folder and file (sometimes needed to make sure go knows where they are or if they are generated yet)
+// make folder and file (sometimes needed to make sure go knows where they are or if they are generated yet)
 func Filefolder(folder, file string) (*os.File, error) {
 
 	p := filepath.FromSlash(folder + "/" + file)

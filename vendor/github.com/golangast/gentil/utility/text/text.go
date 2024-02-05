@@ -1,4 +1,4 @@
-package gentil
+package text
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-//f is for file, o is for old text, n is for new text
+// f is for file, o is for old text, n is for new text
 func UpdateText(f string, o string, n string) error {
 	input, err := ioutil.ReadFile(f)
 	if err != nil {

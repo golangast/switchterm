@@ -1,11 +1,10 @@
-package gentil
+package temp
 
 import (
 	"os"
 	"text/template"
 
 	"github.com/Masterminds/sprig/v3"
-
 )
 
 // write any template to file

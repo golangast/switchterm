@@ -1,126 +1,97 @@
 # goservershell
 
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=golangast&label=Profile%20views&color=0e75b6&style=flat" alt="golangast" /> </p>
+<p align="center">
+<img style="width:40%;" src="./readmeimages/term.webp" alt="Alt text" title="Optional title">
+</p>
 
-
-![GitHub repo file count](https://img.shields.io/github/directory-file-count/golangast/goservershell) 
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/golangast/goservershell)
-![GitHub repo size](https://img.shields.io/github/repo-size/golangast/goservershell)
-![GitHub](https://img.shields.io/github/license/golangast/goservershell)
-![GitHub commit activity](https://img.shields.io/github/commit-activity/w/golangast/goservershell)
+![GitHub repo file count](https://img.shields.io/github/directory-file-count/golangast/switchterm) 
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/golangast/switchterm)
+![GitHub repo size](https://img.shields.io/github/repo-size/golangast/switchterm)
+![GitHub](https://img.shields.io/github/license/golangast/switchterm)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/w/golangast/switchterm)
 ![Go 100%](https://img.shields.io/badge/Go-100%25-blue)
 ![status beta](https://img.shields.io/badge/Status-Beta-red)
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://getbootstrap.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" alt="bootstrap" width="40" height="40"/> </a> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> <a href="https://golang.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original.svg" alt="go" width="40" height="40"/> </a> <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> </p>
 
-## goservershell
-- [goservershell](#goservershell)
-  - [goservershell](#goservershell-1)
+  - [switchterm](#switchterm)
   - [General info](#general-info)
   - [Why build this?](#why-build-this)
   - [What does it do?](#what-does-it-do)
   - [Technologies](#technologies)
-  - [Non Go Technologies](#non-go-technologies)
   - [Requirements](#requirements)
-  - [Setup](#setup)
-  - [Commands](#commands)
   - [Repository overview](#repository-overview)
-<<<<<<< HEAD
-=======
-  - [Overview of the code.](#Overview-of-the-code)
->>>>>>> main
+  - [Overview of the code.](#Overview-of-the-code.)
   - [Things to remember](#things-to-remember)
+  - [Reference Commands](#reference-commands)
   - [Special thanks](#special-thanks)
+  - [Why Go?](#why-go)
+
 
 
 ## General info
-This project is a template for gonew and is used for setting up a webserver using echo framework.
+This project is a command line selection tool. 
+It stores commands in a sqlite database and their tags
 
 
 ## Why build this?
 * Go never changes
-* It is a nice way to start out a webserver without doing much
+* Wanted a easy quick way to run commands and search for them.
 
 
 ## What does it do?
-* It is in pure Go so faster build times and since Go never changes it will always compile.
-* No need for npm with assets because it concatenates and optimizes them (with min command)
-* Provides code for bare basic security
-* Allows for sending emails
-* Database setup (sqlite)
-* Has middleware support
-* Is scaffolding for apis, crud, security
-* Made a multi-part series on it 
-* 439 directories, 4037 files
-* [original](https://youtu.be/HJHCndEVoiA?si=dTewGeY4TlGSKo4_)
-* [part1](https://www.youtube.com/watch?v=Qgs7-FZaT9Q)
-* [part2](https://www.youtube.com/watch?v=y1w1y3m6I9k)
+* walkthrough [video](https://youtu.be/7Wdoy_aPr0c?feature=shared)  
 
+<h1 align="center">Change the directory of the commands and run them</h1>
+ <p align="center">
+<img src="./readmeimages/changedir.gif" alt="Alt text" title="Optional title">
+</p>
+<h1 align="center">You can even do search by tag</h1>
+ <p align="center">
+<img src="./readmeimages/search.gif" alt="Alt text" title="Optional title">
+<h1 align="center">Run multiple commands</h1>
+ <p align="center">
+<img src="./readmeimages/ex.gif" alt="Alt text" title="Optional title">
+</p>
+<h1 align="center">Make bash files and run arguments in them</h1>
+ <p align="center">
+<img src="./readmeimages/bash.gif" alt="Alt text" title="Optional title">
+</p>
 
 ## Technologies
 Project is created with:
-* [modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite) - database
-* [viper](https://github.com/spf13/cobra) - build cli commands
-* [echo](https://github.com/labstack/echo/v4) - web framework to shorten code
-* [sprig](https://github.com/Masterminds/sprig) - template functions
-* [imagecompression](https://github.com/nurlantulemisov/imagecompression) - image compression
-* [minify](https://github.com/tdewolff/minify) - assets optimization
-* [gomail](https://gopkg.in/gomail.v2) - email accessibility
-* [jwt](https://github.com/golang-jwt/jwt) - JWT authentication
-* [validator](https://github.com/go-playground/validator) - Validation
-* [GOW](https://github.com/bokwoon95/wgo) - for live reloading
+* [atomicgo.dev/keyboard](https://atomicgo.dev/keyboard) - For pressing keys
+* [https://pkg.go.dev/modernc.org/sqlite](https://pkg.go.dev/modernc.org/sqlite) - Basically for keeping state
 
-## Non Go Technologies
-* [Bootstrap](https://getbootstrap.com/) - Bootstrap
-* [jQuery](https://jquery.com/) - jQeury
-* [Materialize](https://materializecss.com/) - Materialize
+
 ## Requirements
 * go 1.21 for gonew
 
-## Setup
-Just use the new [gonew](https://go.dev/blog/gonew)
+## How to run as is?
 
+
+*- clone it
+```bash
+git clone https://github.com/golangast/switchterm
 ```
+* - or
+* - install gonew to pull down project quickly
+```bash
 go install golang.org/x/tools/cmd/gonew@latest
-
-gonew github.com/golangast/goservershell example.com/myserver
-
-go mod vendor
-
-
+```
+* - run gonew
+```bash
+gonew github.com/golangast/switchterm example.com/switchterm
 ```
 
-
-
-REMEMBER TO RUN 'go mod tidy' and 'go mod vendor' after to pull down dependencies
-
-REMEMBER TO CHANGE THE /OPTIMIZE/ASSETDIRECTORY.YAML TO YOUR REPO NAME!
-
-## Commands
-//to run the program
-```
-go run . st 
-
-```
-//to optimize assets. It optimizes whats in assets/build and then adds them to assets/optimized
-```
-go run . min 
-
+* - cd into switchterm
+```bash
+cd switchterm
 ```
 
-If you are familiar with https://github.com/bokwoon95/wgo then you can use the following to have live reloading.
--xdir means dont watch that dir
--dir means watch that directory
--verbose means print out the watching directory
+* - run the project
+```bash
+go run main.go
 ```
-wgo run -file .html -xdir vendor -xdir internal -xdir src -dir assets/templates -verbose  main.go st
-```
-
-REMEMBER! that your assets like js/css are in the assets/build folder and they are linked in the html
-from the assets/optimized folder.  You can always change this in the ./optimize config folder if you want.
-But the reloading will not pull new assets by default because it expects you to build them first so that
-they are linked all in one file.
 
 ## Repository overview
 ```bash
@@ -140,28 +111,64 @@ they are linked all in one file.
 
 ```
 
+## Overview of the code.
+1. allows for the user to select one from multiple values 
+```bash
+answer := DigSingle(lists, 1, "green", "red")
+```
+2. allows for the user to select many from multiple values
+```bash
+answer := Dig(lists, 1, "green", "red")
+```
+3. prints the selection and formats it.
+```bash
+switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
+```
+4. allows you to ask a question and save the value
+```bash
+       fmt.Println("add a commnd..")
+		scanner := bufio.NewScanner(os.Stdin)
+		scanner.Scan()
+		inputcmd := scanner.Text()
+```
+5. prints the directions and clears the terminal
+```bash
+ 	switchutility.ClearDirections()
+```
+6. allows you to start the keyboard key press selecting
+```bash
+         err := keyboard.Listen(func(key keys.Key) (stop bool, err error) {
+		switch key.String() {
+```
+
 ## Things to remember
-* 1. That this is a work in progress so things may not be 100% correct.
-* 2. That the asset path to the html by default are linked to assets/optimized folder
-* 3. That the js/css optimizations are not making function names single letter and do not like comments and may not like imports. (work around might be copy past from cdn).
-* 4. That templates folder is in assets folder 
-* 5. That you do need to configure the email with your credentials so that it actually works with the form.
-* 6. That this is just for learning and testing and of course needs to be refined on your end.
-* 7. That you still need to bring along templates and assets for the binary because I didnt want to have to build it every live reload.
-* 8. So yes, there is a lot that needs to be done before you just make a it a binary.
+* using atomicgo.dev/keyboard there is no way to call itself after a key press
 
+## Reference Commands
+* "enter" is to select
+* "c" is to select many
+* "r" is to remove
+* "x" is to execute
+* "q" is to quit
 
-
-
-<h3 align="left">Support:</h3>
-<p><a href="https://ko-fi.com/zacharyendrulat98451"> <img align="left" src="https://cdn.ko-fi.com/cdn/kofi3.png?v=3" height="50" width="210" alt="zacharyendrulat98451" /></a></p><br><br>
-
-
-
+## Licenses
+1. [GNU 3 for my code](https://github.com/golangast/switchterm/blob/main/LICENSE.md)
+2. [MIT License for atomicgo keyboard](https://github.com/atomicgo/keyboard/blob/main/LICENSE)
+3. [BSD-3-Clause for sqlite driver](https://pkg.go.dev/modernc.org/sqlite?tab=licenses) 
+4. [BSD-3-Clause for Go itself](https://github.com/golang/go/blob/master/LICENSE) 
 
 ## Special thanks
 * [Go Team because they are gods](https://github.com/golang/go/graphs/contributors)
-* [Creators of go echo](https://github.com/labstack/echo/graphs/contributors)
-* [Creators of go Viper](https://github.com/spf13/viper/graphs/contributors)
-* [Creators of sqlite and the go sqlite](https://gitlab.com/cznic/sqlite/-/project_members)
-* [Creator of go-ps ](https://github.com/mitchellh/go-ps/graphs/contributors)
+* [Creators of https://pkg.go.dev/modernc.org/sqlite - ](https://gitlab.com/cznic/sqlite/-/project_members)
+
+## Why Go?
+* The language is done since 1.0.https://youtu.be/rFejpH_tAHM there are little features that get added after 10 years but whatever you learn now will forever be useful.
+* It also has a compatibility promise https://go.dev/doc/go1compat
+* It was also built by great people. https://hackernoon.com/why-go-ef8850dc5f3c
+* 14th used language https://insights.stackoverflow.com/survey/2021
+* Highest starred language https://github.com/golang/go
+* It is also number 1 language to go to and not from https://www.jetbrains.com/lp/devecosystem-2021/#Do-you-plan-to-adopt--migrate-to-other-languages-in-the-next--months-If-so-to-which-ones
+* Go is growing in all measures https://madnight.github.io/githut/#/stars/2023/3
+* Jobs are almost doubling every year. https://stacktrends.dev/technologies/programming-languages/golang/
+* Companies that use go. https://go.dev/wiki/GoUsers
+* Why I picked Go https://youtu.be/fD005g07cU4

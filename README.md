@@ -1,7 +1,8 @@
 # Switchterm
  <p align="center">
-<img src="./readmeimages/term.webp" alt="Alt text" title="Optional title">
+<img style="width:40%;" src="./readmeimages/term.webp" alt="Alt text" title="Optional title">
 </p>
+
 ![GitHub repo file count](https://img.shields.io/github/directory-file-count/golangast/switchterm) 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/golangast/switchterm)
 ![GitHub repo size](https://img.shields.io/github/repo-size/golangast/switchterm)

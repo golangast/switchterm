@@ -48,7 +48,7 @@ func (u *Domains) GetDomain() (Domains, error) {
 	db, err := dbconn.DbConnection()
 	if err != nil {
 		logger.Error(
-			"connecting db for TLS",
+			"connecting to db for domains",
 			slog.String("error: ", err.Error()),
 		)
 	}
@@ -58,7 +58,7 @@ func (u *Domains) GetDomain() (Domains, error) {
 		github string
 	)
 	// get from database
-	stmt, err := db.Prepare("SELECT * FROM domains WHERE id = 1")
+	stmt, err := db.Prepare("SELECT * FROM domains")
 	if err != nil {
 		logger.Error(
 			"Select statement db for TLS",
@@ -99,4 +99,64 @@ func (u *Domains) GetDomain() (Domains, error) {
 type Domains struct {
 	Domain string
 	Github string
+}
+
+func (u *Domains) GetAllDomain() ([]Domains, error) {
+	logger := loggers.CreateLogger()
+
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		logger.Error(
+			"connecting to db for domains",
+			slog.String("error: ", err.Error()),
+		)
+	}
+	var (
+		id      int
+		domain  string
+		github  string
+		domains []Domains
+	)
+	rows, err := db.Query("SELECT * FROM domains")
+	if err != nil {
+		logger.Error(
+			"Select statement db for domains rows",
+			slog.String("error: ", err.Error()),
+		)
+	}
+	for rows.Next() {
+
+		err := rows.Scan(&id, &domain, &github)
+		if err != nil {
+			logger.Error(
+				"scanning rows for domains",
+				slog.String("error: ", err.Error()),
+			)
+		}
+
+		d := Domains{Domain: domain, Github: github}
+		domains = append(domains, d)
+
+	}
+
+	defer db.Close()
+	defer rows.Close()
+	switch err {
+	case sql.ErrNoRows:
+		logger.Error(
+			"no rows db for domains",
+			slog.String("error: ", sql.ErrNoRows.Error()),
+		)
+		return domains, nil
+
+	case nil:
+		logger.Error(
+			"nil rows db for domains",
+			slog.String("error: ", sql.ErrNoRows.Error()),
+		)
+		return domains, nil
+
+	default:
+		return domains, nil
+	}
 }

@@ -15,6 +15,7 @@ import (
 	"github.com/golangast/switchterm/loggers"
 	"github.com/golangast/switchterm/switchtermer/db/domain"
 	"github.com/golangast/switchterm/switchtermer/switch/colortermer"
+	"github.com/golangast/switchterm/switchtermer/switch/switchselector"
 	"golang.org/x/text/cases"
 	"golang.org/x/text/language"
 )
@@ -297,12 +298,28 @@ func GenHandler() {
 
 	//get folder and github
 	d := domain.Domains{}
-	domain, err := d.GetDomain()
+
+	dd, err := d.GetAllDomain()
 	if err != nil {
 		logger.Error(
-			"getting domain",
+			"getting domains",
 			slog.String("error: ", err.Error()),
 		)
+	}
+	var ds []string
+	for _, v := range dd {
+		ds = append(ds, v.Domain)
+
+	}
+
+	fmt.Println("which domain do you prefer to use?")
+	domainanswer := switchselector.Menu(ds, 1, "purple", "purple")
+
+	var dg string
+	for _, v := range dd {
+		if v.Domain == domainanswer {
+			dg = v.Github
+		}
 	}
 	//ask for handler and route
 	fmt.Println("What is the name of your handler?")
@@ -316,8 +333,11 @@ func GenHandler() {
 	routes := scannerroute.Text()
 	striproutes := strings.TrimSpace(routes)
 
+	fmt.Println(domainanswer+"/src/handler/get/"+striphandler+"/", striphandler+".go")
+	fmt.Println(domainanswer+"/assets/templates/"+striphandler+"/", striphandler+".html")
+
 	//create handler
-	handlerfile, err := ff.Filefolder(domain.Domain+"/src/handler/get/"+striphandler, striphandler+".go")
+	handlerfile, err := ff.Filefolder(domainanswer+"/src/handler/get/"+striphandler, striphandler+".go")
 	if err != nil {
 		logger.Error(
 			"trying to create handler file",
@@ -325,7 +345,7 @@ func GenHandler() {
 		)
 	}
 	//create template
-	tempfile, err := ff.Filefolder(domain.Domain+"/assets/templates/"+striphandler, striphandler+".html")
+	tempfile, err := ff.Filefolder(domainanswer+"/assets/templates/"+striphandler, striphandler+".html")
 	if err != nil {
 		logger.Error(
 			"trying to create tempfile file",
@@ -333,9 +353,9 @@ func GenHandler() {
 		)
 	}
 	//update route in route folder
-	found := text.FindTextNReturn(domain.Domain+"/src/routes/router.go", `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`)
+	found := text.FindTextNReturn(domainanswer+"/src/routes/router.go", `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`)
 	if found != `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)` {
-		err := text.UpdateText(domain.Domain+"/src/routes/router.go", "//getroute", `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`+"\n"+`//getroute`)
+		err := text.UpdateText(domainanswer+"/src/routes/router.go", "//getroute", `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`+"\n"+`//getroute`)
 		if err != nil {
 			logger.Error(
 				"trying to update router.go",
@@ -344,9 +364,10 @@ func GenHandler() {
 		}
 	}
 	//update the route.go for the import
-	found = text.FindTextNReturn(domain.Domain+"/src/routes/router.go", domain.Github+domain.Domain+"/src/handler/get/"+striproutes)
-	if found != `"`+domain.Github+domain.Domain+`/src/handler/get/`+striproutes+`"` {
-		err := text.UpdateText(domain.Domain+"/src/routes/router.go", "//importroute", `"`+domain.Github+domain.Domain+`/src/handler/get/`+striproutes+`"`+"\n"+`//importroute`)
+
+	found = text.FindTextNReturn(domainanswer+"/src/routes/router.go", dg+domainanswer+"/src/handler/get/"+striproutes)
+	if found != `"`+dg+domainanswer+`/src/handler/get/`+striproutes+`"` {
+		err := text.UpdateText(domainanswer+"/src/routes/router.go", "// importroute", `"`+dg+domainanswer+`/src/handler/get/`+striproutes+`"`+"\n"+`// importroute`)
 		if err != nil {
 			logger.Error(
 				"trying to update router.go for the import",
@@ -408,7 +429,7 @@ You created {{.route}}
 		)
 	}
 	//clean up the imports
-	out, errout, err := term.Shellout(`go mod tidy && go mod vendor`)
+	out, errout, err := term.Shellout(`cd ` + domainanswer + ` && go mod tidy && go mod vendor`)
 	if err != nil {
 		logger.Error(
 			"trying to pull down dependencies"+errout+out,

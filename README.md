@@ -39,7 +39,11 @@ It stores commands in a sqlite database and their tags
 
 
 ## What does it do?
-* walkthrough [video](https://youtu.be/7Wdoy_aPr0c?feature=shared)  
+* Made a multi-part series on it 
+* [original](https://youtu.be/HJHCndEVoiA?si=dTewGeY4TlGSKo4_)
+* [part1](https://www.youtube.com/watch?v=Qgs7-FZaT9Q)
+* [part2](https://www.youtube.com/watch?v=y1w1y3m6I9k)
+* 439 directories, 4037 files
 
 <h1 align="center">Change the directory of the commands and run them</h1>
  <p align="center">

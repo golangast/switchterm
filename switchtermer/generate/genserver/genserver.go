@@ -26,11 +26,12 @@ func Genserver() {
 	scannerdesc.Scan()
 	dir := scannerdesc.Text()
 	stripdir := strings.TrimSpace(dir)
-	fmt.Println("What is your the domain you are going to use for imports? (example/ or github.com/golangast/)")
+	fmt.Println("What is your the domain you are going to use for imports? (example github.com/golangast)")
 	scannergit := bufio.NewScanner(os.Stdin)
 	scannergit.Scan()
 	git := scannergit.Text()
 	stripgit := strings.TrimSpace(git)
+	stripgit = stripgit + "/"
 	d := domain.Domains{Domain: stripdir, Github: stripgit}
 
 	d.Create()
@@ -334,7 +335,7 @@ func GenHandler() {
 	//update route in route folder
 	found := text.FindTextNReturn(domain.Domain+"/src/routes/router.go", `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`)
 	if found != `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)` {
-		err := text.UpdateText(domain.Domain+"/src/routes/router.go", "//getroutes", `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`+"\n"+`//getroutes`)
+		err := text.UpdateText(domain.Domain+"/src/routes/router.go", "//getroute", `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`+"\n"+`//getroute`)
 		if err != nil {
 			logger.Error(
 				"trying to update router.go",
@@ -343,9 +344,9 @@ func GenHandler() {
 		}
 	}
 	//update the route.go for the import
-	found = text.FindTextNReturn(domain.Domain+"/src/routes/router.go", domain.Github+"/src/handler/get/"+striproutes)
-	if found != `"`+domain.Github+`/src/handler/get/`+striproutes+`"` {
-		err := text.UpdateText(domain.Domain+"/src/routes/router.go", "//imports", `"`+domain.Github+`/src/handler/get/`+striproutes+`"`+"\n"+`//imports`)
+	found = text.FindTextNReturn(domain.Domain+"/src/routes/router.go", domain.Github+domain.Domain+"/src/handler/get/"+striproutes)
+	if found != `"`+domain.Github+domain.Domain+`/src/handler/get/`+striproutes+`"` {
+		err := text.UpdateText(domain.Domain+"/src/routes/router.go", "//importroute", `"`+domain.Github+domain.Domain+`/src/handler/get/`+striproutes+`"`+"\n"+`//importroute`)
 		if err != nil {
 			logger.Error(
 				"trying to update router.go for the import",

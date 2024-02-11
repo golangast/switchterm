@@ -1,7 +1,7 @@
 # Switchterm
  <p align="center">
 <img style="width:40%;" src="./readmeimages/term.webp" alt="Alt text" title="Optional title">
-</p>
+
 
 ![GitHub repo file count](https://img.shields.io/github/directory-file-count/golangast/switchterm) 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/golangast/switchterm)
@@ -25,7 +25,7 @@
   - [Special thanks](#special-thanks)
   - [Why Go?](#why-go)
 
-
+</p>
 
 ## General info
 This project is a command line selection tool. 

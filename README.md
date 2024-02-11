@@ -1,7 +1,7 @@
-# goservershell
+# switchterm
 
 <p align="center">
-<img style="width:40%;" src="./readmeimages/termglow.gif" alt="Alt text" title="Optional title">
+<img style="width:60%;" src="./readmeimages/termglow.gif" alt="Alt text" title="Optional title">
 </p>
 
 ![GitHub repo file count](https://img.shields.io/github/directory-file-count/golangast/switchterm) 

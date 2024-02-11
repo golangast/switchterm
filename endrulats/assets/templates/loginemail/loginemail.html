@@ -1,0 +1,31 @@
+{{ template "header" . }}
+
+you have made it
+
+<p>here is some data from the database</p>
+{{if .users}}
+
+{{index .users.Email}}
+
+{{end}}
+
+
+<ul rel="prefetch" class="nav nav-tabs" id="toptab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link " id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
+      aria-controls="contact" aria-selected="true">Contact Me</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab"
+      aria-controls="about" aria-selected="true">About</button>
+  </li>
+ 
+</ul>
+<div class="tab-content" id="myTabContent">
+
+  {{ template "contact" . }}
+  {{ template "about" . }}
+
+</div>
+
+{{ template "footer" . }}

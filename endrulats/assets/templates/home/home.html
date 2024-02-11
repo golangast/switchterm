@@ -1,0 +1,77 @@
+{{ template "header" . }}
+<ul rel="prefetch"  class="nav nav-tabs tabshadow" id="toptab" role="tablist" >
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="about-tab active" data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab"
+      aria-controls="about" aria-selected="true">About</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="tech-tab active" data-bs-toggle="tab" data-bs-target="#tech" type="button" role="tab"
+      aria-controls="tech" aria-selected="true">Tech used to build this site.</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab"
+      aria-controls="history" aria-selected="true">History</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link tabshadow" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
+      aria-controls="contact" aria-selected="true">Contact Me</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="about-tab" data-bs-toggle="tab" data-bs-target="#projects" type="button" role="tab"
+      aria-controls="projects" aria-selected="true">Projects</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="resources-tab" data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab"
+      aria-controls="resources" aria-selected="true">Resources</button>
+  </li>
+
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="pizza-tab" data-bs-toggle="tab" data-bs-target="#pizza" type="button" role="tab"
+      aria-controls="pizza" aria-selected="true">Pizza</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="current-tab" data-bs-toggle="tab" data-bs-target="#current" type="button" role="tab"
+      aria-controls="current" aria-selected="true">Current</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab"
+      aria-controls="profile" aria-selected="true">Profile</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="game-tab" data-bs-toggle="tab" data-bs-target="#game" type="button" role="tab"
+      aria-controls="game" aria-selected="true">game</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+
+  <div class=" floatbar">
+    <div id="list-example" class="list-group">
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="about-tab " data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true">About</a>
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="tech-tab " data-bs-toggle="tab" data-bs-target="#tech" type="button" role="tab" aria-controls="tech" aria-selected="true">Tech used</a>
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="history-tab " data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab" aria-controls="history" aria-selected="true">History</a>
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="contact-tab " data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="true">Contact Me</a>
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="projects-tab " data-bs-toggle="tab" data-bs-target="#projects" type="button" role="tab" aria-controls="projects" aria-selected="true">Projects</a>
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="resources-tab " data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab" aria-controls="resources" aria-selected="true">Resources</a>
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="pizza-tab " data-bs-toggle="tab" data-bs-target="#pizza" type="button" role="tab" aria-controls="pizza" aria-selected="true">Pizza</a>
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="profile-tab " data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</a>
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="current-tab  " data-bs-toggle="tab" data-bs-target="#current" type="button" role="tab" aria-controls="current" aria-selected="true">Current</a>
+      <a class="floatbar-bars list-group-item list-group-item-action"  id="current-tab  " data-bs-toggle="tab" data-bs-target="#game" type="button" role="tab" aria-controls="game" aria-selected="true">game</a>
+        {{if .U}}
+       Welcome! {{.U.Email}}
+        {{end}}
+        </a>
+    </div>
+  </div>
+  {{ template "contact" . }}
+  {{ template "about" . }}
+  {{ template "projects" . }}
+  {{ template "resources" . }}
+  {{ template "blog" . }}
+  {{ template "pizza" . }}
+  {{ template "tech" . }}
+  {{ template "history" . }}
+  {{ template "profile" . }}
+  {{ template "current" . }}
+  {{ template "game" . }}
+</div>
+{{ template "footer" . }}

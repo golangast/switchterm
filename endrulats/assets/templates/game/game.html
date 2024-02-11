@@ -1,0 +1,75 @@
+{{define "game"}}
+<div rel="prefetch" class="tab-pane fade" id="game" role="tabpanel" aria-labelledby="game-tab">
+    <div class="show"></div>
+    <div id="pane">
+        <!-- character -->
+        <div class="box1" id="box" class="character">
+            <img loading="lazy" nonce="{{ .nonce }}" src="img/game/img/gpurple.png">
+        </div>
+
+        <!-- houses -->
+        <div id="box2" class="d box2">
+            <img loading="lazy" nonce="{{ .nonce }}" src="img/game/img/houserock.gif">
+
+            <div class="titlehouse center new badge purple">Zach's House</div>
+
+        </div>
+        <div id="box3" class="d box3">
+            <img loading="lazy" nonce="{{ .nonce }}" src="img/game/img/question.png">
+
+            <div class="titlehouse center new badge red">Builder House</div>
+        </div>
+
+        <div id="box4" class="d box4">
+            <img loading="lazy" nonce="{{ .nonce }}" src="img/game/img/homeserver.gif">
+            <div class="titlehouse center new badge blue">Beginner House</div>
+
+        </div>
+
+        <!-- popups  -->
+        <div class="popup-overlay popups zachhouse">
+            <!--Creates the popup content-->
+            <div class="popup-content zachhouse">
+                {{ template "zachhouse" . }}
+                <!--popup's close button-->
+            </div>
+        </div>
+        <div class="popup-overlay popups beginpopup">
+            <!--Creates the popup content-->
+            <div class="popup-content beginpopup">
+                {{ template "beginner" . }}
+                <!--popup's close button-->
+            </div>
+        </div>
+        <div class="popup-overlay popups builderpopup">
+            <!--Creates the popup content-->
+            <div class="popup-content builderpopup">
+                {{ template "builder" . }}
+                <!--popup's close button-->
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+    <br>
+    <div class="row">
+        <div class="col s12 m7">
+          <div class="card">
+            <div class="card-image">
+              <span class="card-title">About the Game</span>
+            </div>
+            <div class="card-content">
+              <p>Welcome to my game.  Here you will learn to play and learn!</p>
+              <p>To move you just use the arrow keys and you use the space bar to enter the houses. - REMEMBER YOU HAVE TO BE FULLY IN THE HOUSES TO ENTER</p>
+              <p>Does not work on mobile yet</p>
+              <p>The game was made entirely with canvas that is in vanilla js and jqeury and using - <a href="https://www.piskelapp.com/p/create/sprite" target="_blank">Piskelapp</a></p>.
+              <p>I made the pixel art and character in it.</p>.
+            </div>
+            
+          </div>
+        </div>
+      </div>
+   
+</div>
+{{ end}}

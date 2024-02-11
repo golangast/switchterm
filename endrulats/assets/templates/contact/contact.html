@@ -1,0 +1,54 @@
+{{define "contact"}}
+<div class="tab-pane fade " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+    <meta name="description" content="Contact me about information and sign up">
+    <meta name="keywords" content="zachary endrulat contact">
+    <meta name="author" content="zachary endrulat">
+    <meta name="robots" content="follow, index">
+ <h1 class="list-item-3 tac center">Contact Me</h1>
+
+
+
+<nav class="nav-form">
+    <div class="nav nav-tabs " id="nav-tab" role="tablist">
+        <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button"
+            role="tab" aria-controls="nav-home" aria-selected="true">Sign up</button>
+        <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button"
+            role="tab" aria-controls="nav-profile" aria-selected="false">Sign-in</button>
+       
+    </div>
+</nav>
+
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade  " id="nav-profile" role="tabpanel" aria-labelledby="nav-home-tab">
+     
+        <form class="forms"  action="/userlogin" method="POST">
+            <label for="email">email</label>
+            <input type="text" id="email" name="email" value="jj@gmail.com"><br>
+            <label for="passwordraw">Password</label>
+            <input type="text" id="passwordraw" name="passwordraw" value="aa">
+            <input class="hide" type="text" id="sitetoken" name="sitetoken" value={{.t}}>
+            <input type="submit" value="Submit">
+        </form>
+
+    </div>
+    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-profile-tab">
+       
+        <form class="para" action="/usercreate" method="POST">
+    <label for="email">Email</label>
+            <input type="text" id="email" name="email" value="some@gasd">
+  
+            <label for="passwordraw">Password</label>
+            <input type="text" id="passwordraw" name="passwordraw" value="aa">
+            
+            <input class="hide" type="text" id="sitetoken" name="sitetoken" value={{.t}}>
+            <input type="submit" value="Submit">
+        </form>
+        {{ if .exists}}<h2 class="warning">Input was not correct.</h2>{{else}} {{end}} 
+        {{ if .Ex}}<h2 class="warning">Input was not correct.</h2>{{else}} {{end}}
+    
+      
+    </div>
+</div>
+ 
+</div>
+{{end}}

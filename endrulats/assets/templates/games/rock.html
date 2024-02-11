@@ -1,0 +1,149 @@
+{{define "rock"}}
+<div style="background:#a3a1a147">
+    <div class="watch">
+        <span>
+            <!-- guy -->
+            <img src=" /static/img/walk.gif" alt="">
+            <!-- hand -->
+            <img class="badguy" src="/static/img/rock.gif" alt="">
+        </span>
+    </div>
+    <div class="watchright">
+        <span>
+            <!-- guy -->
+            <img src="/static/img/back.gif" alt="">
+            <!-- hand -->
+            <img class="goodguy" src="/static/img/scissors.gif" alt="">
+        </span>
+    </div>
+    <div>
+        <span class="timer">
+            <span class="time">10</span>Seconds
+        </span>
+    </div>
+
+    <div class="collection answer">
+        <a href="#!" class="collection-item s i">Scissors</a>
+        <a href="#!" class="collection-item r i">Rock</a>
+        <a href="#!" class="collection-item p i">Paper</a>
+    </div>
+    <div class="buttons">
+        <button onclick="play();">play</button>
+        <button class="close">Close</button>
+    </div>
+</div>
+<script>
+    //ramdomize
+    function randomIntFromInterval(min, max) { // min and max included
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+    const rndInt = randomIntFromInterval(0, 3)
+    var badguy;
+    var goodguy;
+
+    function play() {
+        var counter = 10;
+        clearInterval(interval);
+
+        switch (rndInt) {
+            case 1:
+                $(".badguy").attr("src", "/static/img/scissors.gif");
+                badguy = "s";
+            case 2:
+                $(".badguy").attr("src", "/static/img/rock.gif");
+                badguy = "r";
+            case 3:
+                $(".badguy").attr("src", "/static/img/paper.gif");
+                badguy = "p";
+        }
+        $(".timer").html('<span class="time">10</span>Seconds');
+
+
+        var interval = setInterval(function() {
+            counter--;
+            if (counter == 0) {
+
+                switch (counter == 0) {
+                    case (badguy == "s" && goodguy == "s"):
+                        $('.timer').html("<h3>Draw</h3>");
+                        break;
+                    case (badguy == "s" && goodguy == "r"):
+                        $('.timer').html("<h3>You win!!!</h3>");
+                        break;
+                    case (badguy == "s" && goodguy == "p"):
+                        $('.timer').html("<h3>You lose!!!</h3>");
+                        break;
+                    case (badguy == "r" && goodguy == "r"):
+                        $('.timer').html("<h3>Draw</h3>");
+                        break;
+                    case (badguy == "r" && goodguy == "p"):
+                        $('.timer').html("<h3>You Lose!!!</h3>");
+                        break;
+                    case (badguy == "r" && goodguy == "s"):
+                        $('.timer').html("<h3>You Win!!!</h3>");
+                        break;
+                    case (badguy == "p" && goodguy == "r"):
+                        $('.timer').html("<h3>You Win!!!</h3>");
+                        break;
+                    case (badguy == "p" && goodguy == "p"):
+                        $('.timer').html("<h3>Draw</h3>");
+                        break;
+                    case (badguy == "p" && goodguy == "s"):
+                        $('.timer').html("<h3>You Win!!!</h3>");
+                        break;
+                    default:
+                        console.log("default");
+                }
+                counter = 10;
+            } else {
+                $('.time').text(counter);
+            }
+        }, 1000);
+        $(".s").click(function() {
+            $(".s").css("border", "1px solid blue");
+            $(".goodguy").attr("src", "/static/img/scissors.gif");
+            goodguy = "s";
+        });
+        $(".r").click(function() {
+            $(".r").css("border", "1px solid blue");
+            $(".goodguy").attr("src", "/static/img/rock.gif");
+            goodguy = "r";
+        });
+        $(".p").click(function() {
+            $(".p").css("border", "1px solid blue");
+            $(".goodguy").attr("src", "/static/img/paper.gif");
+            goodguy = "p";
+        });
+    }
+</script>
+<style>
+    .watch img {
+        float: left;
+        width: 25%;
+    }
+
+    .watchright img {
+        float: right;
+        width: 25%;
+    }
+
+    .answer {
+        width: 40%;
+    }
+
+    .answer i {
+        width: 10%;
+        float: left;
+    }
+
+    .buttons {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .buttons button {
+        float: left;
+        width: 49%;
+    }
+</style>
+{{end}}

@@ -1,10 +1,7 @@
 # Switchterm
- <p align="center">
-<img style="width:40%;" src="./readmeimages/term.webp" alt="Alt text" title="Optional title">
-</p>
 
- <p style="justify-content:center">
-	 
+<img style="width:40%;" src="./readmeimages/term.webp" alt="Alt text" title="Optional title">
+
 ![GitHub repo file count](https://img.shields.io/github/directory-file-count/golangast/switchterm) 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/golangast/switchterm)
 ![GitHub repo size](https://img.shields.io/github/repo-size/golangast/switchterm)
@@ -13,8 +10,6 @@
 ![Go 100%](https://img.shields.io/badge/Go-100%25-blue)
 ![status beta](https://img.shields.io/badge/Status-Beta-red)
 
-</p>
-
   - [switchterm](#switchterm)
   - [General info](#general-info)
   - [Why build this?](#why-build-this)
@@ -22,12 +17,11 @@
   - [Technologies](#technologies)
   - [Requirements](#requirements)
   - [Repository overview](#repository-overview)
-  - [Overview of the code.](#Overview-of-the-code.)
+  - [Overview of the code.](#Overview-of-the-code)
   - [Things to remember](#things-to-remember)
   - [Reference Commands](#reference-commands)
   - [Special thanks](#special-thanks)
   - [Why Go?](#why-go)
-
 
 
 ## General info

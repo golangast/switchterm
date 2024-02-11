@@ -4,6 +4,7 @@ go 1.21.5
 
 require (
 	atomicgo.dev/keyboard v0.2.9
+	github.com/Masterminds/sprig/v3 v3.2.3
 	github.com/fatih/color v1.16.0
 	github.com/golangast/gentil v0.0.0-20240203190046-df50137b967d
 	golang.org/x/text v0.14.0
@@ -13,7 +14,6 @@ require (
 require (
 	github.com/Masterminds/goutils v1.1.1 // indirect
 	github.com/Masterminds/semver/v3 v3.2.0 // indirect
-	github.com/Masterminds/sprig/v3 v3.2.3 // indirect
 	github.com/containerd/console v1.0.3 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/google/uuid v1.3.0 // indirect

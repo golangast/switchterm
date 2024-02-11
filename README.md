@@ -65,7 +65,7 @@ It stores commands in a sqlite database and their tags
 </p>
 <h1 align="center">Generate your server</h1>
  <p align="center">
-<img src="./readmeimages/server.gif" alt="Alt text" title="Optional title">
+<img src="./readmeimages/servers.gif" alt="Alt text" title="Optional title">
 </p>
 <h1 align="center">Generate your get handlers</h1>
  <p align="center">

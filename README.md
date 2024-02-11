@@ -26,9 +26,12 @@
   - [Setup](#setup)
   - [Commands](#commands)
   - [Repository overview](#repository-overview)
+<<<<<<< HEAD
+=======
+  - [Overview of the code.](#Overview-of-the-code)
+>>>>>>> main
   - [Things to remember](#things-to-remember)
   - [Special thanks](#special-thanks)
-
 
 
 ## General info

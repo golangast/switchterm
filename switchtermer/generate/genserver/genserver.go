@@ -26,7 +26,7 @@ func Genserver() {
 	scannerdesc.Scan()
 	dir := scannerdesc.Text()
 	stripdir := strings.TrimSpace(dir)
-	fmt.Println("What is your the domain name you are going to use for githhub?")
+	fmt.Println("What is your the domain you are going to use for imports? (example/ or github.com/golangast/)")
 	scannergit := bufio.NewScanner(os.Stdin)
 	scannergit.Scan()
 	git := scannergit.Text()
@@ -37,7 +37,8 @@ func Genserver() {
 	colortermer.ColorizeOutPut("purple", "purple", "CREATING SERVER! THIS MAY TAKE A FEW SECONDS...")
 	fmt.Println("\n")
 
-	out, errout, err := term.Shellout("go install golang.org/x/tools/cmd/gonew@latest && gonew github.com/golangast/genserv example.com/" + stripdir + "")
+	out, errout, err := term.Shellout("go install golang.org/x/tools/cmd/gonew@latest && gonew github.com/golangast/genserv " + stripgit + stripdir + " && cd " + stripdir +
+		" && go mod init " + stripgit + stripdir + " && go mod tidy && go mod vendor")
 	if err != nil {
 		logger.Error(
 			"pulling down genserv",

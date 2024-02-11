@@ -4,6 +4,7 @@
 <img style="width:60%;" src="./readmeimages/termglow.gif" alt="Alt text" title="Optional title">
 </p>
 
+
 ![GitHub repo file count](https://img.shields.io/github/directory-file-count/golangast/switchterm) 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/golangast/switchterm)
 ![GitHub repo size](https://img.shields.io/github/repo-size/golangast/switchterm)
@@ -11,7 +12,9 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/golangast/switchterm)
 ![Go 100%](https://img.shields.io/badge/Go-100%25-blue)
 ![status beta](https://img.shields.io/badge/Status-Beta-red)
-<img src="https://img.shields.io/github/license/golangast/switchterm.svg"><img src="https://img.shields.io/github/stars/golangast/switchterm.svg">[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://endrulats.com)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/gomods/athens.svg)](https://github.com/golangast/switchterm)[![GoDoc reference example](https://img.shields.io/badge/godoc-reference-blue.svg)](https://pkg.go.dev/github.com/golangast/switchterm/switchtermer)[![GoReportCard example](https://goreportcard.com/badge/github.com/golangast/switchterm)](https://goreportcard.com/report/github.com/golangast/switchterm)
+<img src="https://img.shields.io/github/license/golangast/switchterm.svg"><img src="https://img.shields.io/github/stars/golangast/switchterm.svg">[![Website shields.io](https://img.shields.io/website-up-down-green-red/http/shields.io.svg)](http://endrulats.com)[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity)[![GitHub go.mod Go version of a Go module](https://img.shields.io/github/go-mod/go-version/gomods/athens.svg)](https://github.com/golangast/switchterm)[![GoDoc reference example](https://img.shields.io/badge/godoc-reference-blue.svg)](https://pkg.go.dev/github.com/golangast/switchterm/switchtermer)[![GoReportCard example](https://goreportcard.com/badge/github.com/golangast/switchterm)](https://goreportcard.com/report/github.com/golangast/switchterm)[![Naereen's github streak][![saythanks](https://img.shields.io/badge/say-thanks-ff69b4.svg)](https://saythanks.io/to/kennethreitz)
+
+(https://github-readme-streak-stats.herokuapp.com/?user=golangast&theme=blue-green)](https://github.com/DenverCoder1/github-readme-streak-stats)
 
 
   - [switchterm](#switchterm)

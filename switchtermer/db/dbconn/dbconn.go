@@ -26,6 +26,7 @@ func DbConnection() (*sql.DB, error) {
 
 	return db, nil
 } //end of connect
+
 func ErrorCheck(err error) {
 	if err != nil {
 		fmt.Println(err.Error())

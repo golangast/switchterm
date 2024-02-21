@@ -60,7 +60,7 @@ func FindTextNReturn(p, str string) string {
 	}
 
 	// fmt.Println("Reading from file.")
-	fmt.Println(string(text))
+	//fmt.Println(string(text))
 
 	return ""
 }

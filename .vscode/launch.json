@@ -27,7 +27,29 @@
                 "--check-go-version=false"
             ]
         },
-       
+        {
+            "name": "test",
+            "type": "go",
+            "request": "launch",
+            // "debugAdapter": "dlv-dap",
+            "mode": "auto",
+            "program": "${workspaceFolder}/test/main.go",
+            "env": {},
+            // "args": [
+            //     "test"
+            // ],
+            //"console": "integratedTerminal",
+            "dlvLoadConfig": {
+                "followPointers": true,
+                "maxVariableRecurse": 1,
+                "maxStringLen": 512,
+                "maxArrayValues": 64,
+                "maxStructFields": -1
+            },
+            "dlvFlags": [
+                "--check-go-version=false"
+            ]
+        },
       
     ]
 }

@@ -8,13 +8,13 @@ import (
 
 func Generate() {
 	//list of selections
-	listbash := []string{"server", "certificates", "tls", "dev", "gethandler"}
+	listbash := []string{"server", "certificates", "tls", "dev", "create handler", "create data", "add data to handler"}
 
 	//print directions
 	switchutility.Directions()
 
 	//print selection
-	answerbash := switchselector.DigSingle(listbash, 1, "green", "red")
+	answerbash := switchselector.DigSingle(listbash, 1, "purple", "red")
 
 	//choose selection
 	switch answerbash {
@@ -26,7 +26,11 @@ func Generate() {
 		genserver.TLS()
 	case "dev":
 		genserver.Dev()
-	case "gethandler":
+	case "create handler":
 		genserver.GenHandler()
+	case "create data":
+		genserver.CreateData()
+	case "add data to handler":
+		genserver.AddDataToHandler()
 	}
 }

@@ -1,0 +1,21 @@
+{{ template "header" . }}
+<link rel="stylesheet" media="all" rel="preload" {{ .nonce }} href="css/game.css">
+
+<ul id="messages"></ul>
+<div class="guy">guy</div>
+<!-- closest -->
+<div class="cont">
+    <div class="guy1"></div>
+    <div class="guy2"></div>
+    <div class="guy3"></div>
+</div>
+<div class="name">
+    <input class="names" name="name" type="text">
+</div>
+<a class="outsides" href="/#">
+    <div class="outside">Outside</div>
+</a>
+<script rel="prefetch"  type="text/javascript" src="js/game/house.js" {{ .nonce }} defer></script>
+
+
+{{ template "footer" . }}

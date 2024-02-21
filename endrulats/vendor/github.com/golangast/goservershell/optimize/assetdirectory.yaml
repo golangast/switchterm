@@ -1,0 +1,8 @@
+opt:
+  appname: "goservershell"
+  repo: "github.com/golangast/goservershell"
+  cssin: ./assets/build/css
+  cssout: ./assets/optimized/css/min776150125088482366113625246641026614319376030547615997336373054870.css
+  jsin: ./assets/build/js
+  jsout: ./assets/optimized/js/min9922975421474777341186155998022590132533548734613373604889186034060.js
+  imgin: ./assets/optimized/img

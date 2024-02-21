@@ -61,14 +61,14 @@ func (u *Domains) GetDomain() (Domains, error) {
 	stmt, err := db.Prepare("SELECT * FROM domains")
 	if err != nil {
 		logger.Error(
-			"Select statement db for TLS",
+			"Select statement db for getting domain",
 			slog.String("error: ", err.Error()),
 		)
 	}
 	err = stmt.QueryRow(&id).Scan(&id, &domain, &github)
 	if err != nil {
 		logger.Error(
-			"querying db for TLS",
+			"querying db for scanning domain",
 			slog.String("error: ", err.Error()),
 		)
 	}
@@ -79,20 +79,70 @@ func (u *Domains) GetDomain() (Domains, error) {
 	switch err {
 	case sql.ErrNoRows:
 		logger.Error(
-			"no rows db for TLS",
+			"no rows db for getting domain",
 			slog.String("error: ", sql.ErrNoRows.Error()),
 		)
 		return d, nil
 
 	case nil:
 		logger.Error(
-			"nil rows db for TLS",
+			"nil rows db for getting domain",
 			slog.String("error: ", sql.ErrNoRows.Error()),
 		)
 		return d, nil
 
 	default:
 		return d, nil
+	}
+}
+
+func (u *Domains) GetGitByDomain() (string, error) {
+	logger := loggers.CreateLogger()
+
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		logger.Error(
+			"connecting to db for domains",
+			slog.String("error: ", err.Error()),
+		)
+	}
+	var (
+		id     int
+		domain string
+		github string
+	)
+	// get from database
+	stmt, err := db.Prepare("SELECT * FROM domains WHERE domain = ?")
+	if err != nil {
+		logger.Error(
+			"Select statement db for getting githbu",
+			slog.String("error: ", err.Error()),
+		)
+	}
+	err = stmt.QueryRow(&u.Domain).Scan(&id, &domain, &github)
+	if err != nil {
+		logger.Error(
+			"querying db for github",
+			slog.String("error: ", err.Error()),
+		)
+	}
+
+	defer db.Close()
+	defer stmt.Close()
+	switch err {
+	case sql.ErrNoRows:
+		logger.Error(
+			"no rows db for getting github",
+			slog.String("error: ", sql.ErrNoRows.Error()),
+		)
+		return github, nil
+
+	case nil:
+
+		return github, nil
+
+	default:
+		return github, nil
 	}
 }
 

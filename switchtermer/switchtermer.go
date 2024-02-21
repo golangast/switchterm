@@ -8,7 +8,6 @@ import (
 	"github.com/golangast/switchterm/loggers"
 	"github.com/golangast/switchterm/switchtermer/cmd/add"
 	"github.com/golangast/switchterm/switchtermer/cmd/search"
-	"github.com/golangast/switchterm/switchtermer/data"
 	"github.com/golangast/switchterm/switchtermer/generate"
 	"github.com/golangast/switchterm/switchtermer/settings"
 	"github.com/golangast/switchterm/switchtermer/switch/colortermer"
@@ -23,7 +22,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	var results []string // append to results
 
 	//commands available
-	lists := []string{"where to begin?", "settings", "search", "select", "add", "window", "data", "generate"}
+	lists := []string{"where to begin?", "settings", "search", "select", "add", "window", "generate"}
 
 	answer := switchselector.Menu(lists, 2, "purple", "purple")
 
@@ -41,8 +40,6 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 		add.Add()
 	case "window":
 		window.Window()
-	case "data":
-		data.Data()
 	case "settings":
 		settings.Settings()
 	case "generate":

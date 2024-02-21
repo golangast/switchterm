@@ -1,0 +1,147 @@
+{{define "questions"}}
+<div class="p">
+    Exercises
+    <br>
+    <button class="btn" style="float: right;margin: 3%;">Next</button>
+    <div class="q"></div>
+</div>
+
+<div class="p con" style="background:#a3a1a147">
+    <div class="g" style="width: 12%;">
+        <img src="/game/img/gophers.png">
+
+    </div>
+    <div class="block">
+        <div class="a one">
+            Prnt()
+        </div>
+        <div class="a two">
+            Println()
+        </div>
+        <div class="a three">
+            fmt
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        var text = {
+            "question": [{
+                "q": "What method do you use to print?",
+                "a": ["Prnt", "p", "Println"],
+                "r": "three"
+            }, {
+                "q": "sdfsd",
+                "a": ["one", "two", "three"],
+                "r": "two"
+            }, {
+                "q": "does sfdds work?",
+                "a": ["one", "two", "three"],
+                "r": "one"
+            }, {
+                "q": "does dsfdsffd work?",
+                "a": ["one", "two", "three"],
+                "r": "two"
+            }]
+        }
+
+        //ramdomize
+        function randomIntFromInterval(min, max) { // min and max included 
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        }
+        const rndInt = randomIntFromInterval(0, 3)
+
+        $(".q").text(text.question[rndInt].q);
+        $(".one").text(text.question[rndInt].a[0]);
+        $(".two").text(text.question[rndInt].a[1]);
+        $(".three").text(text.question[rndInt].a[2]);
+        var r = text.question[rndInt].r
+
+        $(".one").click(function() {
+            if ("one" == r) {
+                $(".one").before($(".g"));
+                $(".g img").attr("src", "/static/img/hap.gif");
+            } else {
+                $(".g img").attr("src", "/static/img/mad.gif");
+                $(".con").append($(".g"));
+                $(".g ").css("width", "20%");
+            }
+        });
+        $(".two").click(function() {
+            if ("two" == r) {
+                $(".two").before($(".g"));
+                $(".g img").attr("src", "/static/img/hap.gif");
+
+            } else {
+                $(".g img").attr("src", "/static/img/mad.gif");
+                $(".con").append($(".g"));
+                $(".g ").css("width", "20%");
+            }
+        });
+        $(".three").click(function() {
+            if ("three" == r) {
+                $(".three").before($(".g"));
+                $(".g img").attr("src", "/static/img/hap.gif");
+
+            } else {
+                $(".g img").attr("src", "/static/img/mad.gif");
+                $(".con").append($(".g"));
+                $(".g ").css("width", "20%");
+            }
+        });
+
+        $(".btn").click(function() {
+            //ramdomize
+            function randomIntFromInterval(min, max) { // min and max included 
+                return Math.floor(Math.random() * (max - min + 1) + min)
+            }
+            const rndInt = randomIntFromInterval(0, 3)
+
+            $(".q").text(text.question[rndInt].q);
+            $(".one").text(text.question[rndInt].a[0]);
+            $(".two").text(text.question[rndInt].a[1]);
+            $(".three").text(text.question[rndInt].a[2]);
+            var r = text.question[rndInt].r
+            $(".con").append($(".g"));
+            $(".g ").css("width", "20%");
+            $(".g img").attr("src", "/static/img/gophers.png");
+
+        });
+    });
+</script>
+<style>
+    .block {
+        float: right;
+        flex-flow: row wrap;
+
+    }
+
+    .con {
+
+        height: 11em;
+
+    }
+
+    .g {
+        float: left;
+        position: absolute;
+    }
+
+    .g img {
+        width: 55%;
+    }
+
+    .a {
+
+        padding: 2%;
+        margin: 30% 0 30%;
+
+
+    }
+</style>
+
+
+{{end}}

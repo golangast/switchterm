@@ -139,8 +139,6 @@ answer := DigSingle(lists, 1, "green", "red")
 2. allows for the user to select many from multiple values
 ```bash
 answer := Dig(lists, 1, "green", "red")
-or 
-	domainanswer := switchselector.MenuInstuctions(ds, 1, "purple", "purple", "which domain do you prefer to use?")
 
 ```
 3. prints the selection and formats it.
@@ -153,8 +151,6 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		inputcmd := scanner.Text()
-    //or
-    datafields := switchutility.InputScanDirections("Whats the fields of the data? ")
 
 ```
 5. prints the directions and clears the terminal
@@ -167,6 +163,27 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 		switch key.String() {
 ```
 
+*improved library sugar syntax
+1. to display a list of values to be chosen
+```bash
+	domainanswer := switchselector.MenuInstuctions(ds, 1, "purple", "purple", "which domain do you prefer to use?")
+```
+2. to ask a question and store the answer
+```bash
+    datafields := switchutility.InputScanDirections("Whats the fields of the data? ")
+```
+3. to run bash commands to usually pull down imports.
+```bash
+if err := switchutility.ShellBash("cd genserv/ && go run ."); err != nil {
+		switchutility.Checklogger(err, "running certification")
+	}
+```
+4. to update text in a file.
+```bash
+	if err := switchutility.UpdateText("dirtory/file.go", "text to check for", "what you are replacing", "text to do replacing"); err != nil {
+		switchutility.Checklogger(err, "message for the error")
+	}
+```
 ## Things to remember
 * using atomicgo.dev/keyboard there is no way to call itself after a key press
 

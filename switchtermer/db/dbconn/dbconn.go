@@ -13,7 +13,7 @@ func DbConnection() (*sql.DB, error) {
 
 	db, err := sql.Open("sqlite", file)
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 	db.SetMaxOpenConns(20)
 	db.SetMaxIdleConns(20)
@@ -21,7 +21,7 @@ func DbConnection() (*sql.DB, error) {
 	//check if it pings
 	err = db.Ping()
 	if err != nil {
-		fmt.Println(err)
+		return nil, err
 	}
 
 	return db, nil

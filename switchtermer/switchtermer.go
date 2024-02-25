@@ -12,7 +12,7 @@ import (
 	"github.com/golangast/switchterm/switchtermer/settings"
 	"github.com/golangast/switchterm/switchtermer/switch/colortermer"
 	"github.com/golangast/switchterm/switchtermer/switch/switchselector"
-	"github.com/golangast/switchterm/switchtermer/switch/switchutility"
+	"github.com/golangast/switchterm/switchtermer/switchutility"
 	"github.com/golangast/switchterm/switchtermer/window"
 )
 

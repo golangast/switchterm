@@ -10,7 +10,7 @@ import (
 	"github.com/golangast/switchterm/switchtermer/cmd/cmdrunner"
 	"github.com/golangast/switchterm/switchtermer/cmd/updatetager"
 	"github.com/golangast/switchterm/switchtermer/switch/colortermer"
-	"github.com/golangast/switchterm/switchtermer/switch/switchutility"
+	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
 func Dig(list []string, cols int, background, foreground string) []string {

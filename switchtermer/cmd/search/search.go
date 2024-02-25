@@ -8,7 +8,7 @@ import (
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/loggers"
 	"github.com/golangast/switchterm/switchtermer/switch/switchselector"
-	"github.com/golangast/switchterm/switchtermer/switch/switchutility"
+	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
 func Search(background, foreground string, list []string, cols, atline int) []string {

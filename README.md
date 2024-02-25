@@ -139,6 +139,9 @@ answer := DigSingle(lists, 1, "green", "red")
 2. allows for the user to select many from multiple values
 ```bash
 answer := Dig(lists, 1, "green", "red")
+or 
+	domainanswer := switchselector.MenuInstuctions(ds, 1, "purple", "purple", "which domain do you prefer to use?")
+
 ```
 3. prints the selection and formats it.
 ```bash
@@ -150,6 +153,9 @@ switchutility.PrintColumnsWChosen(cols, atline, results, background, foreground)
 		scanner := bufio.NewScanner(os.Stdin)
 		scanner.Scan()
 		inputcmd := scanner.Text()
+    //or
+    datafields := switchutility.InputScanDirections("Whats the fields of the data? ")
+
 ```
 5. prints the directions and clears the terminal
 ```bash

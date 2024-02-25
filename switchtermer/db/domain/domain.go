@@ -10,33 +10,24 @@ import (
 )
 
 func (u *Domains) Create() error {
-	logger := loggers.CreateLogger()
 
 	db, err := dbconn.DbConnection()
 	if err != nil {
-		logger.Error(
-			"conning db",
-			slog.String("error: ", err.Error()),
-		)
+		return err
 	}
 
 	// Create a statement to insert data into the `users` table.
 	stmt, err := db.PrepareContext(context.Background(), "INSERT INTO `domains` (`domain`, `github`) VALUES (?, ?)")
 	if err != nil {
-		logger.Error(
-			"insert domain",
-			slog.String("error: ", err.Error()),
-		)
+		return err
 	}
+
 	defer stmt.Close()
 
 	// Insert data into the `users` table.
 	_, err = stmt.ExecContext(context.Background(), u.Domain, u.Github)
 	if err != nil {
-		logger.Error(
-			"executing insert domain",
-			slog.String("error: ", err.Error()),
-		)
+		return err
 	}
 
 	db.Close()
@@ -47,11 +38,9 @@ func (u *Domains) GetDomain() (Domains, error) {
 
 	db, err := dbconn.DbConnection()
 	if err != nil {
-		logger.Error(
-			"connecting to db for domains",
-			slog.String("error: ", err.Error()),
-		)
+		return *u, err
 	}
+
 	var (
 		id     int
 		domain string
@@ -60,17 +49,11 @@ func (u *Domains) GetDomain() (Domains, error) {
 	// get from database
 	stmt, err := db.Prepare("SELECT * FROM domains")
 	if err != nil {
-		logger.Error(
-			"Select statement db for getting domain",
-			slog.String("error: ", err.Error()),
-		)
+		return *u, err
 	}
 	err = stmt.QueryRow(&id).Scan(&id, &domain, &github)
 	if err != nil {
-		logger.Error(
-			"querying db for scanning domain",
-			slog.String("error: ", err.Error()),
-		)
+		return *u, err
 	}
 	d := Domains{Domain: domain, Github: github}
 

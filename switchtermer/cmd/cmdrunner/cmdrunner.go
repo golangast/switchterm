@@ -2,13 +2,11 @@ package cmdrunner
 
 import (
 	"fmt"
-	"log/slog"
 	"slices"
 
 	"github.com/golangast/switchterm/cmd/ff"
 	"github.com/golangast/switchterm/db/sqlite/tags"
-	"github.com/golangast/switchterm/loggers"
-	"github.com/golangast/switchterm/switchtermer/switch/switchutility"
+	"github.com/golangast/switchterm/switchtermer/switchutility"
 	// #import
 )
 
@@ -17,14 +15,9 @@ func CmdRunner(chosen []string) {
 	fmt.Println("")
 
 	var err error
-	logger := loggers.CreateLogger()
 	slicetags, err := tags.GetAll()
-	if err != nil {
-		logger.Error(
-			"trying to get all tags",
-			slog.String("error: ", err.Error()),
-		)
-	}
+	switchutility.Checklogger(err, "get all tags")
+
 	chosen = switchutility.RemoveDuplicateStr(chosen)
 	for _, v := range slicetags {
 		if slices.Contains(chosen, v.CMD) {
@@ -34,6 +27,7 @@ func CmdRunner(chosen []string) {
 				case "ff":
 					ff.Ff()
 					break
+
 					//#addcmd
 
 				default:

@@ -1,20 +1,13 @@
 package updatetager
 
 import (
-	"bufio"
-	"fmt"
-	"os"
-
 	"github.com/golangast/switchterm/db/sqlite/tags"
+	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
 func UpdateTager(oldtag string) error {
 
-	fmt.Println("What do you want to name the tag?")
-
-	scannerdesc := bufio.NewScanner(os.Stdin)
-	scannerdesc.Scan()
-	tagname := scannerdesc.Text()
+	tagname := switchutility.InputScanDirections("What do you want to name the tag?")
 
 	tags.UpdateTag(oldtag, tagname)
 

@@ -2,13 +2,18 @@ package generate
 
 import (
 	"github.com/golangast/switchterm/switchtermer/generate/genserver"
+	enabletlsfordomain "github.com/golangast/switchterm/switchtermer/generate/genserver/EnableTLSForDomain"
+	generatehandlerandroute "github.com/golangast/switchterm/switchtermer/generate/genserver/GenerateHandlerAndRoute"
+	integratedatastructurewithhandler "github.com/golangast/switchterm/switchtermer/generate/genserver/IntegrateDataStructureWithHandler"
+	issuedomaincerts "github.com/golangast/switchterm/switchtermer/generate/genserver/IssueDomainCerts"
+	setupdatastructureanddomaintable "github.com/golangast/switchterm/switchtermer/generate/genserver/SetupDataStructureAndDomainTable"
 	"github.com/golangast/switchterm/switchtermer/switch/switchselector"
-	"github.com/golangast/switchterm/switchtermer/switch/switchutility"
+	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
 func Generate() {
 	//list of selections
-	listbash := []string{"server", "certificates", "tls", "dev", "create handler", "create data", "add data to handler"}
+	listbash := []string{"server", "certificates", "tls", "dev", "handler", "data", "add data to handler"}
 
 	//print directions
 	switchutility.Directions()
@@ -21,16 +26,16 @@ func Generate() {
 	case "server":
 		genserver.Genserver()
 	case "certificates":
-		genserver.Certificates()
+		issuedomaincerts.IssueDomainCerts()
 	case "tls":
-		genserver.TLS()
+		enabletlsfordomain.EnableTLSForDomain()
 	case "dev":
-		genserver.Dev()
-	case "create handler":
-		genserver.GenHandler()
-	case "create data":
-		genserver.CreateData()
+		enabletlsfordomain.Dev()
+	case "handler":
+		generatehandlerandroute.GenerateHandlerAndRoute()
+	case "data":
+		setupdatastructureanddomaintable.SetupDataStructureAndDomainTable()
 	case "add data to handler":
-		genserver.AddDataToHandler()
+		integratedatastructurewithhandler.IntegrateDataStructureWithHandler()
 	}
 }

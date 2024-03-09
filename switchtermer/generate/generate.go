@@ -7,13 +7,14 @@ import (
 	integratedatastructurewithhandler "github.com/golangast/switchterm/switchtermer/generate/genserver/IntegrateDataStructureWithHandler"
 	issuedomaincerts "github.com/golangast/switchterm/switchtermer/generate/genserver/IssueDomainCerts"
 	setupdatastructureanddomaintable "github.com/golangast/switchterm/switchtermer/generate/genserver/SetupDataStructureAndDomainTable"
+	"github.com/golangast/switchterm/switchtermer/generate/genserver/rundbserver"
 	"github.com/golangast/switchterm/switchtermer/switch/switchselector"
 	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
 func Generate() {
 	//list of selections
-	listbash := []string{"server", "certificates", "tls", "dev", "handler", "data", "add data to handler"}
+	listbash := []string{"server", "certificates", "tls", "dev", "handler", "data", "add data to handler", "run db server"}
 
 	//print directions
 	switchutility.Directions()
@@ -37,5 +38,7 @@ func Generate() {
 		setupdatastructureanddomaintable.SetupDataStructureAndDomainTable()
 	case "add data to handler":
 		integratedatastructurewithhandler.IntegrateDataStructureWithHandler()
+	case "run db server":
+		rundbserver.Rundbserver()
 	}
 }

@@ -37,6 +37,7 @@ func Genserver() {
 	8. RUN HANDLER TO GENERATE A HANDLER
 	9. RUN DATA TO CREATE DATA FOR THE HANDLER
 	10. RUN ADD DATA TO THE HANDLER.
+	11. THE PROJECT USES https://github.com/rqlite/gorqlite FOR THE DATABASE
 
 	`)
 	colortermer.ColorizeOutPut("purple", "purple", "DONE GENERATING AND PLEASE ENJOY!")

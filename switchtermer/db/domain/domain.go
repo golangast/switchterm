@@ -33,12 +33,13 @@ func (u *Domains) Create() error {
 	db.Close()
 	return nil
 }
-func (u *Domains) GetDomain() (Domains, error) {
+func (u *Domains) GetDomain() ([]Domains, error) {
 	logger := loggers.CreateLogger()
+	var domains []Domains
 
 	db, err := dbconn.DbConnection()
 	if err != nil {
-		return *u, err
+		return domains, err
 	}
 
 	var (
@@ -46,36 +47,49 @@ func (u *Domains) GetDomain() (Domains, error) {
 		domain string
 		github string
 	)
-	// get from database
-	stmt, err := db.Prepare("SELECT * FROM domains")
+
+	rows, err := db.Query("SELECT * FROM domains")
 	if err != nil {
-		return *u, err
+		logger.Error(
+			"Select statement db for domains rows",
+			slog.String("error: ", err.Error()),
+		)
 	}
-	err = stmt.QueryRow(&id).Scan(&id, &domain, &github)
-	if err != nil {
-		return *u, err
+
+	for rows.Next() {
+
+		err := rows.Scan(&id, &domain, &github)
+		if err != nil {
+			logger.Error(
+				"scanning rows for domains",
+				slog.String("error: ", err.Error()),
+			)
+		}
+		d := Domains{Domain: domain, Github: github}
+
+		domains = append(domains, d)
+
 	}
-	d := Domains{Domain: domain, Github: github}
 
 	defer db.Close()
-	defer stmt.Close()
+	defer rows.Close()
 	switch err {
 	case sql.ErrNoRows:
 		logger.Error(
 			"no rows db for getting domain",
 			slog.String("error: ", sql.ErrNoRows.Error()),
 		)
-		return d, nil
+		return domains, nil
 
 	case nil:
 		logger.Error(
 			"nil rows db for getting domain",
 			slog.String("error: ", sql.ErrNoRows.Error()),
 		)
-		return d, nil
+		return domains, nil
 
 	default:
-		return d, nil
+		return domains, nil
 	}
 }
 

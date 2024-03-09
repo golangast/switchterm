@@ -101,7 +101,7 @@ package {{.Name}}
 
 import (
 	"fmt"
-	"{{.Github}}{{.Domain}}/internal/dbsql/dbconn"
+	"github.com/rqlite/gorqlite"
 )
 
 
@@ -116,10 +116,10 @@ type {{title .Name}} struct {
 
 func Get{{title .Name}}() []{{title .Name}} {
 
-data, err := dbconn.DbConnection()
-if err != nil {
-	fmt.Println(err)
-}
+	conn, err := gorqlite.Open("http://bill:secret1@localhost:4001/")
+	if err != nil {
+		panic(err)
+	}
 
 //variables used to store data from the query
 var (
@@ -130,26 +130,19 @@ var (
 	{{.Name}}s  []{{title .Name}} 
 	)//used to store all users
 	//https://go.dev/play/p/82imTtvHWzb
-_, err = data.Query("CREATE TABLE IF NOT EXISTS {{.Name}} (id INTEGER PRIMARY KEY AUTOINCREMENT, {{$first := true}} {{range $k, $v := .MapData }}{{if $first}}{{$first = false}}{{else}} , {{end}}{{lower $k}} {{$v | replace "string" "text"}} NULL {{end}})")
-if err != nil {
-	fmt.Println(err)
-}
-
-//get from database
-rows, err := data.Query("select * from {{.Name}}")
+ _, err = conn.WriteOne("CREATE TABLE IF NOT EXISTS {{.Name}} (id INTEGER PRIMARY KEY AUTOINCREMENT, {{$first := true}} {{range $k, $v := .MapData }}{{if $first}}{{$first = false}}{{else}} , {{end}}{{lower $k}} {{$v | replace "string" "text"}} NULL {{end}})")
 if err != nil {
 	fmt.Println(err)
 }
 
 
+rows, err := conn.QueryOne("select * from {{.Name}}")
 
-//cycle through the rows to collect all the data
 for rows.Next() {
-	err := rows.Scan(&id, &{{ lower .Fields}} )
+	err := rows.Scan(&id, &{{ lower .Fields}})
 	if err != nil {
 		fmt.Println(err)
 	}
-	
 	u := {{title .Name}}{ID: id,
 		{{range $k, $v := .MapFields }}
 		{{$k}}: {{lower $v}},
@@ -158,10 +151,11 @@ for rows.Next() {
 		{{.Name}}s = append({{.Name}}s, u)
 	}
 
+}
 
 //close everything
 rows.Close()
-data.Close()
+conn.Close()
 return {{.Name}}s
 }
 `

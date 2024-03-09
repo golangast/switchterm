@@ -15,6 +15,9 @@ github.com/Masterminds/sprig/v3
 # github.com/containerd/console v1.0.3
 ## explicit; go 1.13
 github.com/containerd/console
+# github.com/davecgh/go-spew v1.1.1
+## explicit
+github.com/davecgh/go-spew/spew
 # github.com/dustin/go-humanize v1.0.1
 ## explicit; go 1.16
 github.com/dustin/go-humanize
@@ -25,7 +28,6 @@ github.com/fatih/color
 ## explicit; go 1.18
 github.com/golangast/gentil/utility/ff
 github.com/golangast/gentil/utility/temp
-github.com/golangast/gentil/utility/term
 github.com/golangast/gentil/utility/text
 # github.com/google/uuid v1.3.0
 ## explicit
@@ -54,6 +56,9 @@ github.com/mitchellh/reflectwalk
 # github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec
 ## explicit; go 1.12
 github.com/remyoudompheng/bigfft
+# github.com/rqlite/gorqlite v0.0.0-20240227123050-397b03f02418
+## explicit; go 1.17
+github.com/rqlite/gorqlite
 # github.com/shopspring/decimal v1.2.0
 ## explicit; go 1.13
 github.com/shopspring/decimal

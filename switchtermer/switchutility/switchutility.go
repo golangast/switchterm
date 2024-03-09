@@ -14,7 +14,6 @@ import (
 	"text/template"
 
 	"github.com/Masterminds/sprig/v3"
-	"github.com/golangast/gentil/utility/term"
 	"github.com/golangast/gentil/utility/text"
 	"github.com/golangast/switchterm/loggers"
 	"golang.org/x/text/cases"
@@ -428,7 +427,7 @@ func InputScanDirections(directions string) string {
 
 func ShellBash(s, errmess string) error {
 
-	out, errout, err := term.Shellout(s)
+	out, errout, err := Shellout(s)
 	if err != nil {
 		return err
 	}

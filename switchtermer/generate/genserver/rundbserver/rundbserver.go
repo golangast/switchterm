@@ -27,7 +27,7 @@ func Rundbserver() {
 	colortermer.ColorizeOutPut("dpurple", "purple", "if you want resources on the db server lookup the following\n")
 	colortermer.ColorizeOutPut("dpurple", "purple", "https://github.com/rqlite/rqlite and https://github.com/rqlite/gorqlite\n")
 
-	if err := switchutility.ShellBash("cd "+chosendomain+"/assets/db/rqlite/bin && ./rqlited -auth config.json  ~/node.1 ", "trying to run database server bash command"); err != nil {
+	if err := switchutility.ShellBash("cd "+chosendomain+"/assets/db/rqlite/bin && chmod 750 ./rqlited && ./rqlited -auth config.json  ~/node.1 ", "trying to run database server bash command"); err != nil {
 		switchutility.Checklogger(err, "running database server")
 	}
 

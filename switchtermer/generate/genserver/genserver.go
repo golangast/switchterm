@@ -22,13 +22,15 @@ func Genserver() {
 	if !exists {
 		d.Create()
 	} else {
-		colortermer.ColorizeOutPut("purple", "purple", "DOMAIN ALREADY EXISTS IN YOUR FOLDERS"+"\n")
+		colortermer.ColorizeOutPut("purple", "purple", "DOMAIN ALREADY EXISTS IN YOUR DATABASE"+"\n")
 	}
 
 	colortermer.ColorizeOutPut("purple", "purple", "CREATING SERVER! THIS MAY TAKE A FEW SECONDS..."+"\n")
 	//run command to generate server
 	switchutility.ShellBash("go install golang.org/x/tools/cmd/gonew@latest && gonew github.com/golangast/genserv "+stripgit+stripdir+" && cd "+stripdir+
 		" && go mod init "+stripgit+stripdir+" && go mod tidy && go mod vendor", "generating server pull down")
+
+	switchutility.ShellBash("cd "+stripdir+" && go mod tidy && go mod vendor && go build", "generating server pull down")
 
 	colortermer.ColorizeOutPut("purple", "purple", `
 	PLEASE NOTE: .....

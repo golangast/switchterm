@@ -186,6 +186,7 @@ if err := switchutility.ShellBash("cd genserv/ && go run ."); err != nil {
 ```
 ## Things to remember
 * using atomicgo.dev/keyboard there is no way to call itself after a key press
+* Remember to run the database server.  It is under the generate command
 
 ## Reference Commands
 * "enter" is to select

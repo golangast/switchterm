@@ -17,7 +17,13 @@ func Genserver() {
 	}
 	//store data
 	d := domain.Domains{Domain: stripdir, Github: stripgit}
-	d.Create()
+	exists, err := d.Exists(d.Domain)
+	switchutility.Checklogger(err, "getting domain and checking if it exists")
+	if !exists {
+		d.Create()
+	} else {
+		colortermer.ColorizeOutPut("purple", "purple", "DOMAIN ALREADY EXISTS IN YOUR FOLDERS"+"\n")
+	}
 
 	colortermer.ColorizeOutPut("purple", "purple", "CREATING SERVER! THIS MAY TAKE A FEW SECONDS..."+"\n")
 	//run command to generate server

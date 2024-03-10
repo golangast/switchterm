@@ -9,6 +9,22 @@ import (
 	"github.com/golangast/switchterm/switchtermer/db/dbconn"
 )
 
+func (t *Domains) Exists(Domain string) (bool, error) {
+	var exists bool
+	db, err := dbconn.DbConnection()
+	if err != nil {
+		return false, err
+	}
+	stmts := db.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM domains WHERE domain=?)", Domain)
+	err = stmts.Scan(&exists)
+	if err != nil {
+		return false, err
+	}
+	db.Close()
+
+	return exists, nil
+
+}
 func (u *Domains) Create() error {
 
 	db, err := dbconn.DbConnection()

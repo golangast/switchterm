@@ -28,7 +28,7 @@
   - [Reference Commands](#reference-commands)
   - [Special thanks](#special-thanks)
   - [Why Go?](#why-go)
-
+  - [Just added](#just-added)
 
 
 ## General info
@@ -193,6 +193,11 @@ if err := switchutility.ShellBash("cd genserv/ && go run ."); err != nil {
 * "r" is to remove
 * "x" is to execute
 * "q" is to quit
+
+## Just added
+* Just added to the genserv not the switchterm (did not add support for database https yet)
+* [rqlite](https://rqlite.io/)
+* [gorqlite](https://github.com/rqlite/gorqlitehttps://rqlite.io/)
 
 ## Licenses
 1. [GNU 3 for my code](https://github.com/golangast/switchterm/blob/main/LICENSE.md)

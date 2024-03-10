@@ -22,7 +22,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	var results []string // append to results
 
 	//commands available
-	lists := []string{"where to begin?", "settings", "search", "select", "add", "window", "generate"}
+	lists := []string{"settings", "search", "select", "add", "window", "generate", "where to begin?"}
 
 	answer := switchselector.Menu(lists, 2, "purple", "purple")
 

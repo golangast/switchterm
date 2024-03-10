@@ -1,0 +1,42 @@
+{{define "profile"}}
+
+<div rel="prefetch" class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="currently-tab">
+  <meta name="description" content="Profile page after sign up">
+  <meta name="keywords" content="zachary endrulat profile">
+  <meta name="author" content="zachary endrulat">
+  <meta name="robots" content="follow, index">
+  <br>
+  <br>
+  <br>
+  {{if .U}}
+  <div class="center btn-floating btn-large deep-purple pulse pulseicon"><i class="fa-solid fa-user"></i></div>
+  <p class="logob box center mcenter"> Welcome! {{.U.Email}}</p>
+
+
+  <p class="logob box center mcenter">
+    Let me know what you are intersted in or if you have any questions.
+
+
+  <form class="logob  center mcenter" action="/userinput" method="POST">
+    <label class="field " for="email">Email</label><br>
+    <input class="field " type="text" id="email" name="email" value="{{.U.Email}}"><br>
+    <label class="field " for="language">What programming language do you like?</label><br>
+    <input class="field " type="text" id="language" name="language" value="c#"><br>
+    <label class="field " for="comment">Ask a question</label><br>
+    <textarea class="field " rows="4" cols="50" name="comment" type="text">Enter text here...</textarea><br>
+    <input class="hide" type="text" id="sitetoken" name="sitetoken" value={{.t}}>
+    <input type="submit" value="Submit">
+  </form>
+
+</p>
+  {{else}}
+  <p class="logob box center mcenter">
+    You did not sign in. Please click Contact me.
+  </p>
+  {{end}}
+
+
+
+</div>
+
+{{ end }}

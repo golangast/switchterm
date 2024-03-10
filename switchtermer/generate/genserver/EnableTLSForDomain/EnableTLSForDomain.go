@@ -30,7 +30,7 @@ func EnableTLSForDomain() {
 		switchutility.Checklogger(err, "trying to update main.go import")
 	}
 	//update port
-	if err := switchutility.UpdateText("./"+chosendomain+"/main.go", `e.Logger.Fatal(e.Start(":5002"))`, `e.Logger.Fatal(e.Start(":5002"))`, ""); err != nil {
+	if err := switchutility.RemoveText("./"+chosendomain+"/main.go", `e.Logger.Fatal(e.Start(":5002"))`, `e.Logger.Fatal(e.Start(":5002"))`, ""); err != nil {
 		switchutility.Checklogger(err, "trying to update main.go removing port")
 	}
 	//update route
@@ -58,22 +58,22 @@ func Dev() {
 	chosendomain := switchselector.MenuInstuctions(do, 1, "purple", "purple", "Which website are you going to turn on dev for?")
 
 	//updating routes
-	if err := switchutility.UpdateText("./"+chosendomain+"/main.go", tls, `#tls`, `e.Static("/", "assets/optimized")`+"\n"+`e.Logger.Fatal(e.Start(":5002"))`); err != nil {
+	if err := switchutility.UpdateCode("./"+chosendomain+"/main.go", tls, `//#tls`, `e.Logger.Fatal(e.Start(":5002"))`); err != nil {
 		switchutility.Checklogger(err, "trying to update main.go tls part for development")
 	}
-	if err := switchutility.UpdateText("./"+chosendomain+"/main.go", `"golang.org/x/crypto/acme/autocert"`, `"golang.org/x/crypto/acme/autocert"`, ``); err != nil {
+	if err := switchutility.RemoveText("./"+chosendomain+"/main.go", `"golang.org/x/crypto/acme/autocert"`, `"golang.org/x/crypto/acme/autocert"`, ``); err != nil {
 		switchutility.Checklogger(err, "trying to update main.go removing import for development")
 	}
-	if err := switchutility.UpdateText("./"+chosendomain+"/main.go", ``, `"golang.org/x/crypto/acme"`, ``); err != nil {
+	if err := switchutility.RemoveText("./"+chosendomain+"/main.go", ``, `"golang.org/x/crypto/acme"`, ``); err != nil {
 		switchutility.Checklogger(err, "trying to update main.go removing import for development")
 	}
-	if err := switchutility.UpdateText("./"+chosendomain+"/main.go", ``, `"golang.org/x/crypto`, ``); err != nil {
+	if err := switchutility.RemoveText("./"+chosendomain+"/main.go", ``, `"golang.org/x/crypto`, ``); err != nil {
 		switchutility.Checklogger(err, "trying to update main.go removing import for development")
 	}
-	if err := switchutility.UpdateText("./"+chosendomain+"/main.go", ``, `"crypto/tls"`, ``); err != nil {
+	if err := switchutility.RemoveText("./"+chosendomain+"/main.go", ``, `"crypto/tls"`, ``); err != nil {
 		switchutility.Checklogger(err, "trying to update main.go removing import for development")
 	}
-	if err := switchutility.UpdateText("./"+chosendomain+"/main.go", ``, `"time"`, ``); err != nil {
+	if err := switchutility.RemoveText("./"+chosendomain+"/main.go", ``, `"time"`, ``); err != nil {
 		switchutility.Checklogger(err, "trying to update main.go removing import for development")
 	}
 	if err := switchutility.ShellBash(" cd "+chosendomain+" && go mod tidy && go mod vendor && go install && go build", "pulling down to dev"); err != nil {

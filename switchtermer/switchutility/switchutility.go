@@ -453,6 +453,26 @@ func UpdateText(file, check, comment, replace string) error {
 	return nil
 }
 
+func RemoveText(file, check, comment, replace string) error {
+	if text.FindTextNReturn(file, check) != comment {
+		err := text.UpdateText(file, comment, replace+"\n")
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func UpdateCode(file, check, comment, replace string) error {
+	if text.FindTextNReturn(file, check) != comment {
+		err := text.UpdateText(file, check, replace+"\n"+comment)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 func Checklogger(err error, s string) {
 	logger := loggers.CreateLogger()
 	if err != nil {

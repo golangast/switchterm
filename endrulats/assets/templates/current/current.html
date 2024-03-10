@@ -1,0 +1,51 @@
+{{define "current"}}
+<div rel="prefetch" class="tab-pane fade" id="current" role="tabpanel" aria-labelledby="current-tab">
+    <meta name="description" content="Switchterm and what I am working on in the future">
+    <meta name="keywords" content="switchterm current plans">
+    <meta name="author" content="zachary endrulat">
+    <meta name="robots" content="follow, index">
+    <title>Switchterm and the current projects I am working on.</title>
+    <div class="row">
+        <div class="col s12 m2">
+            <h1 class="center">
+                SwitchTerm
+            </h1>
+            <img class="op shadow-lg p-3 mb-5 bg-white rounded termlogo" loading="lazy" width="693" height="924"
+                src="img/term.webp" {{ .nonce }} class="d-block w-100" alt="logo">
+                <div class="center btn-floating btn-large cyan pulse pulseicon"><a href="https://github.com/golangast/switchterm" target="_blank"><i class="fa-brands fa-github iconssize "></i></a></div>
+
+            <h5 class="center">
+                What am I currently working on?
+            </h5>
+            <p class="logob box center mcenter">
+                I am currently working on learning more c#/asp.net and
+                working on my switchterm application. I am trying to
+                build the foundation for an application generator and
+                a command generator.
+            </p>
+            <h5 class="center">
+                Why build this?
+            </h5>
+              <p class="logob box center mcenter">
+                There are solutions for running containers and applications using big systems like kubernetes and
+                docker. I believe these things can and are just functions. Why not put the idea into code
+                and generate functions. You can generate bash commands if you need to start things that way.
+
+            </p>
+            <h5 class="center">
+                Why reinvent the wheel?
+            </h5>
+              <p class="plogobar box center mcenter">
+                Running and stopping applications shouldn't need to be a whole framework, gui, or anything.
+                It is just code and just a function.  Why not generate it?  
+
+            </p>
+
+        </div>
+    </div>
+
+
+
+</div>
+
+{{end}}

@@ -1,0 +1,7 @@
+[
+    {
+      "username": "bill",
+      "password": "secret1",
+      "perms": ["all"]
+    }
+  ]

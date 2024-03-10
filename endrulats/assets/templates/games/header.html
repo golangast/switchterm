@@ -1,0 +1,55 @@
+{{define "header"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link loading="lazy" {{ .nonce }} rel="icon" type="image/png" sizes="32x32" href="img/termfav.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+  <link rel="stylesheet" media="all" rel="preload" {{ .nonce }} href="css/min{{.cssr}}.css">
+<!-- Google tag (gtag.js) -->
+<script  {{ .nonce }} rel="prefetch"  src="https://www.googletagmanager.com/gtag/js?id=G-RTTSFHTVY4" async ></script>
+
+</head>
+<nav class="nav-extended" rel="prefetch">
+    <div class="nav-wrapper">
+        <a href="#" ><img  loading="lazy" width="100%" height="auto" class="brand-logo" {{ .nonce }} src="img/go.webp" alt="logo"></a>
+        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">≡</i></a>
+     
+    </div>
+</nav>
+<ul class="sidenav" id="mobile-demo">
+   <div class="logob"> <img  loading="lazy" class="brand-logo" {{ .nonce }} src="img/go.webp" alt="logo"></div>
+
+         <div id="list-example" class="list-group">
+    <li><a id="about-tab " data-bs-toggle="tab" data-bs-target="#about" type="button" role="tab"
+        aria-controls="about" aria-selected="true" href="/">Home</a>
+    </li>
+    <li><a id="tech-tab " data-bs-toggle="tab" data-bs-target="#tech" type="button" role="tab"
+        aria-controls="tech" aria-selected="true" href="/">Tech Used</a>
+    </li> 
+    <li><a id="history-tab " data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab"
+        aria-controls="history" aria-selected="true" href="/">History</a>
+    </li>
+    <li><a id="contact-tab " data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab"
+        aria-controls="contact" aria-selected="true" href="/">Contact Me</a>
+    </li> 
+    <li><a id="Projects-tab " data-bs-toggle="tab" data-bs-target="#Projects" type="button" role="tab"
+        aria-controls="Projects" aria-selected="true" href="/">Projects</a>
+    </li> 
+    <li><a id="resources-tab " data-bs-toggle="tab" data-bs-target="#resources" type="button" role="tab"
+        aria-controls="resources" aria-selected="true" href="/">Resources</a>
+    </li> 
+    <li><a id="blog-tab " data-bs-toggle="tab" data-bs-target="#blog" type="button" role="tab"
+        aria-controls="about" aria-selected="true" href="/">Blog</a>
+    </li> 
+    <li><a id="pizza-tab " data-bs-toggle="tab" data-bs-target="#pizza" type="button" role="tab"
+        aria-controls="pizza" aria-selected="true" href="/">Pizza</a>
+    </li>
+   
+    </div>
+</ul>
+<body>
+        <br><br>
+{{end}}

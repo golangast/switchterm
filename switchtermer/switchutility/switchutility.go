@@ -473,6 +473,35 @@ func UpdateCode(file, check, comment, replace string) error {
 	return nil
 }
 
+func UpdateLine(file, check, replace string) error {
+
+	err := text.UpdateText(file, check, replace)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+func ReplaceLine(file, check, replace string) error {
+	input, err := os.ReadFile(file)
+	if err != nil {
+		return err
+	}
+
+	lines := strings.Split(string(input), "\n")
+
+	for i, line := range lines {
+		if strings.Contains(line, check) {
+			lines[i] = replace
+		}
+	}
+	output := strings.Join(lines, "\n")
+	err = os.WriteFile(file, []byte(output), 0644)
+	if err != nil {
+		return err
+	}
+	return nil
+}
 func Checklogger(err error, s string) {
 	logger := loggers.CreateLogger()
 	if err != nil {

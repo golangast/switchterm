@@ -43,10 +43,7 @@ It stores commands in a sqlite database and their tags
 
 ## What does it do?
 * Made a multi-part series on it 
-* [original](https://youtu.be/HJHCndEVoiA?si=dTewGeY4TlGSKo4_)
-* [part1](https://www.youtube.com/watch?v=Qgs7-FZaT9Q)
 * [part2](https://www.youtube.com/watch?v=y1w1y3m6I9k)
-* 439 directories, 4037 files
 
 <h1 align="center">Change the directory of the commands and run them</h1>
  <p align="center">
@@ -187,6 +184,11 @@ if err := switchutility.ShellBash("cd genserv/ && go run ."); err != nil {
 ## Things to remember
 * using atomicgo.dev/keyboard there is no way to call itself after a key press
 * Remember to run the database server.  It is under the generate command
+* If you are using digital ocean 
+  * Remember to generate [certs](https://www.digitalocean.com/community/tutorials/how-to-use-certbot-standalone-mode-to-retrieve-let-s-encrypt-ssl-certificates-on-ubuntu-20-04) 
+  * Remember to change their permissions sudo chmod 755 /etc/letsencrypt/live/yourdomain/*.pem  # Adjust if file names differ
+  * Remember to run the database in /bin
+  ./rqlited -auth config.json -http-addr yourdomain.com:25060 -http-cert /etc/letsencrypt/live/yourdomain.com/fullchain.pem -http-key /etc/letsencrypt/live/yourdomain.com/privkey.pem  ~/node.1
 
 ## Reference Commands
 * "enter" is to select

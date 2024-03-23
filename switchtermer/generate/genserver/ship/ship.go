@@ -45,13 +45,13 @@ func Ship() {
 	}
 
 	colortermer.ColorizeOutPut("dpurple", "purple", `your binary and database are in the /bin folder now.  
-	/bin
-	 /main - go binary
-	 /assets/assetdirectory.yaml - used for optimizing assets
-	 /config.json - used for auth for database
-	 /rqbench - 
-	 /rqlite - used for sql cli
-	 /rqlited - used for database
+	└──bin
+		├──main - go binary
+		├──assets/assetdirectory.yaml - used for optimizing assets
+		├──config.json - used for auth for database
+		├──rqbench - 
+		├──rqlite - used for sql cli
+		├──rqlited - used for database
 	 `)
 	colortermer.ColorizeOutPut("dpurple", "purple", "Remember you will need to access the certificates for the rqlite database\n")
 	colortermer.ColorizeOutPut("dpurple", "purple", "if you are using digitalocean use this https://www.digitalocean.com/community/tutorials/how-to-use-certbot-standalone-mode-to-retrieve-let-s-encrypt-ssl-certificates-on-ubuntu-20-04\n")

@@ -37,7 +37,7 @@ func Rundbserver() {
 		switchutility.Checklogger(err, "trying to update config.json")
 	}
 
-	fmt.Println("Database server is running....open a new terminal if you want to run the server or hit ctrl+c to cancel the db server")
+	fmt.Println("Database server is running....open a new terminal if you want to run the server or hit ctrl+c to cancel the db server (this will only work locally!)")
 	colortermer.ColorizeOutPut("dpurple", "purple", "the process is called rqlited in your resource manager\n")
 	colortermer.ColorizeOutPut("dpurple", "purple", "if you want resources on the db server lookup the following\n")
 	colortermer.ColorizeOutPut("dpurple", "purple", "https://github.com/rqlite/rqlite and https://github.com/rqlite/gorqlite\n")

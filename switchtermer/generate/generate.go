@@ -5,16 +5,16 @@ import (
 	enabletlsfordomain "github.com/golangast/switchterm/switchtermer/generate/genserver/EnableTLSForDomain"
 	generatehandlerandroute "github.com/golangast/switchterm/switchtermer/generate/genserver/GenerateHandlerAndRoute"
 	integratedatastructurewithhandler "github.com/golangast/switchterm/switchtermer/generate/genserver/IntegrateDataStructureWithHandler"
-	issuedomaincerts "github.com/golangast/switchterm/switchtermer/generate/genserver/IssueDomainCerts"
 	setupdatastructureanddomaintable "github.com/golangast/switchterm/switchtermer/generate/genserver/SetupDataStructureAndDomainTable"
 	"github.com/golangast/switchterm/switchtermer/generate/genserver/rundbserver"
+	"github.com/golangast/switchterm/switchtermer/generate/genserver/ship"
 	"github.com/golangast/switchterm/switchtermer/switch/switchselector"
 	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
 func Generate() {
 	//list of selections
-	listbash := []string{"server", "certificates", "tls", "dev", "handler", "data", "add data to handler", "run db server"}
+	listbash := []string{"server", "tls", "dev", "handler", "data", "add data to handler", "run db server locally only", "ship"}
 
 	//print directions
 	switchutility.Directions()
@@ -26,8 +26,6 @@ func Generate() {
 	switch answerbash {
 	case "server":
 		genserver.Genserver()
-	case "certificates":
-		issuedomaincerts.IssueDomainCerts()
 	case "tls":
 		enabletlsfordomain.EnableTLSForDomain()
 	case "dev":
@@ -38,7 +36,9 @@ func Generate() {
 		setupdatastructureanddomaintable.SetupDataStructureAndDomainTable()
 	case "add data to handler":
 		integratedatastructurewithhandler.IntegrateDataStructureWithHandler()
-	case "run db server":
+	case "run db server locally only":
 		rundbserver.Rundbserver()
+	case "ship":
+		ship.Ship()
 	}
 }

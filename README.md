@@ -188,7 +188,9 @@ if err := switchutility.ShellBash("cd genserv/ && go run ."); err != nil {
   * Remember to generate [certs](https://www.digitalocean.com/community/tutorials/how-to-use-certbot-standalone-mode-to-retrieve-let-s-encrypt-ssl-certificates-on-ubuntu-20-04) 
   * Remember to change their permissions sudo chmod 755 /etc/letsencrypt/live/yourdomain/*.pem  # Adjust if file names differ
   * Remember to run the database in /bin
-  ./rqlited -auth config.json -http-addr yourdomain.com:25060 -http-cert /etc/letsencrypt/live/yourdomain.com/fullchain.pem -http-key /etc/letsencrypt/live/yourdomain.com/privkey.pem  ~/node.1
+```bash
+ ./rqlited -auth config.json -http-addr yourdomain.com:25060 -http-cert /etc/letsencrypt/live/yourdomain.com/fullchain.pem -http-key /etc/letsencrypt/live/yourdomain.com/privkey.pem  ~/node.1
+ ```
 
 ## Reference Commands
 * "enter" is to select

@@ -1,4 +1,4 @@
-package domain
+package grid
 
 import (
 	"context"
@@ -9,13 +9,20 @@ import (
 	"github.com/golangast/switchterm/switchtermer/db/dbconn"
 )
 
-func (t *Domains) Exists(Domain string) (bool, error) {
+type Grid struct {
+	Name       string
+	Domain     string
+	Handler    string
+	GridLayout string
+}
+
+func (t *Grid) Exists(Grid string) (bool, error) {
 	var exists bool
 	db, err := dbconn.DbConnection()
 	if err != nil {
 		return false, err
 	}
-	stmts := db.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM domains WHERE domain=?)", Domain)
+	stmts := db.QueryRowContext(context.Background(), "SELECT EXISTS(SELECT 1 FROM grid WHERE name=?)", t.Name)
 	err = stmts.Scan(&exists)
 	if err != nil {
 		return false, err
@@ -25,7 +32,7 @@ func (t *Domains) Exists(Domain string) (bool, error) {
 	return exists, nil
 
 }
-func (u *Domains) Create() error {
+func (u *Grid) Create() error {
 
 	db, err := dbconn.DbConnection()
 	if err != nil {
@@ -33,15 +40,15 @@ func (u *Domains) Create() error {
 	}
 
 	// Create a statement to insert data into the `users` table.
-	stmt, err := db.PrepareContext(context.Background(), "INSERT INTO `domains` (`domain`, `github`) VALUES (?, ?)")
+	stmt, err := db.PrepareContext(context.Background(), "INSERT INTO `grid` (`name`, `domain`, `handler`, `gridLayout`) VALUES (?, ?,?, ?)")
 	if err != nil {
 		return err
 	}
 
 	defer stmt.Close()
 
-	// Insert data into the `users` table.
-	_, err = stmt.ExecContext(context.Background(), u.Domain, u.Github)
+	// Insert data into the `grid` table.
+	_, err = stmt.ExecContext(context.Background(), u.Name, u.Domain, u.Handler, u.GridLayout)
 	if err != nil {
 		return err
 	}
@@ -49,22 +56,18 @@ func (u *Domains) Create() error {
 	db.Close()
 	return nil
 }
-func (u *Domains) GetDomain() ([]Domains, error) {
+func (u *Grid) GetGrid() ([]Grid, error) {
 	logger := loggers.CreateLogger()
-	var domains []Domains
+	var grids []Grid
 
 	db, err := dbconn.DbConnection()
 	if err != nil {
-		return domains, err
+		return grids, err
 	}
 
-	var (
-		id     int
-		domain string
-		github string
-	)
+	var id int
 
-	rows, err := db.Query("SELECT * FROM domains")
+	rows, err := db.Query("SELECT * FROM grid")
 	if err != nil {
 		logger.Error(
 			"Select statement db for domains rows",
@@ -74,16 +77,16 @@ func (u *Domains) GetDomain() ([]Domains, error) {
 
 	for rows.Next() {
 
-		err := rows.Scan(&id, &domain, &github)
+		err := rows.Scan(&id, &u.Name, &u.Domain, &u.Handler, &u.GridLayout)
 		if err != nil {
 			logger.Error(
 				"scanning rows for domains",
 				slog.String("error: ", err.Error()),
 			)
 		}
-		d := Domains{Domain: domain, Github: github}
+		d := Grid{Name: u.Name, Domain: u.Domain, Handler: u.Handler, GridLayout: u.GridLayout}
 
-		domains = append(domains, d)
+		grids = append(grids, d)
 
 	}
 
@@ -95,21 +98,21 @@ func (u *Domains) GetDomain() ([]Domains, error) {
 			"no rows db for getting domain",
 			slog.String("error: ", sql.ErrNoRows.Error()),
 		)
-		return domains, nil
+		return grids, nil
 
 	case nil:
 		logger.Error(
 			"nil rows db for getting domain",
 			slog.String("error: ", sql.ErrNoRows.Error()),
 		)
-		return domains, nil
+		return grids, nil
 
 	default:
-		return domains, nil
+		return grids, nil
 	}
 }
 
-func (u *Domains) GetGitByDomain() (string, error) {
+func (u Grid) GetGridByDomain() (Grid, error) {
 	logger := loggers.CreateLogger()
 
 	db, err := dbconn.DbConnection()
@@ -119,20 +122,16 @@ func (u *Domains) GetGitByDomain() (string, error) {
 			slog.String("error: ", err.Error()),
 		)
 	}
-	var (
-		id     int
-		domain string
-		github string
-	)
+	var id int
 	// get from database
-	stmt, err := db.Prepare("SELECT * FROM domains WHERE domain = ?")
+	stmt, err := db.Prepare("SELECT * FROM grid WHERE domain = ?")
 	if err != nil {
 		logger.Error(
 			"Select statement db for getting githbu",
 			slog.String("error: ", err.Error()),
 		)
 	}
-	err = stmt.QueryRow(&u.Domain).Scan(&id, &domain, &github)
+	err = stmt.QueryRow(&u.Domain).Scan(&id, &u.Name, &u.Domain, &u.Handler, &u.GridLayout)
 	if err != nil {
 		logger.Error(
 			"querying db for github",
@@ -148,23 +147,18 @@ func (u *Domains) GetGitByDomain() (string, error) {
 			"no rows db for getting github",
 			slog.String("error: ", sql.ErrNoRows.Error()),
 		)
-		return github, nil
+		return u, nil
 
 	case nil:
 
-		return github, nil
+		return u, nil
 
 	default:
-		return github, nil
+		return u, nil
 	}
 }
 
-type Domains struct {
-	Domain string
-	Github string
-}
-
-func (u *Domains) GetAllDomain() ([]Domains, error) {
+func (u *Grid) GetAllGrids() ([]Grid, error) {
 	logger := loggers.CreateLogger()
 
 	db, err := dbconn.DbConnection()
@@ -175,12 +169,10 @@ func (u *Domains) GetAllDomain() ([]Domains, error) {
 		)
 	}
 	var (
-		id      int
-		domain  string
-		github  string
-		domains []Domains
+		id    int
+		grids []Grid
 	)
-	rows, err := db.Query("SELECT * FROM domains")
+	rows, err := db.Query("SELECT * FROM grid")
 	if err != nil {
 		logger.Error(
 			"Select statement db for domains rows",
@@ -188,8 +180,8 @@ func (u *Domains) GetAllDomain() ([]Domains, error) {
 		)
 	}
 	for rows.Next() {
+		err = rows.Scan(&id, &u.Name, &u.Domain, &u.Handler, &u.GridLayout)
 
-		err := rows.Scan(&id, &domain, &github)
 		if err != nil {
 			logger.Error(
 				"scanning rows for domains",
@@ -197,8 +189,8 @@ func (u *Domains) GetAllDomain() ([]Domains, error) {
 			)
 		}
 
-		d := Domains{Domain: domain, Github: github}
-		domains = append(domains, d)
+		d := Grid{Name: u.Name, Domain: u.Domain, Handler: u.Handler, GridLayout: u.GridLayout}
+		grids = append(grids, d)
 
 	}
 
@@ -206,35 +198,26 @@ func (u *Domains) GetAllDomain() ([]Domains, error) {
 	defer rows.Close()
 	switch err {
 	case sql.ErrNoRows:
-		logger.Error(
-			"no rows db for domains",
-			slog.String("error: ", sql.ErrNoRows.Error()),
-		)
-		return domains, nil
-
+		return grids, sql.ErrNoRows
 	case nil:
-		logger.Error(
-			"nil rows db for domains",
-			slog.String("error: ", sql.ErrNoRows.Error()),
-		)
-		return domains, nil
+		return grids, nil
 
 	default:
-		return domains, nil
+		return grids, nil
 	}
 }
 
-func GetStringDomains() ([]string, error) {
-	d := Domains{}
+func GetStringGrids() ([]string, error) {
+	d := Grid{}
 	var do []string
 
-	dd, err := d.GetDomain()
+	dd, err := d.GetGrid()
 	if err != nil {
 		return do, err
 	}
 
 	for _, v := range dd {
-		do = append(do, v.Domain)
+		do = append(do, v.Name)
 	}
 
 	return do, nil

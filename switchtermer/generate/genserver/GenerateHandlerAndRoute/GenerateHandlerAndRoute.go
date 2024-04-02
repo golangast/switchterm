@@ -89,8 +89,10 @@ func GenerateHandlerAndRoute() {
 var Bodytemp = `
 {{ .header   }}
 You created {{.route}}
-<!-- write your code here -->
 <!-- #data -->
+<div class="grid-container">
+<!-- #grid -->
+</div>
 {{ .footer }}
 `
 var handlertemp = `

@@ -1,6 +1,7 @@
 package generate
 
 import (
+	"github.com/golangast/switchterm/switchtermer/generate/generategrid"
 	"github.com/golangast/switchterm/switchtermer/generate/genserver"
 	enabletlsfordomain "github.com/golangast/switchterm/switchtermer/generate/genserver/EnableTLSForDomain"
 	generatehandlerandroute "github.com/golangast/switchterm/switchtermer/generate/genserver/GenerateHandlerAndRoute"
@@ -8,19 +9,20 @@ import (
 	setupdatastructureanddomaintable "github.com/golangast/switchterm/switchtermer/generate/genserver/SetupDataStructureAndDomainTable"
 	"github.com/golangast/switchterm/switchtermer/generate/genserver/rundbserver"
 	"github.com/golangast/switchterm/switchtermer/generate/genserver/ship"
+	"github.com/golangast/switchterm/switchtermer/generate/optimizer"
 	"github.com/golangast/switchterm/switchtermer/switch/switchselector"
 	"github.com/golangast/switchterm/switchtermer/switchutility"
 )
 
 func Generate() {
 	//list of selections
-	listbash := []string{"server", "tls", "dev", "handler", "data", "add data to handler", "run db server locally only", "ship"}
+	listbash := []string{"server", "tls", "dev", "handler", "data", "add data to handler", "run db server locally only", "ship", "grid", "optimize"}
 
 	//print directions
 	switchutility.Directions()
 
 	//print selection
-	answerbash := switchselector.DigSingle(listbash, 1, "purple", "red")
+	answerbash := switchselector.DigSingle(listbash, 2, "purple", "red")
 
 	//choose selection
 	switch answerbash {
@@ -40,5 +42,9 @@ func Generate() {
 		rundbserver.Rundbserver()
 	case "ship":
 		ship.Ship()
+	case "grid":
+		generategrid.Grid()
+	case "optimize":
+		optimizer.Optimizes()
 	}
 }

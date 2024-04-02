@@ -90,3 +90,19 @@ func (u *Handler) GetAll() ([]Handler, error) {
 		return wholehandler, nil
 	}
 }
+
+func GetStringHandlers() ([]string, error) {
+	h := Handler{}
+	var hs []string
+
+	hh, err := h.GetAll()
+	if err != nil {
+		return hs, err
+	}
+
+	for _, v := range hh {
+		hs = append(hs, v.Handle)
+	}
+
+	return hs, nil
+}

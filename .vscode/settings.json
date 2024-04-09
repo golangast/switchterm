@@ -7,6 +7,12 @@
             "group": "new",
             "database": "${workspaceFolder:switchterm}/db/data.db",
             "name": "new"
+        },
+        {
+            "go.toolsEnvVars": {
+                "GOOS": "js",
+                "GOARCH": "wasm"
+            }
         }
     ],
     "sqltools.useNodeRuntime": true,

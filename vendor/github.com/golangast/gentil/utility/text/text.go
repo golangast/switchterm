@@ -54,7 +54,6 @@ func FindLineNReturn(p, str string) string {
 
 	return ""
 }
-
 func FindTextNReturn(p, str string) string {
 	// Open file for reading.
 	var file, err = os.OpenFile(p, os.O_RDWR, 0644)
@@ -65,6 +64,7 @@ func FindTextNReturn(p, str string) string {
 	toplevel := TrimDot(str)
 	property := TrimDotright(str)
 	strs := strings.Replace(property, ".", " ", 1)
+	// fmt.Println(str)
 	// Read file, line by line
 	var text = make([]byte, 1024)
 	for {
@@ -87,6 +87,9 @@ func FindTextNReturn(p, str string) string {
 
 		}
 	}
+
+	// fmt.Println("Reading from file.")
+	fmt.Println(string(text))
 
 	return ""
 }

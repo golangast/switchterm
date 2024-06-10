@@ -1,0 +1,576 @@
+[
+    {
+      "Text": "Please run the gen server now",
+      "Spans": [
+        {
+          "Start": 15,
+          "End": 19,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "please start web",
+      "Spans": [
+        {
+          "Start": 13,
+          "End": 16,
+          "Label": "server"
+        }
+      ],
+      "Answer": "reject"
+    },
+    {
+      "Text": "please start",
+      "Spans": [
+        {
+          "Start": 13,
+          "End": 16,
+          "Label": "server"
+        }
+      ],
+      "Answer": "reject"
+    },
+    {
+      "Text": "I'd like to start a new web server",
+      "Spans": [
+        {
+          "Start": 12,
+          "End": 34,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Can you deploy the application server?",
+      "Spans": [
+        {
+          "Start": 9,
+          "End": 37,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "List all the running servers on this machine",
+      "Spans": [
+        {
+          "Start": 13,
+          "End": 28,
+          "Label": "server"
+        }
+      ],
+      "Answer": "reject"
+    },
+    {
+      "Text": "Please run the gen server now",
+      "Spans": [
+        {
+          "Start": 15,
+          "End": 19,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "I'd like to start the gen server",
+      "Spans": [
+        {
+          "Start": 22,
+          "End": 32,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Can you activate the gen server?",
+      "Spans": [
+        {
+          "Start": 21,
+          "End": 31,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Is it possible to launch the gen server?",
+      "Spans": [
+        {
+          "Start": 28,
+          "End": 39,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Could you initiate the gen server process?",
+      "Spans": [
+        {
+          "Start": 23,
+          "End": 34,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Let's get the gen server going",
+      "Spans": [
+        {
+          "Start": 14,
+          "End": 24,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Time to fire up the gen server, I guess",
+      "Spans": [
+        {
+          "Start": 20,
+          "End": 30,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Mind starting the gen server?",
+      "Spans": [
+        {
+          "Start": 18,
+          "End": 28,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Can we boot up the gen server?",
+      "Spans": [
+        {
+          "Start": 19,
+          "End": 29,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Run the gen server",
+      "Spans": [
+        {
+          "Start": 8,
+          "End": 18,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Start the gen server process",
+      "Spans": [
+        {
+          "Start": 10,
+          "End": 20,
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+   
+    {
+        "Text": "please add a command",
+        "Spans": [
+          {
+            "Start": 6,
+            "End": 11,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+   
+      {
+        "Text": "Go add! ",
+        "Spans": [
+          {
+            "Start": 2,
+            "End": 7,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "Please, add this",
+        "Spans": [
+          {
+            "Start": 8,
+            "End": 11,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "Hey! Can I add something?",
+        "Spans": [
+          {
+            "Start": 11,
+            "End": 15,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "Time to add some items.",
+        "Spans": [
+          {
+            "Start": 8,
+            "End": 12,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "Let's add a new task!",
+        "Spans": [
+          {
+            "Start": 3,
+            "End": 8,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "i would like to add a command",
+        "Spans": [
+          {
+            "Start": 16,
+            "End": 20,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "Maybe we could add...",
+        "Spans": [
+          {
+            "Start": 18,
+            "End": 21,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "I need to add a reminder.",
+        "Spans": [
+          {
+            "Start": 11,
+            "End": 14,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "Yep, adding sounds good.",
+        "Spans": [
+          {
+            "Start": 4,
+            "End": 9,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "What if we add an event?",
+        "Spans": [
+          {
+            "Start": 11,
+            "End": 14,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "Could you add this item?",
+        "Spans": [
+          {
+            "Start": 14,
+            "End": 17,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      }, 
+      {
+        "Text": "Adding some notes now...",
+        "Spans": [
+          {
+            "Start": 8,
+            "End": 12,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "Sure, let's add data!",
+        "Spans": [
+          {
+            "Start": 5,
+            "End": 8,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "I think I need to add...",
+        "Spans": [
+          {
+            "Start": 18,
+            "End": 21,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+      {
+        "Text": "Perhaps adding a task...",
+        "Spans": [
+          {
+            "Start": 8,
+            "End": 13,
+            "Label": "add"
+          }
+        ],
+        "Answer": "accept"
+      },
+    {
+      "Text": "make the post route /dog and pull from database",
+      "Spans": [
+        {
+          "Start": 14,
+          "End": 25,
+          "Label": "route"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "I need to generate server code",
+      "Spans": [
+        {
+          "Start": 19,
+          "End": 26,  
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Can you create the server code for me?",
+      "Spans": [
+        {
+          "Start": 19,
+          "End": 26,  
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Let's generate the server-side code",
+      "Spans": [
+        {
+          "Start": 6,
+          "End": 25,  
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Time to write some server code",
+      "Spans": [
+        {
+          "Start": 19,
+          "End": 26,  
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "I want to build the server logic",
+      "Spans": [
+        {
+          "Start": 20,
+          "End": 27,  
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Generate the code for the server",
+      "Spans": [
+        {
+          "Start": 26,
+          "End": 32,  
+          "Label": "server"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Search for functions tagged server",
+      "Spans": [
+        {
+          "Start": 0,
+          "End": 7,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Can you find server-related functions?",
+      "Spans": [
+        {
+          "Start": 8,
+          "End": 13,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "I would like to search for a command",
+      "Spans": [
+        {
+          "Start": 16,
+          "End": 23,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Look up functions tagged for server",
+      "Spans": [
+        {
+          "Start": 0,
+          "End": 8,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "I need to discover server functions",
+      "Spans": [
+        {
+          "Start": 10,
+          "End": 19,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Search for available server logic functions",
+      "Spans": [
+        {
+          "Start": 0,
+          "End": 7,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Can you list functions related to server code?",
+      "Spans": [
+        {
+          "Start": 8,
+          "End": 13,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Is there a way to find server-side functionality?",
+      "Spans": [
+        {
+          "Start": 18,
+          "End": 23, 
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"  
+    },
+    {
+      "Text": "How can I locate server code functions?",
+      "Spans": [
+        {
+          "Start": 10,
+          "End": 17,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Help me find functions for server development",
+      "Spans": [
+        {
+          "Start": 8,
+          "End": 13,   
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "Let's explore available server function options",
+      "Spans": [
+        {
+          "Start": 6,
+          "End": 14,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    },
+    {
+      "Text": "please search for a command",
+      "Spans": [
+        {
+          "Start": 7,
+          "End": 14,  
+          "Label": "search"
+        }
+      ],
+      "Answer": "accept"
+    }
+  ]

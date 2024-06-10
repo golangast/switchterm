@@ -3,7 +3,10 @@ package switchtermer
 import (
 	"fmt"
 	"log/slog"
+	"slices"
 
+	"github.com/golangast/sugargen/chat"
+	"github.com/golangast/sugargen/input"
 	"github.com/golangast/switchterm/db/sqlite/tags"
 	"github.com/golangast/switchterm/loggers"
 	"github.com/golangast/switchterm/switchtermer/cmd/add"
@@ -22,7 +25,7 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	var results []string // append to results
 
 	//commands available
-	lists := []string{"settings", "search", "select", "add", "window", "generate", "where to begin?"}
+	lists := []string{"settings", "ask", "search", "select", "add", "window", "generate", "where to begin?"}
 
 	answer := switchselector.Menu(lists, 2, "purple", "purple")
 
@@ -30,7 +33,8 @@ func SwitchCol(list []string, cols int, background, foreground string) []string 
 	case "where to begin?":
 		colortermer.ColorizeOutPut("purple", "purple", "(start = initialize switchterm) - (settings = where directory of commands will be) - (search = search commands) \n (select = run commands)  - (add = add a command) - (window = group of tags) \n")
 		fmt.Println("\n")
-
+	case "ask":
+		Ask(background, foreground, list, cols, atline)
 	case "search":
 		return search.Search(background, foreground, list, cols, atline)
 	case "select":
@@ -90,4 +94,32 @@ func SwitchCall() {
 
 		}
 	}
+}
+
+func Ask(background, foreground string, list []string, cols, atline int) {
+	//start training the model! specify the model name and the filename
+	chat.CheckIfSpanLimitsEqualText("server", "train/server.json")
+
+	//use an input to ask a question
+	ans := input.InputScanDirections("What would you like to do?")
+	//get data from the model
+	text, label := chat.GetTextLabelFromGlob(ans)
+	fmt.Println(text)
+	fmt.Println(label)
+
+	//start to use that data to run commands!
+	if slices.Contains(label, "server") {
+		fmt.Println("Starting the server...")
+		generate.Generate()
+
+	}
+	if slices.Contains(label, "add") {
+		fmt.Println("Starting the add...")
+		add.Add()
+	}
+	if slices.Contains(label, "search") {
+		fmt.Println("Starting the search...")
+		search.Search(background, foreground, list, cols, atline)
+	}
+
 }

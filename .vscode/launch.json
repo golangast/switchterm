@@ -33,7 +33,7 @@
             "request": "launch",
             // "debugAdapter": "dlv-dap",
             "mode": "auto",
-            "program": "${workspaceFolder}/test/main.go",
+            "program": "${workspaceFolder}/wasmtest/main.go",
             "env": {},
             // "args": [
             //     "test"

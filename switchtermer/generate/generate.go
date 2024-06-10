@@ -16,7 +16,7 @@ import (
 
 func Generate() {
 	//list of selections
-	listbash := []string{"server", "tls", "dev", "handler", "data", "add data to handler", "run db server locally only", "ship", "grid", "optimize"}
+	listbash := []string{"server", "tls", "dev", "handler", "data", "add data to handler", "run db server locally only", "ship", "ask", "grid", "optimize"}
 
 	//print directions
 	switchutility.Directions()
@@ -46,5 +46,6 @@ func Generate() {
 		generategrid.Grid()
 	case "optimize":
 		optimizer.Optimizes()
+
 	}
 }

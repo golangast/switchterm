@@ -3,7 +3,6 @@ package switchtermer
 import (
 	"fmt"
 	"log/slog"
-	"slices"
 
 	"github.com/golangast/sugargen/chat"
 	"github.com/golangast/sugargen/input"
@@ -103,23 +102,19 @@ func Ask(background, foreground string, list []string, cols, atline int) {
 	//use an input to ask a question
 	ans := input.InputScanDirections("What would you like to do?")
 	//get data from the model
-	text, label := chat.GetTextLabelFromGlob(ans)
+	text, _ := chat.GetTextLabelFromGlob(ans)
 	fmt.Println(text)
-	fmt.Println(label)
 
-	//start to use that data to run commands!
-	if slices.Contains(label, "server") {
-		fmt.Println("Starting the server...")
-		generate.Generate()
-
-	}
-	if slices.Contains(label, "add") {
-		fmt.Println("Starting the add...")
-		add.Add()
-	}
-	if slices.Contains(label, "search") {
-		fmt.Println("Starting the search...")
-		search.Search(background, foreground, list, cols, atline)
-	}
+	// switch {
+	// case slices.Contains(label, "server") && slices.Contains(label, "handler"):
+	// 	generatehandlerandroute.GenerateHandlerAndRoute()
+	// 	generate.Generate()
+	// case slices.Contains(label, "server"):
+	// 	generate.Generate()
+	// case slices.Contains(label, "add"):
+	// 	add.Add()
+	// case slices.Contains(label, "search"):
+	// 	search.Search(background, foreground, list, cols, atline)
+	// }
 
 }

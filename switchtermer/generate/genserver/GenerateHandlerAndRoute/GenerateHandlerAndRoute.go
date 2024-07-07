@@ -54,12 +54,12 @@ func GenerateHandlerAndRoute() {
 	switchutility.Checklogger(err, "trying to create tempfile file")
 
 	//updating routes
-	if err := switchutility.UpdateText(domainanswer+"/src/routes/router.go", `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`, `//getroute`, `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`+"\n"+`//getroute`); err != nil {
+	if err := switchutility.UpdateText(domainanswer+"/src/routes/router.go", `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`, `//getroute`, `e.GET("/`+striproutes+`", `+striproutes+`.`+cases.Title(language.Und, cases.NoLower).String(striproutes)+`)`+"\n"); err != nil {
 		switchutility.Checklogger(err, "trying to update router.go")
 	}
 
 	//update import
-	if err := switchutility.UpdateText(domainanswer+"/src/routes/router.go", dg+domainanswer+"/src/handler/get/"+striproutes, "// importroute", `"`+dg+domainanswer+`/src/handler/get/`+striproutes+`"`+"\n"+`// importroute`); err != nil {
+	if err := switchutility.UpdateText(domainanswer+"/src/routes/router.go", dg+domainanswer+"/src/handler/get/"+striproutes, "// importroute", `"`+dg+domainanswer+`/src/handler/get/`+striproutes+`"`+"\n"); err != nil {
 		switchutility.Checklogger(err, "trying to update router.go for the import")
 	}
 

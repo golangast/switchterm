@@ -572,5 +572,160 @@
         }
       ],
       "Answer": "accept"
-    }
+    },
+    {
+      "Text": "please create the handler dog please",
+      "Spans": [
+        {
+          "Start": 18,
+          "End": 26,  
+          "Label": "handler"
+        },
+        {
+          "Start": 25,
+          "End": 31,  
+          "Label": "han"
+        }
+      ],
+      "Answer": "accept"
+    },
+
+      {
+      "Text": "Create a URL handler for the path about to display company information",
+      "Spans": [
+      {
+      "Start": 18,
+      "End": 33,
+      
+      "Label": "handler"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "Generate a handler for contact that handles user messages",
+      "Spans": [
+      {
+      "Start": 18,
+      "End": 30,
+      
+      "Label": "handler"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "I need a custom handler to process GET requests to blog",
+      "Spans": [
+      {
+      "Start": 28,
+      "End": 41,
+      
+      "Label": "handler"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "Can you create a URL handler for products that allows filtering?",
+      "Spans": [
+      {
+      "Start": 18,
+      "End": 33,
+      
+      "Label": "handler"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "Generate a handler for login that authenticates users",
+      "Spans": [
+      {
+      "Start": 18,
+      "End": 29,
+      
+      "Label": "handler"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "I'd like a custom handler for API calls to users",
+      "Spans": [
+      {
+      "Start": 25,
+      "End": 38,
+      
+      "Label": "handler",
+        "URL":"users"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "Can you create a URL handler for dynamic content on dashboard?",
+      "Spans": [
+      {
+      "Start": 18,
+      "End": 33,
+      
+      "Label": "handler",
+        "URL":"dashboard"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "Generate a handler for search that retrieves results based on keywords",
+      "Spans": [
+      {
+      "Start": 18,
+      "End": 29,
+      
+      "Label": "handler",
+        "URL":"search"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "I need a custom handler to handle file uploads at upload",
+      "Spans": [
+      {
+      "Start": 28,
+      "End": 40,
+      
+      "Label": "handler",
+        "URL":"uploads"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "Can you create a URL handler for showing user profiles at user",
+      "Spans": [
+      {
+      "Start": 18,
+      "End": 37,
+      
+      "Label": "handler",
+        "URL":"user"
+      }
+      ],
+      "Answer": "accept"
+      },
+      {
+      "Text": "Generate a handler for admin that requires authorization",
+      "Spans": [
+      {
+      "Start": 18,
+      "End": 29,
+      
+      "Label": "handler"
+    
+      }
+      ],
+      "Answer": "accept"
+      }
   ]

@@ -33,19 +33,19 @@ func Ship() {
 	if err := switchutility.ReplaceLine(chosendomain+"/assets/db/rqlite/bin/config.json", `password`, `"password": "`+rrr+`",`); err != nil {
 		switchutility.Checklogger(err, "trying to update config.json")
 	}
-	if err := switchutility.ReplaceLine(chosendomain+"/internal/dbsql/dbconn/dbconn.go", `conn, err := gorqlite.Open(`, `conn, err := gorqlite.Open("http://`+rr+`:`+rrr+`@localhost:4001/")`); err != nil {
+	if err := switchutility.ReplaceLine(chosendomain+"/internal/dbsql/dbconn/dbconn.go", `conn, err := gorqlite.Open(`, `conn, err := gorqlite.Open("http://`+rr+`:`+rrr+`@`+chosendomain+`:4001/")`); err != nil {
 		switchutility.Checklogger(err, "trying to update config.json")
 	}
 
 	colortermer.ColorizeOutPut("dpurple", "purple", "if you want resources on the db server lookup the following\n")
 	colortermer.ColorizeOutPut("dpurple", "purple", "https://github.com/rqlite/rqlite and https://github.com/rqlite/gorqlite\n")
 
-	if err := switchutility.ShellBash("cd "+chosendomain+"/bin && chmod 755 ./rqlited && cd .. && go build -o bin/ main.go   ", "trying to run database server bash command"); err != nil {
+	if err := switchutility.ShellBash("cd "+chosendomain+"/bin/"+chosendomain+" && chmod 755 ./rqlited && cd .. && go build -o bin/"+chosendomain+"/main.go   ", "trying to run database server bash command"); err != nil {
 		switchutility.Checklogger(err, "running database server")
 	}
 
 	colortermer.ColorizeOutPut("dpurple", "purple", `your binary and database are in the /bin folder now.  
-	└──bin
+	└──bin/`+chosendomain+`
 		├──main - go binary
 		├──assets/assetdirectory.yaml - used for optimizing assets
 		├──config.json - used for auth for database

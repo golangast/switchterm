@@ -3,6 +3,7 @@ package switchtermer
 import (
 	"fmt"
 	"log/slog"
+	"slices"
 
 	"github.com/golangast/sugargen/chat"
 	"github.com/golangast/sugargen/input"
@@ -11,6 +12,7 @@ import (
 	"github.com/golangast/switchterm/switchtermer/cmd/add"
 	"github.com/golangast/switchterm/switchtermer/cmd/search"
 	"github.com/golangast/switchterm/switchtermer/generate"
+	generatehandlerandroute "github.com/golangast/switchterm/switchtermer/generate/genserver/GenerateHandlerAndRoute"
 	"github.com/golangast/switchterm/switchtermer/settings"
 	"github.com/golangast/switchterm/switchtermer/switch/colortermer"
 	"github.com/golangast/switchterm/switchtermer/switch/switchselector"
@@ -105,16 +107,16 @@ func Ask(background, foreground string, list []string, cols, atline int) {
 	text, _ := chat.GetTextLabelFromGlob(ans)
 	fmt.Println(text)
 
-	// switch {
-	// case slices.Contains(label, "server") && slices.Contains(label, "handler"):
-	// 	generatehandlerandroute.GenerateHandlerAndRoute()
-	// 	generate.Generate()
-	// case slices.Contains(label, "server"):
-	// 	generate.Generate()
-	// case slices.Contains(label, "add"):
-	// 	add.Add()
-	// case slices.Contains(label, "search"):
-	// 	search.Search(background, foreground, list, cols, atline)
-	// }
+	switch {
+	case slices.Contains(text, "server") && slices.Contains(text, "handler"):
+		generatehandlerandroute.GenerateHandlerAndRoute()
+		generate.Generate()
+	case slices.Contains(text, "server"):
+		generate.Generate()
+	case slices.Contains(text, "add"):
+		add.Add()
+	case slices.Contains(text, "search"):
+		search.Search(background, foreground, list, cols, atline)
+	}
 
 }
